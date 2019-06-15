@@ -125,6 +125,8 @@ typedef struct node
     
 }LNode, *LinkList;
 
+#define LNodeSize sizeof(LNode)
+
 LinkList CREATE(int n){
     LinkList p,r=NULL,list = NULL;
     ElemType a = NULL;
@@ -218,6 +220,192 @@ void INSERTLINK3(LinkList *list, LinkList q, ElemType item){
     }
 }
 
+int INSERTLINK4(LinkList list, int i, ElemType item){
+    LinkList p,q=list;
+    int j=1;
+    while (j<i && q != NULL) {
+        q = q->link;
+        j++;
+    }
+    if (j != i || q == NULL) {
+        printf("链表中不存在第 i 个链节点! \n");
+        return -1;
+    }
+    p = malloc(sizeof(LNode));
+    p->data = item;
+    p->link = q->link;
+    q->link = p;
+    return 1;
+}
+
+void INSERTLINK5(LinkList *list, ElemType item){
+    LinkList p,q,r=NULL;
+    p = malloc(LNodeSize);
+    p->data = item;
+    if (*list == NULL || item->num <= (*list)->data->num) {
+        p->link = *list;
+        *list = p;
+    }else{
+        q = *list;
+        while (q != NULL && item->num >= q->data->num) {
+            r = q;
+            q = q->link;
+        }
+        if (r != NULL) {
+            p->link = r->link;
+            r->link = p;
+        }
+    }
+}
+
+// r: 前驱节点
+// q: 要删除节点
+void DELETELINK1(LinkList *list, LinkList r, LinkList q){
+    if (q == *list) {
+        *list = q->link;
+    }else{
+        r->link = q->link;
+    }
+    free(q);
+}
+
+void DELETELINK2(LinkList *list, LinkList q){
+    if (*list == q) {
+        *list = q->link;
+        free(q);
+    }else{
+        LinkList p = *list;
+        while (p->link != q && p->link != NULL) {
+            p = p->link;
+        }
+        if (p->link != NULL) {
+            p->link = q->link;
+            free(q);
+        }
+    }
+}
+
+void DELETELIST(LinkList *list)
+{
+    LinkList q = *list;
+    while (q != NULL) {
+        *list = q->link;
+        free(q);
+        q = *list;
+    }
+}
+
+void DELETEITEM(LinkList *list, ElemType item){
+    LinkList q=*list,p=(*list)->link;
+    while (p != NULL) {
+        if (p->data->num == item->num) {
+            q->link = p->link;
+            free(p);
+            p = q->link;
+        }else{
+            q = p;
+            p = p->link;
+        }
+    }
+    if ((*list)->data->num == item->num) {
+        q = *list;
+        *list = (*list)->link;
+        free(q);
+    }
+}
+
+void INVERT(LinkList *list){
+    LinkList q=NULL,r,p=*list;
+    while (p != NULL) {
+        r = p;
+        p = p->link;
+        r->link = q;
+        q = r;
+    }
+    *list = q;
+}
+
+void CONNECT(LinkList lista, LinkList listb){
+    LinkList p = lista;
+    while (p->link != NULL) {
+        p = p->link;
+    }
+    p->link = listb;
+}
+
+LinkList MERGELIST(LinkList lista, LinkList listb){
+    LinkList listc,p=lista,q=listb,r;
+    if (lista->data->num <= listb->data->num) {
+        listc = lista;
+        p = p->link;
+    }else{
+        listc = listb;
+        q = q->link;
+    }
+    r = listc;
+    while (p != NULL && q != NULL) {
+        if (p->data->num <= q->data->num) {
+            r->link = p;
+            r = p;
+            p = p->link;
+        }else{
+            r->link = q;
+            r = q;
+            q = q->link;
+        }
+    }
+    r->link = p?p:q;
+    return listc;
+}
+
+LinkList COPY(LinkList list)
+{
+    LinkList listb;
+    if (list == NULL) {
+        return NULL;
+    }else{
+        listb = malloc(LNodeSize);
+        listb->data = list->data;
+        listb->link = COPY(list->link);
+    }
+    return listb;
+}
+
+LinkList LINKSORT(ElemType A[], int n){
+    LinkList list = NULL;
+    int i;
+    for (i=0; i<n; i++) {
+        INSERTLINK5(&list, A[i]);
+    }
+    return list;
+}
+
+void REMOVE(LinkList *list){
+    if (*list == NULL) {
+        printf("数据异常 \n");
+        return;
+    }
+    LinkList q=NULL,r=*list,s=*list,p=*list;
+    p = p->link;
+    while (p != NULL) {
+        if (p->data->num >= r->data->num) {
+            q = s;
+            r = p;
+        }
+        s = p;
+        p = p->link;
+    }
+    if (s != r) {
+        if (r == *list) {
+            *list = (*list)->link;
+        }else{
+            q->link = r->link;
+        }
+        s->link = r;
+        r->link = NULL;
+    }
+}
+
 void DRDay2()
 {
     // printf("DR-LinearTable, come on \n");
@@ -245,28 +433,116 @@ void DRDay2()
     
     int m = 10;
     LinkList head = CREATE(m);
+    PRINTDATA(head);
     printf("长度：%d \n", LENGHT(head));
+    printf("后续操作 \n");
     ElemType it = malloc(sizeof(ElemType));
-    it->num = 6;
-    LinkList find = FIND(head, it);
-    printf("找到的数据：%d \n", find->data->num);
     
-    // 头插入
-    READ(&it);
-    INSERTLINK1(&head, it);
-    PRINTDATA(head);
-    printf("长度：%d \n", LENGHT(head));
+//    // 找数据
+//    it->num = 6;
+//    LinkList find = FIND(head, it);
+//    printf("找到的数据：%d \n", find->data->num);
     
-    // 尾插入
-    READ(&it);
-    INSERTLINK2(&head, it);
-    PRINTDATA(head);
-    printf("长度：%d \n", LENGHT(head));
+//    // 头插入
+//    READ(&it);
+//    INSERTLINK1(&head, it);
+//    PRINTDATA(head);
+//    printf("长度：%d \n", LENGHT(head));
+//    
+//    // 尾插入
+//    READ(&it);
+//    INSERTLINK2(&head, it);
+//    PRINTDATA(head);
+//    printf("长度：%d \n", LENGHT(head));
+//    
+//    // 指定节点插入
+//    READ(&it);
+//    INSERTLINK3(&head, head->link->link, it);
+//    PRINTDATA(head);
+//    printf("长度：%d \n", LENGHT(head));
     
-    // 指定节点插入
-    READ(&it);
-    INSERTLINK3(&head, head->link->link, it);
-    PRINTDATA(head);
-    printf("长度：%d \n", LENGHT(head));
+//    // 指定位置后面插入
+//    READ(&it);
+//    INSERTLINK4(head, 4, it);
+//    PRINTDATA(head);
+//    printf("长度：%d \n", LENGHT(head));
+    
+//    // 按值有序插入
+//    READ(&it);
+//    it->num = 7;
+//    INSERTLINK5(&head, it);
+//    PRINTDATA(head);
+//    printf("长度：%d \n", LENGHT(head));
+
+//    // 按节点删除
+//    DELETELINK2(&head, head->link->link->link);
+//    PRINTDATA(head);
+//    printf("长度：%d \n", LENGHT(head));
+
+      // 销毁链表
+//    DELETELIST(&head);
+//    PRINTDATA(head);
+//    printf("长度：%d \n", LENGHT(head));
+
+//      // 按值删除
+//    READ(&it);
+//    it->num = 7;
+//    DELETEITEM(&head, it);
+//    PRINTDATA(head);
+//    printf("长度：%d \n", LENGHT(head));
+
+//    // 反转
+//    INVERT(&head);
+//    PRINTDATA(head);
+//    printf("长度：%d \n", LENGHT(head));
+    
+//    // 合并
+//    int j = 8;
+//    n = 6;
+//    LinkList head2 = CREATE(j);
+//    PRINTDATA(head2);
+//    printf("长度：%d \n", LENGHT(head2));
+//    printf("合并后 \n");
+//    LinkList c = MERGELIST(head, head2);
+//    PRINTDATA(c);
+//    printf("长度：%d \n", LENGHT(c));
+    
+//    // copy
+//    LinkList d = COPY(head);
+//    PRINTDATA(d);
+//    printf("长度：%d \n", LENGHT(d));
+
+//    // 排序
+//    ElemType it1 = malloc(sizeof(ElemType));
+//    it1->num = 4;
+//    ElemType it2 = malloc(sizeof(ElemType));
+//    it2->num = 9;
+//    ElemType it3 = malloc(sizeof(ElemType));
+//    it3->num = 2;
+//    ElemType it4 = malloc(sizeof(ElemType));
+//    it4->num = 4;
+//    ElemType it5 = malloc(sizeof(ElemType));
+//    it5->num = 1;
+//    ElemType it6 = malloc(sizeof(ElemType));
+//    it6->num = 7;
+//    ElemType it7 = malloc(sizeof(ElemType));
+//    it7->num = 0;
+//    ElemType it8 = malloc(sizeof(ElemType));
+//    it8->num = 2;
+//    ElemType A[8] = {it1, it2, it3, it4, it5, it6, it7, it8};
+//    LinkList S = LINKSORT(A, 8);
+//    PRINTDATA(S);
+//    printf("长度：%d \n", LENGHT(S));
+//
+//    // 指定位置后面插入
+//    READ(&it);
+//    INSERTLINK4(head, 4, it);
+//    PRINTDATA(head);
+//    printf("长度：%d \n", LENGHT(head));
+//    REMOVE(&head);
+//    PRINTDATA(head);
+//    printf("长度：%d \n", LENGHT(head));
+    
+
     
 }
