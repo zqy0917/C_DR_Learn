@@ -8,10 +8,11 @@
 
 #include <stdio.h>
 #include <math.h>
-#include "Day2.h"
-#include "Day3.h"
-#include "Day4.h"
-#include "LinearTable.h"
+#include "CS/Day2.h"
+#include "CS/Day3.h"
+#include "CS/Day4.h"
+#include "DR/LinearTable.h"
+#include "DR/CycleLinearTable.h"
 
 void input()
 {
@@ -173,8 +174,7 @@ void printPoint()
     }
 }
 
-
-int main(int argc, const char * argv[]) {
+int main(int argc, char * argv[]) {
     // insert code here...
     //    addTest();
     //    test2();
@@ -187,7 +187,8 @@ int main(int argc, const char * argv[]) {
     //    EntranceDay2();
     //    EntranceDay3();
     //    EntranceDay4();
-    DRDay2();
+//    DRDay2();
+    DRDay3(argc, argv);
     
     return 0;
 }
