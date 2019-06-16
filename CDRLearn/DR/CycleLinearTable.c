@@ -7,32 +7,15 @@
 //
 
 #include "CycleLinearTable.h"
+#include "LinearTablePractise.h"
 #include <string.h>
-#include <stdlib.h>
 
-static int n = 0;
-
-typedef struct
-{
-    int num;
-    char data[10];
-}EType, *ElemType;
-
-static void READ(ElemType *a){
+void READ(ElemType *a){
     *a = malloc(sizeof(EType));
     (*a)->num = n++;
-    char *d = "data";
+    const char *d = "data";
     strcpy((*a)->data, d);
 }
-
-typedef struct node
-{
-    ElemType data;
-    struct node *link;
-    
-}LNode, *LinkList;
-
-#define LNodeSize sizeof(LNode)
 
 LinkList CreateACycleList(int n){
 
@@ -86,12 +69,6 @@ void JOSEPHUS(int n, int m, int k){
     printf("最后： %d \n", q->data->num);
     
 }
-
-typedef struct dnode{
-    ElemType data;
-    struct dnode *llink,*rlink;
-}DNode, *DLinkList;
-#define DNodeSize sizeof(DNode)
 
 DLinkList CREATEDLIST(int n){
     DLinkList r=NULL,p=NULL;
@@ -232,7 +209,8 @@ void DRDay3(int argc, char *argv[]){
 //    printf("删除后 \n");
 //    DELETED(dlist, insertIt);
 //    PRINTDLIST(dlist);
-    PRINTFILE(argc, argv);
+//    PRINTFILE(argc, argv);
+    parctice30();
     
     
     

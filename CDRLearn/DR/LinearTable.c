@@ -19,7 +19,7 @@ typedef struct
     char data[10];
 }EType, *ElemType;
 
-void READ(ElemType *a){
+static void READ(ElemType *a){
     *a = malloc(sizeof(EType));
     (*a)->num = n++;
     char *d = "data";
