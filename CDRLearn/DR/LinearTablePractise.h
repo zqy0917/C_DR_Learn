@@ -14,4 +14,6 @@
 
 int parctice30();
 
+void parctice29();
+
 #endif /* LinearTablePractise_h */

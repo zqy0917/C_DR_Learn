@@ -78,6 +78,9 @@ int parctice30(){
     return 1;
 }
 
+void parctice29(){
+    
+}
 
 
 
