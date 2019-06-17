@@ -32,8 +32,15 @@ typedef struct dnode{
     struct dnode *llink,*rlink;
 }DNode, *DLinkList;
 
+typedef struct dlrunode{
+    ElemType data;
+    struct dlrunode *llink,*rlink;
+    int freq;
+}DLRUNode, *DLRULinkList;
+
 #define LNodeSize sizeof(LNode)
 #define DNodeSize sizeof(DNode)
+#define DLRUNodeSize sizeof(DLRUNode)
 
 void READ(ElemType *a);
 

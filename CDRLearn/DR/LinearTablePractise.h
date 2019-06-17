@@ -14,6 +14,24 @@
 
 int parctice30();
 
-void parctice29();
+void parctice29(int n);
+
+int practice28();
+
+void practice27(int delNum);
+
+void practice26();
+
+void practice25();
+
+void practice24();
+
+void practice23();
+
+void practice22();
+
+void practice21();
+
+void practice20();
 
 #endif /* LinearTablePractise_h */
