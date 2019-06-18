@@ -11,8 +11,8 @@
 #include "CS/Day2.h"
 #include "CS/Day3.h"
 #include "CS/Day4.h"
-#include "DR/LinearTable.h"
-#include "DR/CycleLinearTable.h"
+#include "LinearTable.h"
+#include "CycleLinearTable.h"
 
 void input()
 {
