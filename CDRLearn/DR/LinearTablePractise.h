@@ -70,5 +70,7 @@ void prcatice3();
 
 void prcatice2();
 
+void prcatice1();
+
 
 #endif /* LinearTablePractise_h */

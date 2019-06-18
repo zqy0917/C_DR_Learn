@@ -993,16 +993,83 @@ void prcatice5(){
     PRINTARRAY(a, n);
 }
 
+// 逆转线性表
+void OVERTURN(int *a, int n){
+    int *p = a+n-1;
+    while (a < p) {
+        int t = *a;
+        *a = *p;
+        *p = t;
+        a++;
+        p--;
+    }
+}
+
+int FINDITEM(int *a, int n, int item){
+    if (n <= 0) {
+        return -1;
+    }else if (*a == item) {
+        return 0;
+    }else{
+        int q = FINDITEM(a+1, n-1, item);
+        return q >= 0 ? q+1 : -1;
+    }
+}
+
 void prcatice4(){
-    
+    int n=9;
+    int *a = CREATEARRAY(n);
+    PRINTARRAY(a, n);
+    printf("逆转后 \n");
+    OVERTURN(a, n);
+    PRINTARRAY(a, n);
 }
 
 void prcatice3(){
-    
+    int n=9;
+    int *a = CREATEARRAY(n);
+    PRINTARRAY(a, n);
+    int p = FINDITEM(a, n, 6);
+    printf("位置：%d \n", p);
+}
+
+void MAXMIN(int *a, int n){
+    int max = *a,min = *a;
+    for (int i=0; i<n; i++) {
+        if (*(a+i) > max) {
+            max = *(a+i);
+        }else if (*(a+i) < min) {
+            min = *(a+i);
+        }
+    }
+    printf("最大值：%d, 最小值：%d \n", max, min);
 }
 
 void prcatice2(){
-    
+    int n=10;
+    int *a = CREATEARRAY(n);
+    PRINTARRAY(a, n);
+    MAXMIN(a, n);
+}
+
+int MINITEM(int *a, int n){
+    int min = *a,j=0;
+    for (int i=0; i<n; i++) {
+        if (*(a+i) < min) {
+            min = *(a+i);
+            j = i;
+        }
+    }
+    printf("最小值：%d, 所在位置：%d \n", min, j);
+    return j;
+}
+
+void prcatice1(){
+    int n=10;
+    int *a = CREATEARRAY(n);
+    *(a+5) = -100;
+    PRINTARRAY(a, n);
+    MINITEM(a, n);
 }
 
 

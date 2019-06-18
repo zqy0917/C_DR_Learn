@@ -232,7 +232,10 @@ void DRDay3(int argc, char *argv[]){
 //    prcatice7();
 //    prcatice6();
 //    prcatice5();
-    prcatice4();
+//    prcatice4();
+//    prcatice3();
+//    prcatice2();
+    prcatice1();
 }
 
 
