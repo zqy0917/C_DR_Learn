@@ -34,4 +34,41 @@ void practice21();
 
 void practice20();
 
+void prcatice19();
+
+void prcatice18();
+
+void prcatice17();
+
+void prcatice16();
+
+void prcatice15();
+
+void prcatice14();
+
+void prcatice13();
+
+void prcatice12();
+
+void prcatice11();
+
+void prcatice10();
+
+void prcatice9();
+
+void prcatice8();
+
+void prcatice7();
+
+void prcatice6();
+
+void prcatice5();
+
+void prcatice4();
+
+void prcatice3();
+
+void prcatice2();
+
+
 #endif /* LinearTablePractise_h */

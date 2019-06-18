@@ -575,5 +575,466 @@ void practice20(){
     PRINTCYCLEUNHEADLIST(list);
 }
 
+// 删除多余使链表数据域值不同
+void prcatice19(){
+    LinkList list = CreateList(10);
+    list->link->data->num = 1;
+    list->link->link->link->data->num = 6;
+    PROINTLIST(list);
+    LinkList p=list->link,q=list,r;
+    q->link = NULL;
+    int exist;
+    while (p != NULL) {
+        r = q;
+        exist = 0;
+        while (1) {
+            if (r->data->num == p->data->num) {
+                exist = 1;
+                break;
+            }
+            if (r->link == NULL) {
+                break;
+            }
+            r = r->link;
+        }
+        LinkList tmp = p->link;
+        if (exist) {
+            free(p);
+        }else{
+            r->link = p;
+            p->link = NULL;
+        }
+        p = tmp;
+    }
+    printf("排重后：\n");
+    PROINTLIST(list);
+}
+
+static LinkList MERGELIST(LinkList x, LinkList y){
+    LinkList p1=x->link,p2=y,list=x,r;
+    list->link = NULL;
+    r = list;
+    int i=1;
+    while (p1 != NULL && p2 != NULL) {
+        LinkList tmp;
+        if (i % 2 == 0) {
+            tmp = p1->link;
+            r->link = p1;
+            p1->link = NULL;
+            r = p1;
+            p1 = tmp;
+        }else{
+            tmp = p2->link;
+            r->link = p2;
+            p2->link = NULL;
+            r = p2;
+            p2 = tmp;
+        }
+        i++;
+    }
+    if (p1 != NULL) {
+        r->link = p1;
+    }else if (p2 != NULL) {
+        r->link = p2;
+    }
+    return list;
+}
+void prcatice18(){
+    LinkList list = CreateList(5);
+    list->data->num = 100;
+    list->link->data->num = 200;
+    list->link->link->data->num = 300;
+    list->link->link->link->data->num = 400;
+    list->link->link->link->link->data->num = 500;
+    LinkList list2 = CreateList(10);
+    LinkList mergeL = MERGELIST(list, list2);
+    PROINTLIST(mergeL);
+}
+
+LinkList FINDK(LinkList list, int k){
+    int i=1;
+    LinkList p=list,r=NULL;
+    while (p != NULL) {
+        if (r != NULL){
+            r = r->link;
+        }
+        if (i == k) {
+            r = list;
+        }
+        i++;
+        p = p->link;
+    }
+    return r;
+}
+
+void prcatice17(){
+    LinkList list = CreateList(5);
+    PROINTLIST(list);
+    printf("\n");
+    LinkList r = FINDK(list, 2);
+    if (r == NULL) {
+        printf("没找到 \n");
+    }else{
+        printf("%d \n", r->data->num);
+    }
+}
+
+void MOVEMINITEM(LinkList *list){
+    LinkList p=(*list)->link,r=*list,m=NULL,k=NULL;
+    int min = (*list)->data->num;
+    while (p != NULL) {
+        if (p->data->num < min) {
+            k = m;
+            r = p;
+        }
+        m = p;
+        p = p->link;
+    }
+    if (r != *list) {
+        k->link = r->link;
+        r->link = *list;
+        *list = r;
+    }
+}
+void prcatice16(){
+    LinkList list = CreateList(10);
+    list->link->link->link->link->data->num = -100;
+    list->link->link->link->data->num = -100;
+    PROINTLIST(list);
+    printf("移动后 \n");
+    MOVEMINITEM(&list);
+    PROINTLIST(list);
+}
+
+void CHAGEP(LinkList *list, LinkList p){
+    LinkList t=NULL,f=*list;
+    if (p == f) {
+        t = p->link;
+        p->link = p->link->link;
+        t->link = p;
+        *list = t;
+    }else{
+        while (f != NULL) {
+            if (f == p) {
+                break;
+            }
+            t = f;
+            f = f->link;
+        }
+        if (t != NULL && f != NULL) {
+            LinkList tmp = f->link->link;
+            t->link = f->link;
+            f->link->link = f;
+            f->link = tmp;
+        }
+    }
+}
+void prcatice15(){
+    LinkList list = CreateList(5);
+    PROINTLIST(list);
+    LinkList p = list;
+    printf("移动 %d 后 \n", p->data->num);
+    CHAGEP(&list, p);
+    PROINTLIST(list);
+}
+
+void prcatice14(){
+    LinkList list = CreateList(10);
+    list->link->data->num = 3;
+    PROINTLIST(list);
+    LinkList p=list, r=NULL;
+    int b=1;
+    while (p != NULL) {
+        if (r != NULL && r->data->num > p->data->num) {
+            b = 0;
+            break;
+        }
+        r = p;
+        p = p->link;
+    }
+    if (b) {
+        printf("按顺序排列 \n");
+    }else{
+        printf("非按顺序排列 \n");
+    }
+}
+
+void DELETEMAX(LinkList *list){
+    LinkList p=(*list)->link, r=*list, m=NULL, max=*list;
+    
+    while (p != NULL) {
+        if (p->data->num > max->data->num) {
+            m = r;
+            max = p;
+        }
+        r = p;
+        p = p->link;
+    }
+    if (max == *list) {
+        *list = (*list)->link;
+    }else{
+        m->link = max->link;
+    }
+    free(max);
+}
+
+void prcatice13(){
+    LinkList list = CreateList(10);
+    list->data->num = 30;
+    PROINTLIST(list);
+    DELETEMAX(&list);
+    printf("删除最大后 \n");
+    PROINTLIST(list);
+}
+
+// 删除 [i,i+k-1]
+void DELETECUSTOM(LinkList *list, int i, int k){
+    int j=1;
+    LinkList p = *list,r=NULL;
+    while (p != NULL) {
+        if (j == i-1) {
+            r = p;
+            p = p->link;
+        }else if (j >= i && j < i+k) {
+            if (r == NULL) {
+                *list = (*list)->link;
+                free(p);
+                p = *list;
+            }else{
+                r->link = p->link;
+                free(p);
+                p = r->link;
+            }
+        }else if (j >= i+k){
+            break;
+        }else{
+            p = p->link;
+        }
+        j++;
+    }
+}
+
+void prcatice12(){
+    LinkList list = CreateList(10);
+    PROINTLIST(list);
+    DELETECUSTOM(&list, 5, 3);
+    printf("删除后 \n");
+    PROINTLIST(list);
+}
+
+void DELETEI(LinkList *list, int i){
+    LinkList p=*list, r=NULL;
+    int j=1;
+    while (p != NULL) {
+        if (j == i) {
+            break;
+        }
+        j++;
+        r = p;
+        p = p->link;
+    }
+    if (p == NULL) {
+        return;
+    }
+    if (r == NULL) {
+        *list = (*list)->link;
+    }else{
+        r->link = p->link;
+    }
+    free(p);
+}
+
+void prcatice11(){
+    LinkList list = CreateList(5);
+    PROINTLIST(list);
+    DELETEI(&list, 5);
+    printf("删除后 \n");
+    PROINTLIST(list);
+}
+
+void CHAGEITEM(LinkList list, int d, int item){
+    LinkList p = list;
+    while (p != NULL) {
+        if (p->data->num == d) {
+            p->data->num = item;
+        }
+        p = p->link;
+    }
+}
+
+void prcatice10(){
+    LinkList list = CreateList(5);
+    list->link->data->num = 5;
+    list->link->link->data->num = 5;
+    PROINTLIST(list);
+    CHAGEITEM(list, 5, 100);
+    printf("修改后 \n");
+    PROINTLIST(list);
+}
+
+int *CREATEARRAY(int n){
+    int *a = calloc(sizeof(int), n);
+    for (int i=1; i<=n; i++) {
+        a[i-1] = i;
+    }
+    return a;
+}
+
+void PRINTARRAY(int *a, int n){
+    for (int i=0; i<n; i++) {
+        printf("%d ", *(a+i));
+    }
+    printf("\n");
+}
+
+void MEAGEARRAY(int (*a)[], int n, int (*b)[], int m, int i){
+    if (i <= 0 || i > n+1) {
+        printf("擦数异常 \n");
+        return;
+    }
+    int j;// m = 2, i=2
+    for (j=n-1; j>i-2; j--) {
+        (*a)[j+m] = (*a)[j];
+        (*a)[j] = 0;
+    }
+    for (j=0; j<m; j++) {
+        (*a)[j+i-1] = (*b)[j];
+    }
+}
+
+void prcatice9(){
+    int n = 6;
+    int m = 5;
+    int a[20] = {1,6,7,8,9,10};
+    int b[5] = {2,3,4,5,6};
+    MEAGEARRAY(&a, n, &b, m,2);
+    PRINTARRAY(a, 11);
+}
+
+void prcatice8(){
+    int a[20];
+    int i=0;
+    int n=10;
+    while (i < n) {
+        scanf("%d", &a[i]);
+        i++;
+    }
+    PRINTARRAY(a, n);
+}
+
+void DELETEAITEM(int *a, int n, int i){
+    for (int j=i; j<n; j++) {
+        a[j] = a[j+1];
+    }
+}
+
+void DELETERANGE(int *a, int n, int x, int y)
+{
+    for (int i=0; i<n; i++) {
+        int it = *(a+i);
+        if (it > x && it < y) {
+            DELETEAITEM(a, n, i);
+            i--;
+            n--;
+        }
+    }
+}
+
+void prcatice7(){
+    int n=10;
+    int *a = CREATEARRAY(n);
+    PRINTARRAY(a, 10);
+    DELETERANGE(a, n, 0, 9);
+    PRINTARRAY(a, 10);
+}
+
+// 删除序号为奇数的元素,require: O(n)
+void DELETEODD(int *a, int n){
+    // 1,2,3,4,5,6,7,8,9,10
+    //   |   |   |   |   |
+    // 1,2,3
+    int k=0;
+    for (int i=0; i<n; i++) {
+        *(a+i) = *(a+i+k);
+        k++;
+    }
+}
+
+void prcatice6(){
+    int n=12;
+    int *a = CREATEARRAY(n);
+    PRINTARRAY(a, n);
+    printf("删除后 \n");
+    DELETEODD(a, n);
+    int i;
+    if (n % 2 == 0) {
+        i = n/2;
+    }else{
+        i = n/2+1;
+    }
+    PRINTARRAY(a, i);
+}
+
+void DELETEODDITEM(int *a, int *n){
+    for (int i=0; i<*n; i++) {
+        if (*(a+i) % 2 == 1) {
+            DELETEAITEM(a, *n, i);
+            (*n)--;
+        }
+    }
+}
+
+void prcatice5(){
+    int n=10;
+    int *a = CREATEARRAY(n);
+    PRINTARRAY(a, n);
+    printf("删除后 \n");
+    DELETEODDITEM(a, &n);
+    PRINTARRAY(a, n);
+}
+
+void prcatice4(){
+    
+}
+
+void prcatice3(){
+    
+}
+
+void prcatice2(){
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

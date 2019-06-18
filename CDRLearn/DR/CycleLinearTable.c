@@ -217,9 +217,22 @@ void DRDay3(int argc, char *argv[]){
 //    practice23();
 //    practice22();
 //    practice21();
-    practice20();
-    
-    
+//    practice20();
+//    prcatice19();
+//    prcatice18();
+//    prcatice17();
+//    prcatice16();
+//    prcatice15();
+//    prcatice14();
+//    prcatice13();
+//    prcatice12();
+//    prcatice10();
+//    prcatice9();
+//    prcatice8();
+//    prcatice7();
+//    prcatice6();
+//    prcatice5();
+    prcatice4();
 }
 
 
