@@ -235,7 +235,7 @@ void DRDay3(int argc, char *argv[]){
 //    prcatice4();
 //    prcatice3();
 //    prcatice2();
-    prcatice1();
+//    prcatice1();
 }
 
 

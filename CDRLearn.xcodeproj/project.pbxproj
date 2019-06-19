@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1DAAEEC522BA3AEF00C5CBB9 /* ArrayPractice.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEEC422BA3AEF00C5CBB9 /* ArrayPractice.c */; };
 		7B16358E22B92A30001C2019 /* CycleLinearTable.c in Sources */ = {isa = PBXBuildFile; fileRef = 7B16358722B92A30001C2019 /* CycleLinearTable.c */; };
 		7B16358F22B92A30001C2019 /* LinearTable.c in Sources */ = {isa = PBXBuildFile; fileRef = 7B16358922B92A30001C2019 /* LinearTable.c */; };
 		7B16359022B92A30001C2019 /* LinearTablePractise.c in Sources */ = {isa = PBXBuildFile; fileRef = 7B16358B22B92A30001C2019 /* LinearTablePractise.c */; };
@@ -29,6 +30,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1DAAEEC322BA3AEF00C5CBB9 /* ArrayPractice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArrayPractice.h; sourceTree = "<group>"; };
+		1DAAEEC422BA3AEF00C5CBB9 /* ArrayPractice.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ArrayPractice.c; sourceTree = "<group>"; };
 		7B16358722B92A30001C2019 /* CycleLinearTable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CycleLinearTable.c; sourceTree = "<group>"; };
 		7B16358822B92A30001C2019 /* CycleLinearTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CycleLinearTable.h; sourceTree = "<group>"; };
 		7B16358922B92A30001C2019 /* LinearTable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LinearTable.c; sourceTree = "<group>"; };
@@ -57,6 +60,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1DAAEEC022BA0D1600C5CBB9 /* Array */ = {
+			isa = PBXGroup;
+			children = (
+				1DAAEEC322BA3AEF00C5CBB9 /* ArrayPractice.h */,
+				1DAAEEC422BA3AEF00C5CBB9 /* ArrayPractice.c */,
+			);
+			path = Array;
+			sourceTree = "<group>";
+		};
 		7B16358622B92A30001C2019 /* LinearList */ = {
 			isa = PBXGroup;
 			children = (
@@ -69,13 +81,6 @@
 				7B16358D22B92A30001C2019 /* test */,
 			);
 			path = LinearList;
-			sourceTree = "<group>";
-		};
-		7B16359222B92A6F001C2019 /* Array */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Array;
 			sourceTree = "<group>";
 		};
 		7B8E5B5A22B4ED4F00E77A49 = {
@@ -120,7 +125,7 @@
 		7B8E5B7D22B4ED9400E77A49 /* DR */ = {
 			isa = PBXGroup;
 			children = (
-				7B16359222B92A6F001C2019 /* Array */,
+				1DAAEEC022BA0D1600C5CBB9 /* Array */,
 				7B16358622B92A30001C2019 /* LinearList */,
 			);
 			path = DR;
@@ -184,6 +189,7 @@
 			files = (
 				7B8E5B8122B4ED9400E77A49 /* Day3.c in Sources */,
 				7B8E5B8222B4ED9400E77A49 /* Day4.c in Sources */,
+				1DAAEEC522BA3AEF00C5CBB9 /* ArrayPractice.c in Sources */,
 				7B16358E22B92A30001C2019 /* CycleLinearTable.c in Sources */,
 				7B8E5B6722B4ED4F00E77A49 /* main.c in Sources */,
 				7B16359022B92A30001C2019 /* LinearTablePractise.c in Sources */,

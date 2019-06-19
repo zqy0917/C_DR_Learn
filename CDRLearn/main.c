@@ -13,6 +13,7 @@
 #include "CS/Day4.h"
 #include "LinearTable.h"
 #include "CycleLinearTable.h"
+#include "ArrayPractice.h"
 
 void input()
 {
@@ -188,7 +189,8 @@ int main(int argc, char * argv[]) {
     //    EntranceDay3();
     //    EntranceDay4();
 //    DRDay2();
-    DRDay3(argc, argv);
+//    DRDay3(argc, argv);
+    ArrayPractice(argc, argv);
     
     return 0;
 }
