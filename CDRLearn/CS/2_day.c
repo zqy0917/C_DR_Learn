@@ -1,19 +1,19 @@
 #include <stdio.h>
 #include <math.h>
 
-int max(int a,int b)
+static  int max(int a,int b)
 {
    int z = a > b ? a : b;
    return z; 
 }
 
-int min(int a,int b)
+static  int min(int a,int b)
 {
    int z = a < b ? a : b;
    return z; 
 }
 
-void test1()
+static void test1()
 {
     int a;
     scanf("%d", &a);
@@ -61,7 +61,7 @@ void segmentFunc2()
     printf("x=%d, y=%d \n", x, y);
 }
 
-void convertNum()
+static void convertNum()
 {
     int a;
     scanf("%d", &a);
@@ -81,7 +81,7 @@ void convertNum()
     printf("反转后：%d \n", output);
 }
 
-void calculateHigh()
+static void calculateHigh()
 {
     float x,y;
     printf("enter x, y \n");
@@ -106,7 +106,7 @@ void calculateHigh()
     printf("该点海拔：%f \n", high);
 }
 
-void outputSqit()
+static void outputSqit()
 {
     for(int i=1; i<5; i++)
     {
@@ -209,7 +209,7 @@ void calculateNum()
     
 }
 
-int main()
+int main_day2()
 {
     // test1();
     // segmentFunc(100);

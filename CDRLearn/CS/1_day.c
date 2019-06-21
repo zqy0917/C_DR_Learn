@@ -2,13 +2,13 @@
 #include <math.h>
 
 
-int max(int a, int b);
-int min(int a, int b);
-int threeMax(int a, int b, int c);
-void test1();
-void test2();
-void test3();
-void test4();
+static int max(int a, int b);
+static int min(int a, int b);
+static int threeMax(int a, int b, int c);
+static void test1();
+static void test2();
+static void test3();
+static void test4();
 int maxCommonFactor(int a, int b);
 int maxCommonFactorRecursive(int a, int b);
 float FahrenheitToCelsius(float fahrenheit);
@@ -22,7 +22,7 @@ void exercises6();
 void exercises7();
 void exercises8();
 
-int main()
+int main_day1()
 {
     // test1();
     // test2();
@@ -45,7 +45,7 @@ int main()
     return 0;
 }
 
-void test1()
+static void test1()
 {
     int n, m, sum;
     n = 1090;
@@ -54,33 +54,33 @@ void test1()
     printf("The sum is %d \n", sum);
 }
 
-void test2()
+static void test2()
 {
     int a,b;
     scanf("%d %d", &a, &b);
     printf("max = %d \n", max(a, b));
 }
 
-int max(int a,int b)
+static int max(int a,int b)
 {
    int z = a > b ? a : b;
    return z; 
 }
 
-int min(int a,int b)
+static int min(int a,int b)
 {
    int z = a < b ? a : b;
    return z; 
 }
 
-void test3()
+static void test3()
 {
     printf("***************** \n");
     printf("Very Good! \n");
     printf("***************** \n");
 }
 
-void test4()
+static void test4()
 {
     int u, m, n;
     scanf("%d %d %d", &u, &m, &n);

@@ -9,7 +9,7 @@
 #include "Day2.h"
 #include <string.h>
 #include <math.h>
-
+//{},,,,,,()
 void bubbleSort(int array[], int count)
 {
 //    int a[10] = {20, 12, 152, 42, 89, 12, 42, 121, 112 ,12};
@@ -408,4 +408,5 @@ void EntranceDay2()
 //    strFuncTest();
 //    coculateWordsCount();
     test7();
-}
+}//{
+//}

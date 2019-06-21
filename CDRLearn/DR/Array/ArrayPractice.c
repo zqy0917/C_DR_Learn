@@ -226,7 +226,7 @@ void Practice4(){
     PRINTARRAY(A, n);
 }
 
-// 时间复杂度：O(n),循环右移 k 位置，采用尽可能少的空间!!!!!!!!!!!! 没做出来。。。🔥🔥🔥
+// 时间复杂度：O(n),循环右移 k 位置，采用尽可能少的空间 🔥🔥🔥
 void Practice5(){
     int k = 5;
     int n = 10;
@@ -308,7 +308,7 @@ void Practice8(){
     printf("外围一圈和：%d \n", num);
 }
 
-// 旋转数组第 tier 层,没做出来。。。🔥🔥🔥(做得很慢)
+// 旋转数组第 tier 层,🔥🔥🔥(做得很慢)
 void REVERSENTIER(int **A, int n, int tier){
     int i;
     for (int j=0; j<n-1-tier*2; j++) {

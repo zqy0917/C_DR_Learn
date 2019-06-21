@@ -96,7 +96,7 @@ struct Person *createPersons(int n){
 
 #define N 3
 #define Count 10
-void test6(){
+static void test6(){
     struct Person*endNode = createPersons(Count);
     // printPersons(endNode->next);
     struct Person *p = endNode->next;
@@ -756,7 +756,7 @@ void practice10(){
 }
 
 
-int main(int argc, String argv[]){
+int main_day8(int argc, String argv[]){
     while (--argc > 0)
     {
         printf("%s%c", *++argv, argc <= 1 ? '\n' : ' ');

@@ -1,21 +1,21 @@
 #include <stdio.h>
 
 
-void swip(int *a, int *b)
+static void swip(int *a, int *b)
 {
     int t = *a;
     *a = *b;
     *b = t;
 }
 
-void sort(int *a, int *b, int *c)
+static void sort(int *a, int *b, int *c)
 {
     if (*a > *b) swip(a, b);
     if (*a > *c) swip(a, c);
     if (*b > *c) swip(b, c);
 }
 
-void pointArray(){
+static void pointArray(){
     int a[10] = {1, 2 ,3 ,4 ,5, 6, 7, 8, 9 ,10};
     for (int i=0; i<10; i++){
         printf("%d, ", *(a+i));
@@ -28,13 +28,13 @@ void pointArray(){
     printf("\n ---------------------------- \n");
 }
 
-void invArray(int *arr, int n);
-void invArray2(int *arr, int n);
-void sortArr(int *arr, int n);
-void printArr(int *arr, int n);
+static void invArray(int *arr, int n);
+static void invArray2(int *arr, int n);
+static void sortArr(int *arr, int n);
+static void printArr(int *arr, int n);
 // *p++ 先取p值在自加1
 // *++p p先自加1在取值
-void pointArray2(){
+static void pointArray2(){
     int a[10];
     int *p;
     for (p=a; p<a+10; p++) {
@@ -50,7 +50,7 @@ void pointArray2(){
     printArr(a, 10);
 }
 
-void printArr(int *arr, int n)
+static void printArr(int *arr, int n)
 {
     for (int i=0; i<10; i++){
         printf("%d, ", *arr++);
@@ -58,7 +58,7 @@ void printArr(int *arr, int n)
     printf("\n -------------------------- \n");
 }
 
-void invArray(int *arr, int n){
+static void invArray(int *arr, int n){
     for (int i=0; i<=(n-1)/2; i++) {
         int t = *(arr+i);
         *(arr+i) = *(arr+n-1-i);
@@ -66,7 +66,7 @@ void invArray(int *arr, int n){
     }
 }
 
-void invArray2(int *arr, int n){
+static void invArray2(int *arr, int n){
     for (int *i = arr,*j = arr+n-1; i<j; i++,j--) {
         int t = *i;
         *i = *j;
@@ -75,7 +75,7 @@ void invArray2(int *arr, int n){
 }
 
 // sort array with point
-void sortArr(int *arr, int n)
+static void sortArr(int *arr, int n)
 {
     for (int *i=arr; i<arr+n; i++) {
         for (int *j=i+1; j<arr+n; j++) {
@@ -88,7 +88,7 @@ void sortArr(int *arr, int n)
     }
 }
 
-void array2(int (*a)[3], int r, int l){
+static void array2(int (*a)[3], int r, int l){
     printf("%d %p", **a, a);
     printf("\n");
     for (int i=0; i<r; i++) {
@@ -100,7 +100,7 @@ void array2(int (*a)[3], int r, int l){
 }
 
 // p-a 代表绝对距离
-void array3(int *a, int n){
+static void array3(int *a, int n){
     int *p = a;
     for (int i=0; i<n; i++) {
         printf("%d ", *p++);
@@ -111,12 +111,12 @@ void array3(int *a, int n){
     printf("\n");
 }
 
-void string1(char *c)
+static void string1(char *c)
 {
     printf("%c %s \n", *c, c);
 }
 
-void strCopy(char *from, char *to){
+static void strCopy(char *from, char *to){
     while (*from != '\0')
     {
         *to++ = *from++;
@@ -124,11 +124,11 @@ void strCopy(char *from, char *to){
     *to = '\0';
 }
 
-void test21(){
+static void test21(){
     
 }
 
-int main()
+int main_day5()
 {
     // int a=10,b=1,c=18;
     // int *aP = &a;

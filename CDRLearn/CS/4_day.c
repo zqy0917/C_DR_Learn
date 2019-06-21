@@ -6,7 +6,7 @@ void calculateData(int year, int month, int date);
 int monthDateCount(int month, int leap);
 int leapYear(int year);
 
-int main()
+int main_day4()
 {
     calculateData(2019, 3, 1);
     return 0;

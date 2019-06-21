@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-int test1(int root)
+static int test1(int root)
 {
     if (root == 1) {
         return 1;
@@ -9,7 +9,7 @@ int test1(int root)
     return root * test1(root-1);
 }
 
-void move(int stratum, int cIndex, int tIndex);
+static void move(int stratum, int cIndex, int tIndex);
 
 /*
 汉诺塔：堪称递归经典问题，经典！经典！经典！！！！！
@@ -50,8 +50,8 @@ void Hanoi(int stratum, int cIndex, int tIndex)
     move(stratum, cIndex, tIndex);
     Hanoi(stratum-1, tmpIndex, tIndex);
 }
-int a=0;
-void move(int stratum, int cIndex, int tIndex){
+static int a=0;
+static void move(int stratum, int cIndex, int tIndex){
     ++a;
     char c,t;
     switch (cIndex)
@@ -99,13 +99,13 @@ void sortWithSelect(int array[], int n)
     }
 }
 
-int isCharacter(char c)
+static int isCharacter(char c)
 {
     return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 }
 
 // 输出最长单词
-void test10(char str[])
+static void test10(char str[])
 {
     int len=0,tmp=0,index=0,isWord=0;
     char res[10000];
@@ -137,7 +137,7 @@ void test10(char str[])
     printf("%s \n", res);
 }
 
-void test11()
+static void test11()
 {
 
 }
@@ -183,7 +183,7 @@ int findStaff(int ids[10], int left, int right ,int findId)
     }
 }
 
-void test15()
+static void test15()
 {
     int ids[10] = {6, 2, 3, 4, 5, 1, 7, 10, 9, 8};
     char names[10][100] = {"name 6", "name 2", "name 3", "name 4", "name 5", "name 1", "name 7", "name 10", "name 9", "name 8"};
@@ -201,7 +201,7 @@ void test15()
     
 }
 
-int convertNum(int a){
+static int convertNum(int a){
     static int res = 0;
     if (a < 16) {
         res += a;
@@ -213,7 +213,7 @@ int convertNum(int a){
     }
 }
 
-int main()
+int main_day3()
 {
     // int res = test1(10);
     // printf("阶乘结果： %d \n", res);
@@ -231,4 +231,5 @@ int main()
     int a = convertNum(0x11);
     printf("%d \n", a);
     printf("%d \n", 0x3f % 16);
+    return 0;
 }

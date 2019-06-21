@@ -2,14 +2,14 @@
 #include <string.h>
 #include <stdlib.h>
 
-float *search(float (*array)[4], int n)
+static float *search(float (*array)[4], int n)
 {   
     float *p;
     p = *(array + n);
     return p;
 }
 
-void test2()
+static void test2()
 {
     float array[][4] = {
         {1.3, 2.4, 2.1, 6.7}, 
@@ -27,7 +27,7 @@ void test2()
 }
 
 // 冒泡排序
-void strSort(char *strs[], int n){
+static void strSort(char *strs[], int n){
     char **i;
     char **j;
     for (i=strs; i<strs+n-1; i++) {
@@ -43,7 +43,7 @@ void strSort(char *strs[], int n){
 }
 
 // 选择排序
-void strSortSelect(char *strs[], int n){
+static void strSortSelect(char *strs[], int n){
     char **i;
     char **j;
     for (i=strs; i<strs+n-1; i++) {
@@ -58,7 +58,7 @@ void strSortSelect(char *strs[], int n){
     }
 }
 
-void test3(){
+static void test3(){
     char *str1 = "Follow me";
     char *str2 = "BASIC";
     char *str3 = "Great Wall";
@@ -74,7 +74,7 @@ void test3(){
     }
 }
 
-void check(int *arr, int n){
+static void check(int *arr, int n){
     int *pt = arr;
     for (; pt<arr+n; pt++) {
         if (*pt < 60) {
@@ -83,7 +83,7 @@ void check(int *arr, int n){
     }
 }
 
-void test4(){
+static void test4(){
     int *arr = (int *)calloc(5, sizeof(int));
     int *p = arr;
     for (int i=0; i<5; i++) {
@@ -101,7 +101,7 @@ void test4(){
 }
 
 // 选择排序
-void sort21(int **arr, int n)
+static void sort21(int **arr, int n)
 {
     int *i = *arr;
     int *j;
@@ -116,7 +116,7 @@ void sort21(int **arr, int n)
     }
 }
 
-void printArr(int **arr, int n)
+static void printArr(int **arr, int n)
 {
     int *first = *arr;
     int *final = (*arr)+n;
@@ -127,7 +127,7 @@ void printArr(int **arr, int n)
     *arr = first;
 }
 
-void test21(){
+static void test21(){
     int a[10] = {2, 3, 5, 6, 8, 9, 10, 1, 4, 7};
     int *p = a;
     int **pt = &p;
@@ -136,16 +136,16 @@ void test21(){
     printArr(pt, 10);
 }
 
-char * test19New(int n){
+static char * test19New(int n){
     char *a = malloc(n*sizeof(char));
     return a;
 }
 
-void test19Free(char *s){
+static void test19Free(char *s){
     free(s);
 }
 
-char *monthStr(int month){
+static char *monthStr(int month){
     char *str1 = "一月";
     char *str2 = "二月";
     char *str3 = "三月";
@@ -163,7 +163,7 @@ char *monthStr(int month){
     return res;
 }
 
-void test18(){
+static void test18(){
     int month;
     while (scanf("%d", &month))
     {
@@ -172,7 +172,7 @@ void test18(){
     }
 }
 
-int test17Strcmp(char *p1, char *p2){
+static int test17Strcmp(char *p1, char *p2){
     char *c = p1;
     char *d = p2;
     int res = 0;
@@ -192,7 +192,7 @@ int test17Strcmp(char *p1, char *p2){
     return res;
 }
 
-int main(int argc,char *argv[])
+int main_day6(int argc,char *argv[])
 {
     while (--argc > 0)
     {
