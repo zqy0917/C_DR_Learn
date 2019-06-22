@@ -9,7 +9,40 @@ static int test1(int root)
     return root * test1(root-1);
 }
 
-static void move(int stratum, int cIndex, int tIndex);
+static int a=0;
+static void move(int stratum, int cIndex, int tIndex){
+    ++a;
+    char c,t;
+    switch (cIndex)
+    {
+        case 0:
+            c = 'A';
+            break;
+        case 1:
+            c = 'B';
+            break;
+        case 2:
+            c = 'C';
+            break;
+        default:
+            break;
+    }
+    switch (tIndex)
+    {
+        case 0:
+            t = 'A';
+            break;
+        case 1:
+            t = 'B';
+            break;
+        case 2:
+            t = 'C';
+            break;
+        default:
+            break;
+    }
+    printf("将第 %d 个盘子从 %c 座移动到 %c 座 \n", stratum, c, t);
+}
 
 /*
 汉诺塔：堪称递归经典问题，经典！经典！经典！！！！！
@@ -49,40 +82,6 @@ void Hanoi(int stratum, int cIndex, int tIndex)
     Hanoi(stratum-1, cIndex, tmpIndex);
     move(stratum, cIndex, tIndex);
     Hanoi(stratum-1, tmpIndex, tIndex);
-}
-static int a=0;
-static void move(int stratum, int cIndex, int tIndex){
-    ++a;
-    char c,t;
-    switch (cIndex)
-    {
-    case 0:
-        c = 'A';
-        break;
-    case 1:
-        c = 'B';
-        break;
-    case 2:
-        c = 'C';
-        break;
-    default:
-        break;
-    }
-    switch (tIndex)
-    {
-    case 0:
-        t = 'A';
-        break;
-    case 1:
-        t = 'B';
-        break;
-    case 2:
-        t = 'C';
-        break;
-    default:
-        break;
-    }
-    printf("将第 %d 个盘子从 %c 座移动到 %c 座 \n", stratum, c, t);
 }
 
 void sortWithSelect(int array[], int n)

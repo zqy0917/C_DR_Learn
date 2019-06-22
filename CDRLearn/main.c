@@ -16,6 +16,9 @@
 #include "ArrayPractice.h"
 #include "BasicOperatOrderStack.h"
 #include "BasicOperatLinkStack.h"
+#include "BasciOperatOrderQueue.h"
+#include "BasciOperatLinkQueue.h"
+#include "StackQueuePractice.h"
 
 void input()
 {
@@ -194,7 +197,10 @@ int main(int argc, char * argv[]) {
 //    DRDay3(argc, argv);
 //    ArrayPractice(argc, argv);
 //    OrderStackMain(argc, argv);
-    LinkStackMain(argc, argv);
+//    LinkStackMain(argc, argv);
+//    OrderQueueMain(argc, argv);
+//    LinkQueueMain(argc, argv);
+    SQPracticeMain(argc, argv);
     
     return 0;
 }
