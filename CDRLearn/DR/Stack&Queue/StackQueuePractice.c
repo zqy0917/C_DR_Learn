@@ -245,7 +245,6 @@ static void Hanoi2(int n, int org, int help, int tar){
             MOVE(it->n, it->org, it->tar);
             POPLINK(&top, NULL);
         }else{
-
             item = GETSELEM(it->n-1, it->help, it->org, it->tar, 0);
             PUSHLINK(&top, item);
             
@@ -340,29 +339,13 @@ void practice7(){
     rear = head;
     for (int i=1; i<=10; i++) {
         it = GETQELEM(i);
+        printf("%d 入队列 \n", it->num);
         ADDQ(&rear, it);
     }
-//    PRINTQUEUE(rear);
-    DELQ(&rear, &it);
-    printf("%d 出队列 \n", it->num);
-    DELQ(&rear, &it);
-    printf("%d 出队列 \n", it->num);
-    DELQ(&rear, &it);
-    printf("%d 出队列 \n", it->num);
-    DELQ(&rear, &it);
-    printf("%d 出队列 \n", it->num);
-    DELQ(&rear, &it);
-    printf("%d 出队列 \n", it->num);
-    DELQ(&rear, &it);
-    printf("%d 出队列 \n", it->num);
-    DELQ(&rear, &it);
-    printf("%d 出队列 \n", it->num);
-    DELQ(&rear, &it);
-    printf("%d 出队列 \n", it->num);
-    DELQ(&rear, &it);
-    printf("%d 出队列 \n", it->num);
-    DELQ(&rear, &it);
-    printf("%d 出队列 \n", it->num);
+    for (int i=1; i<=9; i++) {
+        DELQ(&rear, &it);
+        printf("%d 出队列 \n", it->num);
+    }
     PRINTQUEUE(rear);
 }
 
