@@ -20,6 +20,7 @@
 #include "BasciOperatLinkQueue.h"
 #include "StackQueuePractice.h"
 #include "BTreeLinkStruct.h"
+#include "BTreePractice.h"
 
 void input()
 {
@@ -202,6 +203,8 @@ int main(int argc, char * argv[]) {
 //    OrderQueueMain(argc, argv);
 //    LinkQueueMain(argc, argv);
 //    SQPracticeMain(argc, argv);
-    BTreeLinkMain(argc, argv);
+//    BTreeLinkMain(argc, argv);
+    BTreePracticeMain(argc, argv);
+    
     return 0;
 }

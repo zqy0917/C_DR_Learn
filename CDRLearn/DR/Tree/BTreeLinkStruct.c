@@ -475,6 +475,7 @@ BTREE SortTree(int K[], int n){
     return T;
 }
 
+// 非递归查找
 BTREE SearchBST1(BTREE T, int item){
     BTREE p = T;
     if (T != NULL) {
@@ -487,6 +488,21 @@ BTREE SearchBST1(BTREE T, int item){
         }
     }
     return p;
+}
+
+// 递归查找
+BTREE SearchBSTRecursion(BTREE T, int item){
+    if (T == NULL) {
+        return NULL;
+    }else if (T->data == item) {
+        return T;
+    }else{
+        if (T->data > item) {
+            return SearchBSTRecursion(T->lchild, item);
+        }else{
+            return SearchBSTRecursion(T->rchild, item);
+        }
+    }
 }
 
 void TreeBasicOperat(){
@@ -534,7 +550,7 @@ void SortBTreeOpeart(){
     printf("\n");
     int depth = DepthBT(T);
     printf("深度： %d \n", depth);
-    BTREE ST = SearchBST1(T, 7);
+    BTREE ST = SearchBSTRecursion(T, 2);
     if (ST) {
         printf("查找到的值： %d \n", ST->data);
     }else{
