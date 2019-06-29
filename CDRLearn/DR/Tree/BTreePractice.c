@@ -672,14 +672,18 @@ static BTREE BuildOrderTree(int A[], int n){
     BTREE QUEUE1[MAX],p=NULL,tmp,k;
     for (i=0; i<n; i++) {
         t = A[i];
-        tmp = malloc(sizeof(SIZENODE));
-        tmp->data = t;
-        tmp->lchild = tmp->rchild = NULL;
+        if (t != 0) {
+            tmp = malloc(sizeof(SIZENODE));
+            tmp->data = t;
+            tmp->lchild = tmp->rchild = NULL;
+        }else{
+            tmp = NULL;
+        }
         if (p == NULL) {
             if (t != 0) {
                 p = tmp;
                 QUEUE1[rear] = p;
-                QUEUE2[rear++] = 0;
+                QUEUE2[rear] = 0;
             }else{
                 return NULL;
             }
@@ -688,18 +692,22 @@ static BTREE BuildOrderTree(int A[], int n){
             flag = QUEUE2[front+1];
             if (flag == 0) {
                 QUEUE2[front+1] = 1;
-                if (t == 0) {
-                    k->lchild = NULL;
-                }else{
-                    k->lchild = tmp;
+                if (k != NULL) {
+                    if (t == 0) {
+                        k->lchild = NULL;
+                    }else{
+                        k->lchild = tmp;
+                    }
                     QUEUE1[++rear] = k->lchild;
                     QUEUE2[rear] = 0;
                 }
             }else if (flag == 1) {
-                if (t == 0) {
-                    k->rchild = NULL;
-                }else{
-                    k->rchild = tmp;
+                if (k != NULL) {
+                    if (t == 0) {
+                        k->rchild = NULL;
+                    }else{
+                        k->rchild = tmp;
+                    }
                     QUEUE1[++rear] = k->rchild;
                     QUEUE2[rear] = 0;
                 }
@@ -711,10 +719,19 @@ static BTREE BuildOrderTree(int A[], int n){
     return p;
 }
 
+// 递归算法对二叉树中序遍历
+static void InOrder(BTREE T){
+    if (T != NULL) {
+        InOrder(T->lchild);
+        Visit(T);
+        InOrder(T->rchild);
+    }
+}
+
 // 根据顺序二叉树，前序遍历 🔥🔥🔥
 static void Practice1(){
-    const int n=7;
-    int A[n] = {1, 3, 2, 0, 0, 5, 4};
+    const int n=15;
+    int A[n] = {1, 2, 3, 4, 5, 0, 7, 0, 8, 9, 0, 0, 0, 12, 13};
     BTREE T = BuildOrderTree(A, n);
     LayerOrder2(T);
 }
