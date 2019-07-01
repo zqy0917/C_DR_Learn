@@ -21,6 +21,7 @@
 #include "StackQueuePractice.h"
 #include "BTreeLinkStruct.h"
 #include "BTreePractice.h"
+#include "GraphExamples.h"
 
 void input()
 {
@@ -204,7 +205,9 @@ int main(int argc, char * argv[]) {
 //    LinkQueueMain(argc, argv);
 //    SQPracticeMain(argc, argv);
 //    BTreeLinkMain(argc, argv);
-    BTreePracticeMain(argc, argv);
+//    BTreePracticeMain(argc, argv);
+    GraphExampleMain(argc, argv);
+    
     
     return 0;
 }

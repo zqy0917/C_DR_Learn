@@ -667,6 +667,7 @@ static void Practice2(){
     printf("是否相似：%d \n", b);
 }
 
+// 莫名其妙的崩溃？？ 🔥🔥🔥
 static BTREE BuildOrderTree(int A[], int n){
     int i,front=-1,rear=0,t,QUEUE2[MAX],flag;
     BTREE QUEUE1[MAX],p=NULL,tmp,k;
@@ -675,7 +676,8 @@ static BTREE BuildOrderTree(int A[], int n){
         if (t != 0) {
             tmp = malloc(sizeof(SIZENODE));
             tmp->data = t;
-            tmp->lchild = tmp->rchild = NULL;
+            tmp->lchild = NULL;
+            tmp->rchild = NULL;
         }else{
             tmp = NULL;
         }
@@ -692,23 +694,15 @@ static BTREE BuildOrderTree(int A[], int n){
             flag = QUEUE2[front+1];
             if (flag == 0) {
                 QUEUE2[front+1] = 1;
-                if (k != NULL) {
-                    if (t == 0) {
-                        k->lchild = NULL;
-                    }else{
-                        k->lchild = tmp;
-                    }
-                    QUEUE1[++rear] = k->lchild;
+                if (tmp != NULL) {
+                    k->lchild = tmp;
+                    QUEUE1[++rear] = tmp;
                     QUEUE2[rear] = 0;
                 }
             }else if (flag == 1) {
-                if (k != NULL) {
-                    if (t == 0) {
-                        k->rchild = NULL;
-                    }else{
-                        k->rchild = tmp;
-                    }
-                    QUEUE1[++rear] = k->rchild;
+                if (tmp != NULL) {
+                    k->rchild = tmp;
+                    QUEUE1[++rear] = tmp;
                     QUEUE2[rear] = 0;
                 }
                 front++;
@@ -730,10 +724,10 @@ static void InOrder(BTREE T){
 
 // 根据顺序二叉树，前序遍历 🔥🔥🔥
 static void Practice1(){
-    const int n=15;
-    int A[n] = {1, 2, 3, 4, 5, 0, 7, 0, 8, 9, 0, 0, 0, 12, 13};
+    const int n=7;
+    int A[n] = {1, 2, 3, 0, 0, 4, 5};
     BTREE T = BuildOrderTree(A, n);
-    LayerOrder2(T);
+    InOrder(T);
 }
 
 int BTreePracticeMain(int argc, char *argv[]){

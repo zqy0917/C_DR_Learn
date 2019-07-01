@@ -19,6 +19,7 @@
 		1DB20B9D22BC881F00CE873E /* BasicOperatLinkStack.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DB20B9C22BC881F00CE873E /* BasicOperatLinkStack.c */; };
 		1DB20BA022BC884800CE873E /* BasicOperatOrderStack.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DB20B9F22BC884800CE873E /* BasicOperatOrderStack.c */; };
 		1DE30D6122C4A8F600A7B24B /* BTreePractice.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DE30D6022C4A8F600A7B24B /* BTreePractice.c */; };
+		1DE8915922C9FF2400180C3B /* GraphExamples.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8915822C9FF2400180C3B /* GraphExamples.c */; };
 		7B16358E22B92A30001C2019 /* CycleLinearTable.c in Sources */ = {isa = PBXBuildFile; fileRef = 7B16358722B92A30001C2019 /* CycleLinearTable.c */; };
 		7B16358F22B92A30001C2019 /* LinearTable.c in Sources */ = {isa = PBXBuildFile; fileRef = 7B16358922B92A30001C2019 /* LinearTable.c */; };
 		7B16359022B92A30001C2019 /* LinearTablePractise.c in Sources */ = {isa = PBXBuildFile; fileRef = 7B16358B22B92A30001C2019 /* LinearTablePractise.c */; };
@@ -66,6 +67,8 @@
 		1DB20B9F22BC884800CE873E /* BasicOperatOrderStack.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BasicOperatOrderStack.c; sourceTree = "<group>"; };
 		1DE30D5F22C4A8F600A7B24B /* BTreePractice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTreePractice.h; sourceTree = "<group>"; };
 		1DE30D6022C4A8F600A7B24B /* BTreePractice.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BTreePractice.c; sourceTree = "<group>"; };
+		1DE8915722C9FF2400180C3B /* GraphExamples.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GraphExamples.h; sourceTree = "<group>"; };
+		1DE8915822C9FF2400180C3B /* GraphExamples.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GraphExamples.c; sourceTree = "<group>"; };
 		7B16358722B92A30001C2019 /* CycleLinearTable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CycleLinearTable.c; sourceTree = "<group>"; };
 		7B16358822B92A30001C2019 /* CycleLinearTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CycleLinearTable.h; sourceTree = "<group>"; };
 		7B16358922B92A30001C2019 /* LinearTable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LinearTable.c; sourceTree = "<group>"; };
@@ -137,6 +140,15 @@
 			path = "Stack&Queue";
 			sourceTree = "<group>";
 		};
+		1DE8915622C9FEE900180C3B /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				1DE8915722C9FF2400180C3B /* GraphExamples.h */,
+				1DE8915822C9FF2400180C3B /* GraphExamples.c */,
+			);
+			path = Graph;
+			sourceTree = "<group>";
+		};
 		7B16358622B92A30001C2019 /* LinearList */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +217,7 @@
 		7B8E5B7D22B4ED9400E77A49 /* DR */ = {
 			isa = PBXGroup;
 			children = (
+				1DE8915622C9FEE900180C3B /* Graph */,
 				1D0E122F22C1FA450022F5E6 /* Tree */,
 				1DB20B6722BC740200CE873E /* Stack&Queue */,
 				1DAAEEC022BA0D1600C5CBB9 /* Array */,
@@ -284,6 +297,7 @@
 				7B9DC1C222BE5B340000D8EA /* BasciOperatLinkQueue.c in Sources */,
 				1DB20B9122BC749100CE873E /* 4_day.c in Sources */,
 				1DB20B9D22BC881F00CE873E /* BasicOperatLinkStack.c in Sources */,
+				1DE8915922C9FF2400180C3B /* GraphExamples.c in Sources */,
 				1D0E123222C1FA8E0022F5E6 /* BTreeLinkStruct.c in Sources */,
 				7B8E5B8022B4ED9400E77A49 /* Day2.c in Sources */,
 				7B9DC1BF22BE4DCA0000D8EA /* BasciOperatOrderQueue.c in Sources */,
