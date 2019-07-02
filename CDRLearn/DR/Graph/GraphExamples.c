@@ -113,8 +113,65 @@ void DELVER(VLink G[], int *n, int item){
     }
 }
 
+int FIRSTADJ(VLink G[] ,int v){
+    if (v >= 0 && G[v].link != NULL) {
+        return G[v].link->adjvex;
+    }
+    return -1;
+}
+
+int NEXTADJ(VLink G[], int visited[], int v){
+    int next=-1;
+    if (v >= 0) {
+        VLink vl = G[v];
+        ELink *el = vl.link;
+        while (el != NULL && visited[el->adjvex] == 0) {
+            next = el->adjvex;
+            break;
+        }
+    }
+    return next;
+}
+
+static void Visit(VLink G[], int v){
+    if (v >= 0) {
+        printf("%d ", G[v].vertex);
+    }
+}
+
+void DFS(VLink G[], int visited[], int v){
+    int w;
+    Visit(G, v);
+    visited[v] = 1;
+    w = FIRSTADJ(G, v);
+    while (w != -1) {
+        if (visited[w] == 0) {
+            DFS(G, visited, w);
+        }
+        w = NEXTADJ(G, visited, v);
+    }
+}
+
+void TRAVEL_DFS(VLink G[], int visited[], int n){
+    int i;
+    for (i=0; i<n; i++) {
+        visited[i] = 0;
+    }
+    DFS(G, visited, 5);
+    printf("\n");
+}
+
 int GraphExampleMain(int argc, char *argv[]){
     printf("Hello Graph %d\n", MaxValue);
+    const int n=10;
+    int visited[n];
+    VLink G[n],*v;
+    for (int i=0; i<n; i++) {
+        v = malloc(sizeof(VLink));
+        G[i] = *v;
+    }
+    ADJLIST(G, n, n);
+    TRAVEL_DFS(G, visited, n);
     
     return 0;
 }
