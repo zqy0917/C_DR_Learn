@@ -324,7 +324,7 @@ void ComponentTest(){
     Component(G, visited, n);
 }
 
-// 普里姆算法求最小生成树(最小代价生成树),最小生成树无回路！！！🔥🔥🔥
+// 普里姆算法求最小生成树(最小代价生成树),，牛逼算法重在理解。注意：最小生成树无回路！！！🔥🔥🔥
 void Prim(int GE[][MaxVNum], int n){
     
     int lowcost[n],teend[MaxVNum],i,j,k,mincost;
@@ -370,11 +370,82 @@ void PrimTest(){
     Prim(GE, n);
 }
 
+int MinDist(int s[], int dist[], int n){
+    int i,min=-1,minDist=MaxValue;
+    for (i=0; i<n; i++) {
+        if (s[i] == 0 && dist[i] < minDist) {
+            minDist = dist[i];
+            min = i;
+        }
+    }
+    return min;
+}
+
+// 迪杰斯特拉算法求最短路径(牛逼算法，重在理解，理解路径构造的过程，怎么构造的) 🔥🔥🔥
+void Shortest_Path_Dijkstra(int cost[][MaxVNum], int v, int n, int dist[], int path[][MaxVNum]){
+    int i,w,u,count,pos[n],s[MaxVNum];
+    for (i=0; i<n; i++) {
+        s[i]=0;/* 标记数组置0,s 代表是否已经找到原点v到该顶点的最短路径，0/1 */
+        dist[i]=cost[v][i]; /* dist 记录了原点 v 到各个顶点的路径长度，初始值为 cost 第 v 行数据 */
+        path[i][0]=v; /* 记录原点到每个顶点的最短路径(eg:v->1->2...), 初始肯定都是从 v 开始 */
+        pos[i]=0; /* 第 i 条最短路径此时个数(记录下一次应该在 path 的哪个位置插入路径) */
+    }
+    s[v]=1; /* 原点标记为 1 */
+    count=1;
+    while (count < n) {
+        u = MinDist(s, dist, n);
+        if (u == -1) { /* 代表所有顶点都已找到最短路径 */
+            break;
+        }
+        s[u]=1; /* 代表找到一个最短路径置为1 */
+        path[u][++pos[u]] = u; /* 将u设置到路径中去 */
+        count++;
+        // 根据 u 更新从 v 到所有未确定最短路径顶点的路径长度
+        for (w=0; w<n; w++) { /* 查找u可以直接到达(路径1)的并且尚未确定最短路径的顶点 */
+            if (cost[u][w] > 0 && cost[u][w] < MaxVNum && s[w] == 0) {
+                // 找到了，并且通过 v->u->w 的长度小于 v 直接到 w 的距离，则更新 dist[w],并且path也更新为 v->u->w
+                if (dist[u]+cost[u][w] < dist[w]) {
+                    dist[w] = dist[u]+cost[u][w];
+                    for (i=0; i<=pos[u]; i++) {
+                        path[w][i] = path[u][i];
+                    }
+                    // 将 w 对应的标记为之调整到和 u 一样，因为路径一样。
+                    pos[w]=pos[u];
+                }
+            }
+        }
+
+    }
+    // 开始打印
+    for (i=0; i<n; i++) {
+        printf("原点 %d 到顶点 %d 的路径长度: %-2d, ", v, i, dist[i]);
+        for (u=0; u<=pos[i]; u++) {
+            printf("%d ", path[i][u]);
+        }
+        printf("\n");
+    }
+}
+
+void ShortPathTest(){
+    const int n=7;
+    int GE[n][MaxVNum],i,j;
+    ADJMATRIX(GE, n, 25);
+    for (i=0; i<n; i++) {
+        for (j=0; j<n; j++) {
+            printf("%d ", GE[i][j]);
+        }
+        printf("\n");
+    }
+    int v=0, dist[n], path[n][MaxVNum];
+    Shortest_Path_Dijkstra(GE, v, n, dist, path);
+}
+
 int GraphExampleMain(int argc, char *argv[]){
     printf("Hello Graph %d\n", MaxValue);
 //    DepthAndBreadthFirstSearch();
 //    ComponentTest();
-    PrimTest();
+//    PrimTest();
+    ShortPathTest();
     
     return 0;
 }
