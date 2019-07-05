@@ -35,6 +35,7 @@ typedef struct edge{
 }ELink;
 
 typedef struct ver{
+    int indegree;/* 顶点的入度 */
     int vertex; /* 顶点的数据信息 */
     ELink *link; /* 指向第一条边所对应的边节点 */
 }VLink;
@@ -440,12 +441,128 @@ void ShortPathTest(){
     Shortest_Path_Dijkstra(GE, v, n, dist, path);
 }
 
+// 依次输入带权有向图 n 个顶点和 e 个表示边的顶点偶对，写一算法建立邻接表结构(附带顶点入度字段)
+void ADJLIST_TOPO(VLink G[], int n, int e){
+    int k,vi,vj,weight;
+    ELink *p,*q;
+    for (k=0; k<n; k++) {
+        G[k].vertex = k;
+        G[k].link = NULL; /* 建立 n 个顶点结点 */
+    }
+    for (k=0; k<e; k++) {
+        scanf("%d %d %d", &vi, &vj, &weight); /* 输入一个顶点偶对与权值 */
+        p = (ELink *)malloc(sizeof(ELink));
+        p->adjvex = vj;
+        p->weight = weight;
+        p->next = NULL;
+        G[vj].indegree++;
+        if (!G[vi].link) {
+            G[vi].link = p;
+        }else{
+            q = G[vi].link;
+            while (q->next != NULL) {
+                q = q->next;
+            }
+            q->next = p;
+        }
+    }
+}
+
+// 拓扑排序算法
+void TOPO_Sort(VLink G[], int n, int V[], int *Vn){
+    ELink *p=NULL;
+    int STACK[MaxVNum],top=-1,i,j,k;
+    for (i=0; i<n; i++) {
+        if (G[i].indegree == 0) {
+            STACK[++top] = i;
+        }
+    }
+    i=0;
+    while (top >= 0) {
+        j = STACK[top--];
+        V[i++] = G[j].vertex;
+        p = G[j].link;
+        while (p != NULL) {
+            k = p->adjvex;
+            G[k].indegree--;
+            if (G[k].indegree == 0) {
+                STACK[++top] = k;
+            }
+            p = p->next;
+        }
+    }
+    *Vn = i;
+}
+
+int TOPO_Judge(VLink G[], int V[], int n){
+    int i,j,k,b=1,exist[n];
+    ELink *p=NULL;
+    for (i=0; i<n; i++) {
+        k=-1;
+        for (j=0; j<n; j++) {
+            if (G[j].vertex == V[i]) {
+                if (exist[j] != 1) {
+                    k = j;
+                    exist[k]=1;
+                }
+                break;
+            }
+        }
+        if (k >= 0 && G[k].indegree == 0) {
+            p = G[k].link;
+            while (p != NULL) {
+                j = p->adjvex;
+                G[j].indegree--;
+                p = p->next;
+            }
+        }else{
+            b=0;
+            break;
+        }
+    }
+    return b;
+}
+
+void TOPO_SortTest(){
+    int visited[MaxVNum]={0};
+    const int n=7;
+    VLink G[n],*v;
+    for (int i=0; i<n; i++) {
+        v = malloc(sizeof(VLink));
+        G[i] = *v;
+    }
+    ADJLIST_TOPO(G, n, 8);
+    Component(G, visited, n);
+    int indegrees[n];
+    for (int i=0; i<n; i++) {
+        indegrees[i] = G[i].indegree;
+        printf("%d ", G[i].indegree);
+    }
+    printf("\n");
+    int V[n]={-1}, Vn=0, b;
+    TOPO_Sort(G, n, V, &Vn);
+    if (Vn == n) {
+        for (int i=0; i<n; i++) {
+            printf("%d ", V[i]);
+        }
+        printf("\n");
+    }else{
+        printf("网中存在回路！！！ \n");
+    }
+    for (int i=0; i<n; i++) {
+        G[i].indegree = indegrees[i];
+    }
+    b = TOPO_Judge(G, V, n);
+    printf("是否拓扑序列: %d \n", b);
+}
+
 int GraphExampleMain(int argc, char *argv[]){
     printf("Hello Graph %d\n", MaxValue);
 //    DepthAndBreadthFirstSearch();
 //    ComponentTest();
 //    PrimTest();
-    ShortPathTest();
+//    ShortPathTest();
+    TOPO_SortTest();
     
     return 0;
 }
