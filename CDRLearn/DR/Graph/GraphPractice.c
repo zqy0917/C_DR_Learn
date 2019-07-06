@@ -18,6 +18,8 @@ typedef struct edge{
 }ELink;
 
 typedef struct ver{
+    int outNum; /* 出度 */
+    int inNum; /* 入度 */
     int vertex; /* 顶点的数据信息 */
     ELink *link; /* 指向第一条边所对应的边节点 */
 }VLink;
@@ -28,6 +30,8 @@ static void ADJLIST(VLink G[], int n, int e){
     for (i=0; i<n; i++) {
         G[i].vertex = i;
         G[i].link = NULL;
+        G[i].inNum = 0;
+        G[i].outNum = 0;
     }
     for (i=0; i<e; i++) {
         scanf("%d %d %d", &vi, &vj, &weight);
@@ -185,7 +189,7 @@ static void Insert(VLink G[], int n, int u, int v, int weight){
         
     }
 }
-
+void Delete(VLink G[], int n, int u, int v);
 /*有向图结构
  输入：
  0 1 0
@@ -205,7 +209,7 @@ static void Insert(VLink G[], int n, int u, int v, int weight){
  // 邻接表表示：
  0 ->1 ->2
  1 ->0 ->3
- 2 ->5 ->7 ->1 ->9
+ 2 ->7 ->1 ->9
  3 ->8
  4 ->5
  5 ->6
@@ -227,21 +231,210 @@ static void Practice7(){
     }
     ADJLIST(G, n, 14);
     int visited[n];
-    DepthFirst(G, n, visited);
     BreadthFirst(G, n, visited);
     Insert(G, n, 2, 5, 0);
+    BreadthFirst(G, n, visited);
+    Delete(G, n, 2, 5);
+    BreadthFirst(G, n, visited);
+}
+
+// 删除图中一条边 <u,v>,假设 u，v存在
+void Delete(VLink G[], int n, int u, int v){
+    int i,uPos=0,vPos=0;
+    ELink *r=NULL,*p=NULL;
+    for(i=0; i<n; i++){
+        if (G[i].vertex == u) {
+            uPos = i;
+        }
+        if (G[i].vertex == v) {
+            vPos = i;
+        }
+    }
+    p = G[uPos].link;
+    if (p->adjvex == v) {
+        G[uPos].link = p->next;
+        free(p);
+    }else{
+        while (p != NULL) {
+            if (p->adjvex == v) {
+                r->next = p->next;
+                free(p);
+                break;
+            }
+            r = p;
+            p = p->next;
+        }
+    }
+}
+
+void GetOutInNum(VLink G[], int n){
+    int i;
+    ELink *p=NULL;
+    for (i=0; i<n; i++) {
+        p = G[i].link;
+        while (p != NULL) {
+            G[i].outNum++;
+            G[p->adjvex].inNum++;
+            p = p->next;
+        }
+    }
+}
+
+static void Practice5(){
+    static int n=10;
+    int i;
+    VLink G[n], *v;
+    for (i=0; i<n; i++) {
+        v = malloc(sizeof(VLink));
+        G[i] = *v;
+    }
+    ADJLIST(G, n, 14);
+    int visited[n];
+    BreadthFirst(G, n, visited);
+    GetOutInNum(G, n);
+    for (i=0; i<n; i++) {
+        printf("顶点 %d 的度：%d \n", i, G[i].inNum+G[i].outNum);
+    }
+}
+
+void GetOutInNum2(int A[][MaxVNum], int e, int B[], int n){
+    int i;
+    for (i=0; i<n; i++) {
+        B[i]=0;
+    }
+    for (i=0; i<e; i++) {
+        B[A[i][0]]++;
+        B[A[i][1]]++;
+    }
+}
+
+static void Practice4(){
+    const int e=6,n=6;
+    int A[e][MaxVNum] = {
+        {0, 1, 0},
+        {1, 2, 0},
+        {2, 3, 0},
+        {3, 4, 0},
+        {4, 5, 0},
+        {5, 0, 0},
+    },B[n];
+    GetOutInNum2(A, e, B, n);
+    for (int i=0; i<n; i++) {
+        printf("%d ", B[i]);
+    }
+}
+
+static void Convert(VLink G[], int n, int B[][MaxVNum]){
+    int i,j;
+    ELink *p=NULL;
+    for (i=0; i<n; i++) {
+        for (j=0; j<n; j++) {
+            B[i][j] = -1;
+        }
+    }
+    for (i=0; i<n; i++) {
+        p = G[i].link;
+        while (p != NULL) {
+            B[i][p->adjvex] = p->weight;
+            p = p->next;
+        }
+    }
+}
+
+static void Practice3(){
+    static int n=10;
+    int i,j;
+    VLink G[n], *v;
+    for (i=0; i<n; i++) {
+        v = malloc(sizeof(VLink));
+        G[i] = *v;
+    }
+    ADJLIST(G, n, 14);
+    int visited[n];
+    BreadthFirst(G, n, visited);
+    int B[n][MaxVNum];
+    Convert(G, n, B);
+    for (i=0; i<n; i++) {
+        for (j=0; j<n; j++) {
+            printf("%d ", B[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+static void Convert2(int A[][MaxVNum], VLink G[], int n){
+    int i,j;
+    VLink *vl;
+    ELink *p,*r=NULL;
+    for (i=0; i<n; i++) {
+        vl = malloc(sizeof(VLink));
+        vl->inNum = 0;
+        vl->outNum = 0;
+        vl->link = NULL;
+        vl->vertex = i;
+        G[i] = *vl;
+        for (j=0; j<n; j++) {
+            if (A[i][j] != -1) {
+                p = malloc(sizeof(ELink));
+                p->next = NULL;
+                p->adjvex = j;
+                p->weight = A[i][j];
+                if (G[i].link == NULL) {
+                    G[i].link = p;
+                }else{
+                    r->next = p;
+                }
+                r = p;
+            }
+        }
+    }
+}
+
+static void Practice2(){
+    static int n=10;
+    int i,j;
+    VLink G[n], *v, E[n];
+    for (i=0; i<n; i++) {
+        v = malloc(sizeof(VLink));
+        G[i] = *v;
+    }
+    ADJLIST(G, n, 14);
+    int visited[n];
+    BreadthFirst(G, n, visited);
+    int B[n][MaxVNum];
+    Convert(G, n, B);
+    for (i=0; i<n; i++) {
+        for (j=0; j<n; j++) {
+            printf("%d ", B[i][j]);
+        }
+        printf("\n");
+    }
+    Convert2(B, E, n);
+    BreadthFirst(E, n, visited);
+}
+
+//
+static void Practice1(){
+    static int n=10;
+    int i,j;
+    VLink G[n], *v, E[n];
+    for (i=0; i<n; i++) {
+        v = malloc(sizeof(VLink));
+        G[i] = *v;
+    }
+    ADJLIST(G, n, 14);
+    int visited[n];
     BreadthFirst(G, n, visited);
 }
 
 int GraphPracticeMain(int argc, char *argv[]){
     printf("Hello Graph practice \n");
-    Practice7();
 //    Practice7();
-//    Practice7();
-//    Practice7();
-//    Practice7();
-//    Practice7();
-//    Practice7();
+//    Practice5();
+//    Practice4();
+//    Practice3();
+//    Practice2();
+    Practice1();
     
     return 0;
 }
