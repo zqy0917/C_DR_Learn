@@ -427,6 +427,104 @@ static void Practice1(){
     BreadthFirst(G, n, visited);
 }
 
+void Visit2(int v){
+    printf("%d ", v);
+}
+
+static void PrintCycle(int STACK[], int top, int target){
+    if (STACK[top] == target) {
+        printf("%d ", STACK[top]);
+    }else{
+        PrintCycle(STACK, top-1, target);
+        printf("%d ", STACK[top]);
+    }
+}
+
+// DFS 递归求环, 🔥🔥🔥(递归和非递归都多看看，感觉挺有意义的算法)
+void DFSWithCycle(int G[][MaxVNum], int n, int v, int visited[MaxVNum], int allVisited[MaxVNum], int path[MaxVNum], int pathIndex){
+    int i;
+    visited[v] = 1;
+    path[++pathIndex]=v;
+    for (i=0; i<n; i++) {
+        if (i == v) {
+            continue; /* 主对角线无意义 */
+        }
+        if (G[v][i] != 0) {
+            if (visited[i] == 1 && allVisited[i] == 0) {
+                PrintCycle(path, pathIndex, i);
+                printf("%d \n", i);
+            }
+            if (visited[i] == 0) {
+                DFSWithCycle(G, n, i, visited, allVisited, path, pathIndex);
+            }
+        }
+    }
+    allVisited[v] = 1;
+}
+
+// DFS 非递归求环
+void DFSWithCycle2(int G[][MaxVNum], int n, int v, int visited[MaxVNum], int allVisited[MaxVNum]){
+    int STACK[MaxVNum],top=-1,p,i,pos[MaxVNum];
+    STACK[++top] = v;
+    for (i=0; i<n; i++) {
+        pos[i]=0;
+    }
+    while (top >= 0) {
+        p = STACK[top];
+        if (visited[p] == 0) {
+            visited[p] = 1;
+        }
+        for (i=pos[p]; i<n; i++) {
+            if (G[p][i] == 0 || p == i) {
+                continue;
+            }
+            if (visited[i] == 0) {
+                STACK[++top] = i;
+                break;
+            }else if (allVisited[i] == 0) {
+                /* 找到环 */
+                PrintCycle(STACK, top, i);
+                printf("%d \n", i);
+            }
+        }
+        pos[p] = i;
+        if (pos[p] == n) {
+            /* 行全部访问完，出栈 */
+            allVisited[p] = 1;
+            top--;
+        }
+    }
+}
+
+// DFS 判断网中是否存在回路
+void PracticeCycle(){
+    const int n=4;
+    int G[n][MaxVNum] = {
+        {0, 1, 0, 0},
+        {1, 0, 1, 0},
+        {0, 0, 0, 1},
+        {1, 1, 1, 0},
+    };
+    int visited[n],i;
+    for (i=0; i<n; i++) {
+        visited[i]=0;
+    }
+    
+    int allVisited[n];
+    for (i=0; i<n; i++) {
+        allVisited[i]=0;
+    }
+    
+    int path[n];
+    for (i=0; i<n; i++) {
+        path[i]=0;
+    }
+    
+    DFSWithCycle(G, n, 0, visited, allVisited, path, -1);
+//    DFSWithCycle2(G, n, 0, visited, allVisited);
+}
+
+
 int GraphPracticeMain(int argc, char *argv[]){
     printf("Hello Graph practice \n");
 //    Practice7();
@@ -434,7 +532,8 @@ int GraphPracticeMain(int argc, char *argv[]){
 //    Practice4();
 //    Practice3();
 //    Practice2();
-    Practice1();
+//    Practice1();
+    PracticeCycle();
     
     return 0;
 }
