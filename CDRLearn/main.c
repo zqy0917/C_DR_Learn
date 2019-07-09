@@ -23,6 +23,7 @@
 #include "BTreePractice.h"
 #include "GraphExamples.h"
 #include "GraphPractice.h"
+#include "FileExamples.h"
 
 void input()
 {
@@ -208,7 +209,8 @@ int main(int argc, char * argv[]) {
 //    BTreeLinkMain(argc, argv);
 //    BTreePracticeMain(argc, argv);
 //    GraphExampleMain(argc, argv);
-    GraphPracticeMain(argc, argv);
+//    GraphPracticeMain(argc, argv);
+    FileExampleMain(argc, argv);
     
     
     return 0;
