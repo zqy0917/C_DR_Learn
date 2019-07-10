@@ -7,6 +7,7 @@
 //
 
 #include "FileExamples.h"
+#include <stdlib.h>
 
 // 顺序查找
 int Seq_Search(int key[], int n, int k){
@@ -90,9 +91,57 @@ int HashInsert(Hashlist1 HT, int M, int k){
     D=i;
     // Tomorrow continue
     while (HT[D].key != 0 && HT[D].key != k) {
-        
+        D = Hash(D+1);
+        if (D == i) {
+            /* 散列表已满 */
+            return -1;
+        }
+    }
+    if (HT[D].key != k) {
+        HT[D].key = k;
     }
     return 0;
+}
+
+// 冲突法采用开放定址法 (2) d = 1方，-1方，2方，-2方.......,称为二次探测在散列
+int HashSearch(Hashlist1 HT, int M, int k){
+    int i,di,D;
+    i = Hash(k);
+    D = i;
+    di = 1;
+    while (HT[D].key !=0 && HT[D].key != k) {
+        D = Hash(i+di*di);
+        di++;
+        if (D == i) {
+            /* 没找到 */
+            return -1;
+        }
+    }
+    if (HT[D].key == k) {
+        return D;
+    }
+    return -1;
+}
+
+// 采用桶式冲突法删除数据(链地址法)
+int HashDelete(Hashlist2 HT, int k){
+    int i;
+    i = Hash(k);
+    HNLink p = HT[i],r=NULL;
+    while (p != NULL) {
+        if (p->key == k) {
+            if (r == NULL) {
+                HT[i] = p->link;
+            }else{
+                r->link = p->link;
+            }
+            free(p);
+            return i;
+        }
+        r = p;
+        p = p->link;
+    }
+    return -1;
 }
 
 int FileExampleMain(int argc, char *argv[]){
