@@ -26,6 +26,7 @@
 #include "GraphPractice.h"
 #include "FileExamples.h"
 #include "FilePractice.h"
+#include "SortExamples.h"
 
 int main(int argc, char * argv[]) {
     // insert code here...
@@ -47,7 +48,8 @@ int main(int argc, char * argv[]) {
 //    GraphExampleMain(argc, argv);
 //    GraphPracticeMain(argc, argv);
 //    FileExampleMain(argc, argv);
-    FilePracticeMain(argc, argv);
+//    FilePracticeMain(argc, argv);
+    SortPracticeMain(argc, argv);
     
     
     return 0;

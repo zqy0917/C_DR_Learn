@@ -117,6 +117,12 @@ int FilePracticeMain(int argc, char *argv[]){
         printf("%d ", HT[i].key);
     }
     printf("\n");
-    
+    printf("%d\n", 'M'-'A'+1);
+    printf("%d\n", 'T'-'A'+1);
+    printf("%d\n", 'W'-'A'+1);
+    printf("%d\n", 'T'-'A'+1);
+    printf("%d\n", 'F'-'A'+1);
+    printf("%d\n", 'S'-'A'+1);
+    printf("%d\n", 'S'-'A'+1);
     return 0;
 }
