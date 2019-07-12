@@ -138,6 +138,31 @@ static void Shell_Sort(int K[], int n){
     
 }
 
+// Quick sort, follow progress
+// 5, 6, 3, 1, 10, 7, 4, 8, 2, 9
+
+
+static void Quick_Sort(int K[], int n){
+    int i=0,p=1,q=n-1,temp;
+    while (p < q) {
+        if (K[p] < K[i]) {
+            p++;
+        }
+        if (K[q] > K[i]) {
+            q--;
+        }
+        if (K[p] > K[i] && K[q] < K[i]) {
+            temp = K[p];
+            K[p] = K[q];
+            K[q] = temp;
+        }
+    }
+    
+//    temp = K[i];
+//    K[i] = K[p];
+//    K[p] = temp;
+}
+
 static void PrintArray(int K[], int n){
     int i;
     for (i=0; i<n; i++){
@@ -149,14 +174,16 @@ static void PrintArray(int K[], int n){
 int SortPracticeMain(int argc, char *argv[]){
     printf("Hello internal srot \n");
     const int n = 10;
-    int K[n] = {1, 6, 3, 5, 10, 7, 4, 8, 2, 9};
+    int K[n] = {6, 5, 3, 1, 10, 7, 4, 8, 2, 9};
     // 1  3  5  6 10
 //    Insert_Sort(K, n);
 //    Bin_Insert_Sort(K, n);
 //    Select_Sort(K, n);
 //    Bubble_Sort2(K,n);
 //    Bubble_Sort1(K,n);
-    Shell_Sort(K,n);
+//    Shell_Sort(K,n);
+    Quick_Sort(K, n);
+    printf("\n");
     PrintArray(K, n);
     return 0;
 }
