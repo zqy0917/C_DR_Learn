@@ -64,6 +64,7 @@ void Select_Sort(int K[], int n){
     }
 }
 
+// Bubble sort
 void Bubble_Sort1(int K[], int n){
     int i,j,flag,temp;
     for (i=0; i<n-1; i++) {
@@ -100,6 +101,43 @@ void Bubble_Sort2(int K[], int n){
     }
 }
 
+// Shell sort, follow progress
+// 1, 6, 3, 5, 10, 7, 4, 8, 2, 9
+
+// gap = 5
+// 1, 4  3  2, 9,  7  6  8  5  10
+// 1, 4  3  2, 9,  7  6  8  5  10
+
+// gap = 2
+// 1  2  3  4  6  7  5  8  9  10
+// 1  2  3  4  5  7  6  8  9  10
+// 1  2  3  4  5  7  6  8  9  10
+
+// gap = 1
+// 1  2  3  4  5  6  7  8  9  10
+// 1  2  3  4  5  6  7  8  9  10
+static void Shell_Sort(int K[], int n){
+    int i,j,gap=n,flag=0;
+    int temp;
+    while (gap > 1) {
+        gap /= 2;
+        do {
+            flag = 0;
+            for(i=0; i<=n-gap-1; i++){
+                j = i+gap;
+                if (K[i] > K[j]) {
+                    temp = K[i];
+                    K[i] = K[j];
+                    K[j] = temp;
+                    flag = 1;
+                }
+            }
+            
+        } while (flag != 0);
+    }
+    
+}
+
 static void PrintArray(int K[], int n){
     int i;
     for (i=0; i<n; i++){
@@ -117,7 +155,8 @@ int SortPracticeMain(int argc, char *argv[]){
 //    Bin_Insert_Sort(K, n);
 //    Select_Sort(K, n);
 //    Bubble_Sort2(K,n);
-    Bubble_Sort1(K,n);
+//    Bubble_Sort1(K,n);
+    Shell_Sort(K,n);
     PrintArray(K, n);
     return 0;
 }
