@@ -11,6 +11,6 @@
 
 #include <stdio.h>
 
-int SortPracticeMain(int argc, char *argv[]);
+int SortExamplesMain(int argc, char *argv[]);
 
 #endif /* SortExamples_h */

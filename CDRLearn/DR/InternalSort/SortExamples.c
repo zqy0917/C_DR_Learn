@@ -325,7 +325,7 @@ static void PrintArray(int K[], int n){
     printf("\n");
 }
 
-int SortPracticeMain(int argc, char *argv[]){
+int SortExamplesMain(int argc, char *argv[]){
     printf("Hello internal srot \n");
 //    const int n = 10;
     const int n = 11;
