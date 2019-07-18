@@ -140,31 +140,37 @@ typedef struct node{
     struct node *llink;
 }Node, *LNode;
 
-static LNode CREATEDLIST(int n){
-    LNode r=NULL,p=NULL;
-    for (int i=0; i<=n; i++)
+static LNode CREATEDLIST(int data[], int n){
+    LNode r=NULL,p=NULL,head;
+    head = malloc(sizeof(Node));
+    head->data = n;
+    head->llink = NULL;
+    head->rlink = NULL;
+    for (int i=0; i<n; i++)
     {
         LNode t = malloc(sizeof(Node));
-        t->data = i+1;
+        t->data = data[i];
         t->llink = NULL;
         t->rlink = NULL;
         if (p == NULL) {
             p = t;
+            head->rlink = p;
+            p->llink = head;
         }else{
             r->rlink = t;
             t->llink = r;
         }
         r = t;
     }
-    r->rlink = p;
-    p->llink = r;
-    return p;
+    r->rlink = head;
+    head->llink = r;
+    return head;
 }
 
 static void PRINTDLIST(LNode list){
-    printf("data.num: %d \n", list->data);
+    printf("data count: %d \n", list->data);
     LNode p = list->rlink;
-    while (p->rlink != list) {
+    while (p != list) {
         printf("data.num: %d \n", p->data);
         p = p->rlink;
     }
@@ -188,45 +194,61 @@ static void LinearListInsertNode(LNode list, LNode lastNode, LNode node){
 }
 
 // Insert sort linear list
-// 2  2  1  5
 static void LinearList_Sort(LNode list){
     if (list->rlink == list) {
         /* Linear list is NULL */
         return;
     }
-    LNode i=list->rlink->rlink,j;
+    LNode i=list->rlink->rlink,j,p;
     while (i != list) {
+        p = i->rlink;
         j = i->llink;
         LinearListDelNode(list, i);
         while (j != list) {
-            if (j->data <= i->data) {// 未完待续🔥🔥🔥🔥🔥
+            if (j->data <= i->data) {
                 break;
             }
             j = j->llink;
         }
-        // insert behind j
         LinearListInsertNode(list, j, i);
+        i = p;
     }
     
 }
 
-
 static void Practice5(){
-    LNode list = CREATEDLIST(10);
-    list->rlink->rlink->data = 1;
-    list->rlink->rlink->rlink->rlink->data = 3;
-    list->rlink->rlink->rlink->rlink->rlink->rlink->rlink->data = 2;
+    const int n = 10;
+    int A[n] = {2, 6, 3, 1, 7, 5, 9, 10, 4, 8};
+    LNode list = CREATEDLIST(A,n);
     PRINTDLIST(list);
     printf("----------------- \n");
     LinearList_Sort(list);
     PRINTDLIST(list);
 }
+
+// Create a single Linear-list incloud head node, and the head node called "list".
+static LNode Create_Single_List(int data[], int n){
+    LNode list;
+    
+    return list;
+}
+
+// Include head node Linear list Select-Sort,the head called "list". Memory outside of the linked list cannot be used, can not modify Linear list data.
+static void Select_Sort_SingleList(LNode list){
+    
+}
+
+static void Practice4(){
+    const int n = 10;
+    int A[n] = {2, 6, 3, 1, 7, 5, 9, 10, 4, 8};
+}
+
 int SortPracticeMain(int argc, char *argv[]){
     printf("Hello Sort practice!!! \n");
 //    Practice8();
 //    Practice7();
 //    Practice6();
-    Practice5();
+//    Practice5();
     
     return 0;
 }
