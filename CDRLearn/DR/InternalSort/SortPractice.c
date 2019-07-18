@@ -175,6 +175,14 @@ static void PRINTDLIST(LNode list){
         p = p->rlink;
     }
 }
+static void Print_Single_List(LNode list){
+    LNode p = list->rlink;
+    printf("data count: %d \n", list->data);
+    while (p != NULL) {
+        printf("data.num: %d \n", p->data);
+        p = p->rlink;
+    }
+}
 
 // Only delete link
 static void LinearListDelNode(LNode list, LNode link){
@@ -228,19 +236,109 @@ static void Practice5(){
 
 // Create a single Linear-list incloud head node, and the head node called "list".
 static LNode Create_Single_List(int data[], int n){
-    LNode list;
-    
+    LNode list, r=NULL, p=NULL;
+    list = malloc(sizeof(Node));
+    list->data = n;
+    list->rlink = NULL;
+    list->llink = NULL;
+    int i;
+    for (i=0; i<n; i++) {
+        p = malloc(sizeof(Node));
+        p->rlink = NULL;
+        p->llink = NULL;
+        p->data = data[i];
+        if (r == NULL) {
+            list->rlink = p;
+        }else{
+            r->rlink = p;
+        }
+        r = p;
+    }
     return list;
 }
 
 // Include head node Linear list Select-Sort,the head called "list". Memory outside of the linked list cannot be used, can not modify Linear list data.
+// 5  2, 6, 3, 1, 7
 static void Select_Sort_SingleList(LNode list){
-    
+    LNode p = list, r, min, k, s=NULL;
+    while (p->rlink != NULL) {
+        min = p->rlink;
+        r = min->rlink;
+        s = k = min;
+        while (r != NULL) {
+            if (r->data < min->data) {
+                s = k;
+                min = r;
+            }
+            k = r;
+            r = r->rlink;
+        }
+        // Change p->rlink and minv
+        if (min != p->rlink) {
+            s->rlink = min->rlink;
+            min->rlink = p->rlink;
+            p->rlink = min;
+        }
+        p = min;
+    }
 }
 
 static void Practice4(){
     const int n = 10;
     int A[n] = {2, 6, 3, 1, 7, 5, 9, 10, 4, 8};
+    LNode list = Create_Single_List(A, n);
+    Print_Single_List(list);
+    printf("--------------------\n");
+    Select_Sort_SingleList(list);
+    Print_Single_List(list);
+}
+
+static void Adjust(int K[], int i, int n){
+    int j = i*2, temp;
+    temp = K[i];
+    while (j <= n) {
+        if (j<n && K[j] < K[j+1]) {
+            j++;
+        }
+        if (temp >= K[j]) {
+            break;
+        }
+        K[j/2] = K[j];
+        j *= 2;
+    }
+    K[j/2] = temp;
+}
+
+static void Insert_Heap(int A[], int *n, int k){
+    int i,temp,N = *n;;
+    for (i=N/2; i>=1; i--) {
+        Adjust(A, i, N);
+    }
+    for (i=1; i<=*n; i++) {
+        printf("%d ", A[i]);
+    }
+    printf("\n");
+    A[++N] = k;
+    (*n) = N;
+    for (i = N; i>1; i/=2) {
+        if (A[i/2] < A[i]) {
+            temp = A[i];
+            A[i] = A[i/2];
+            A[i/2] = temp;
+        }else{
+            break;
+        }
+    }
+}
+
+static void Practice3(){
+    int n = 10,i;
+    int K[] = {-1, 6, 5, 3, 1, 10, 7, 7, 4, 2, 8};
+    Insert_Heap(K, &n, 11);
+    for (i=1; i<=n; i++) {
+        printf("%d ", K[i]);
+    }
+    printf("\n");
 }
 
 int SortPracticeMain(int argc, char *argv[]){
@@ -249,6 +347,7 @@ int SortPracticeMain(int argc, char *argv[]){
 //    Practice7();
 //    Practice6();
 //    Practice5();
-    
+//    Practice4();
+    Practice3();
     return 0;
 }
