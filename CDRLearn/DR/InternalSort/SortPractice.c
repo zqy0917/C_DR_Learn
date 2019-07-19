@@ -341,6 +341,76 @@ static void Practice3(){
     printf("\n");
 }
 
+static void Quick_Stack(int K[], int n){
+    int STACK1[MaxNum],STACK2[MaxNum],top=-1,i,j,s,t,temp;
+    STACK1[++top] = 0;
+    STACK2[top] = n-1;
+    while (top >= 0) {
+        s = STACK1[top];
+        t = STACK2[top--];
+        i = s+1;
+        j = t;
+        while (1) {
+            while (K[i] <= K[s]) {
+                i++;
+            }
+            while (K[j] > K[s]) {
+                j--;
+            }
+            if (i < j) {
+                temp = K[i];
+                K[i] = K[j];
+                K[j] = temp;
+            }else{
+                break;
+            }
+        }
+        temp = K[j];
+        K[j] = K[s];
+        K[s] = temp;
+        if (j-1 > s) {
+            STACK1[++top] = s;
+            STACK2[top] = j-1;
+        }
+        if (j+1 < t) {
+            STACK1[++top] = j+1;
+            STACK2[top] = t;
+        }
+    }
+    
+}
+
+static void Practice2(){
+    int n = 10;
+    int K[] = {6, 5, 1, 1, 10, 7, 7, 4, 2, 8};
+    Quick_Stack(K, n);
+    PrintArray(K, n);
+}
+
+static void Select_Sort(int K[], int n){
+    int i,j,m,temp;
+    for (i=0; i<n-1; i++) {
+        m = i;
+        for (j=m+1; j<n; j++) {
+            if (K[j] > K[m]) {
+                m = j;
+            }
+        }
+        if (m != i) {
+            temp = K[i];
+            K[i] = K[m];
+            K[m] = temp;
+        }
+    }
+}
+
+static void Practice1(){
+    int n = 10;
+    int K[] = {6, 5, 3, 1, 10, 7, 9, 7, 2, 8};
+    Select_Sort(K, n);
+    PrintArray(K, n);
+}
+
 int SortPracticeMain(int argc, char *argv[]){
     printf("Hello Sort practice!!! \n");
 //    Practice8();
@@ -348,6 +418,9 @@ int SortPracticeMain(int argc, char *argv[]){
 //    Practice6();
 //    Practice5();
 //    Practice4();
-    Practice3();
+//    Practice3();
+//    Practice2();
+//    Practice1();
+    
     return 0;
 }
