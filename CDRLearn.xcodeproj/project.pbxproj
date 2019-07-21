@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1D03E9E522CF59EE003412A3 /* GraphPractice.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D03E9E422CF59EE003412A3 /* GraphPractice.c */; };
 		1D0E123222C1FA8E0022F5E6 /* BTreeLinkStruct.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D0E123122C1FA8E0022F5E6 /* BTreeLinkStruct.c */; };
+		1D52A4C722E46E2A007FCCAD /* PositionOperate.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D52A4C622E46E2A007FCCAD /* PositionOperate.c */; };
 		1DAAEEC522BA3AEF00C5CBB9 /* ArrayPractice.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEEC422BA3AEF00C5CBB9 /* ArrayPractice.c */; };
 		1DB20B9122BC749100CE873E /* 4_day.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DB20B8522BC749100CE873E /* 4_day.c */; };
 		1DB20B9222BC749100CE873E /* 1_day.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DB20B8622BC749100CE873E /* 1_day.c */; };
@@ -55,6 +56,8 @@
 		1D03E9E422CF59EE003412A3 /* GraphPractice.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GraphPractice.c; sourceTree = "<group>"; };
 		1D0E123022C1FA8E0022F5E6 /* BTreeLinkStruct.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTreeLinkStruct.h; sourceTree = "<group>"; };
 		1D0E123122C1FA8E0022F5E6 /* BTreeLinkStruct.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BTreeLinkStruct.c; sourceTree = "<group>"; };
+		1D52A4C522E46E2A007FCCAD /* PositionOperate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PositionOperate.h; sourceTree = "<group>"; };
+		1D52A4C622E46E2A007FCCAD /* PositionOperate.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PositionOperate.c; sourceTree = "<group>"; };
 		1DAAEEC322BA3AEF00C5CBB9 /* ArrayPractice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArrayPractice.h; sourceTree = "<group>"; };
 		1DAAEEC422BA3AEF00C5CBB9 /* ArrayPractice.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ArrayPractice.c; sourceTree = "<group>"; };
 		1DB20B8522BC749100CE873E /* 4_day.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 4_day.c; sourceTree = "<group>"; };
@@ -261,6 +264,8 @@
 				7B8E5B7A22B4ED9400E77A49 /* Day3.h */,
 				7B8E5B7B22B4ED9400E77A49 /* Day4.c */,
 				7B8E5B7C22B4ED9400E77A49 /* Day4.h */,
+				1D52A4C522E46E2A007FCCAD /* PositionOperate.h */,
+				1D52A4C622E46E2A007FCCAD /* PositionOperate.c */,
 			);
 			path = CS;
 			sourceTree = "<group>";
@@ -356,6 +361,7 @@
 				1DEC4E0922D5D919008E623D /* IntroducePractice.c in Sources */,
 				1DB20B9D22BC881F00CE873E /* BasicOperatLinkStack.c in Sources */,
 				1DE8915922C9FF2400180C3B /* GraphExamples.c in Sources */,
+				1D52A4C722E46E2A007FCCAD /* PositionOperate.c in Sources */,
 				1D0E123222C1FA8E0022F5E6 /* BTreeLinkStruct.c in Sources */,
 				7B8E5B8022B4ED9400E77A49 /* Day2.c in Sources */,
 				7B9DC1BF22BE4DCA0000D8EA /* BasciOperatOrderQueue.c in Sources */,

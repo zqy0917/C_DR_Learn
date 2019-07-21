@@ -28,6 +28,7 @@
 #include "FilePractice.h"
 #include "SortExamples.h"
 #include "SortPractice.h"
+#include "PositionOperate.h"
 
 int main(int argc, char * argv[]) {
     // insert code here...
@@ -51,6 +52,8 @@ int main(int argc, char * argv[]) {
 //    FileExampleMain(argc, argv);
 //    FilePracticeMain(argc, argv);
 //    SortExamplesMain(argc, argv);
-    SortPracticeMain(argc, argv);
+//    SortPracticeMain(argc, argv);
+    PosOperateExamplesMain(argc, argv);
+    
     return 0;
 }
