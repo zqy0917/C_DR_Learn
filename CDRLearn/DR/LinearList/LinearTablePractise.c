@@ -9,6 +9,30 @@
 #include "LinearTablePractise.h"
 
 
+static DLinkList CreateDListWithArray(int *A, int n){
+    DLinkList list=NULL,r=NULL;
+    ElemType it;
+    int i;
+    for (i=0; i<n; i++){
+        READ(&it);
+        it->num = A[i];
+        DLinkList d = malloc(DNodeSize);
+        d->data = it;
+        d->llink = NULL;
+        d->rlink = NULL;
+        if (i == 0) {
+            list = d;
+        }else{
+            r->rlink = d;
+            d->llink = r;
+        }
+        r = d;
+    }
+    r->rlink = list;
+    list->llink = r;
+    return list;
+}
+
 static DLinkList CREATEDLIST(const int n){
     DLinkList list=NULL,r=NULL;
     ElemType it;
@@ -52,7 +76,12 @@ int parctice30(){
     CHANGEDLIST(head);
     PRINTDLIST(head);
     
-    DLinkList p = head->rlink;
+    DLinkList p,r=NULL;
+    p = head->rlink;
+    if (p->data->num > 0) {
+        r = p;
+        p = p->rlink;
+    }
     if (p->rlink == p) {
         printf("空链表 \n");
         return -1;
@@ -62,19 +91,26 @@ int parctice30(){
             DLinkList tmp = p->rlink;
             p->llink->rlink = p->rlink;
             p->rlink->llink = p->llink;
-            p->rlink = head->rlink;
-            p->llink = head;
-            head->rlink = p;
-            p->rlink->llink = p;
+            p->llink = p->rlink = NULL;
+            if (r == NULL) {
+                p->rlink = head->rlink;
+                p->llink = head;
+                head->rlink->llink = p;
+                head->rlink = p;
+            }else{
+                p->rlink = r->rlink;
+                p->llink = r;
+                r->rlink->llink = p;
+                r->rlink = p;
+            }
+            r = p;
             p = tmp;
         }else{
             p = p->rlink;
         }
     }
-    
     printf("排序后 \n");
     PRINTDLIST(head);
-    
     return 1;
 }
 
@@ -90,8 +126,8 @@ void parctice29(int n){
         t->llink = NULL;
         t->rlink = NULL;
         if (i == 0) {
-            // -1 代表链表头
-            it->num = -1;
+            // n 代表链表头
+            it->num = n;
             list = t;
         }else{
             scanf("%d", &j);
@@ -103,6 +139,7 @@ void parctice29(int n){
     }
     r->rlink = list;
     list->llink = r;
+    printf("链表长度: %d \n", list->data->num);
     while (r != list) {
         printf("%d ", r->data->num);
         r = r->llink;
@@ -110,50 +147,32 @@ void parctice29(int n){
     printf("\n");
 }
 
-int practice28(){
-    DLinkList list=NULL, r=NULL, p=NULL;
-    ElemType it=NULL;
-    int j;
-    while (scanf("%d", &j)){
-        if (j == -1) {
-            break;
-        }
-        READ(&it);
-        DLinkList t = malloc(DNodeSize);
-        t->data = it;
-        t->llink = NULL;
-        t->rlink = NULL;
-        it->num = j;
-        if (list == NULL) {
-            list = t;
-        }else{
-            r->rlink = t;
-            t->llink = r;
-        }
-        r = t;
-    }
-    if (list == NULL) {
-        printf("链表为空 \n");
-        return 0;
-    }
-    r->rlink = list;
-    list->llink = r;
-    p = r;
-    r=list;
-    int symmetry = 1;
-    while (1) {
-        if (p->data->num != r->data->num) {
-            symmetry = 0;
-            break;
-        }
-        if (r->rlink == p || r->rlink == p->llink) {
-            break;
-        }
-        r = r->rlink;
-        p = p->llink;
-    }
+static int ListSymmetried(DLinkList list);
+void practice28(){
+    const int n = 9;
+    int A[n] = {1, 2, 3, 4, 5, 4, 3 ,2, 1};
+    DLinkList list = CreateDListWithArray(A, n);
+    PRINTDLIST(list);
+    int symmetry = ListSymmetried(list);
     printf("对称：%d \n", symmetry);
-    return symmetry;
+}
+
+static int ListSymmetried(DLinkList list){
+    DLinkList rear = list->llink;
+    DLinkList head = list;
+    int flag = 1;
+    while (head != rear) {
+        if (head->data->num != rear->data->num) {
+            flag = 0;
+            break;
+        }
+        head = head->rlink;
+        rear = rear->llink;
+        if (head->llink == rear) {
+            break;
+        }
+    }
+    return flag;
 }
 
 void practice27(int delNum){
@@ -247,6 +266,112 @@ void LOCATE(DLRULinkList *list, int x){
         lruHead = next;
     }
 }
+
+// 楼上垃圾代码改进
+static void SortWithFreq(DLRULinkList *list);
+static void SortWithFreq2Bubble(DLRULinkList *list);
+void LOCATE2(DLRULinkList *list, int x){
+    DLRULinkList p = *list;
+    while (p != NULL) {
+        if (p->data->num == x) {
+            (p->freq) += 1;
+        }
+        p = p->rlink;
+    }
+    SortWithFreq2Bubble(list);
+}
+
+// 双向链表排序适合用冒泡排序
+static void SortWithFreq2Bubble(DLRULinkList *list){
+    DLRULinkList m,n,bub=NULL,tmp1=NULL,tmp2=NULL;
+    int flag;
+    m = *list;
+    while (m->rlink != NULL) {
+        flag = 0;
+        n = *list;
+        while (n->rlink != bub) {
+            DLRULinkList next = n->rlink;
+            if (n->freq < next->freq) {
+                tmp1 = n->llink;
+                tmp2 = next->rlink;
+                next->rlink = n;
+                next->llink = tmp1;
+                n->llink = next;
+                n->rlink = tmp2;
+                if (tmp1 != NULL) {
+                    tmp1->rlink = next;
+                }else{
+                    *list = next;
+                }
+                if (tmp2 != NULL) {
+                    tmp2->llink = n;
+                }
+                flag = 1;
+            }else{
+                n = n->rlink;
+            }
+        }
+        bub = n;
+        if (flag == 0){
+            break;
+        }
+        m = m->rlink;
+    }
+}
+
+// 双向链表选择排序算法
+static void SortWithFreq(DLRULinkList *list){
+    DLRULinkList m,n,max=NULL,tmp1=NULL,tmp2=NULL;
+    m = *list;
+    while (m->rlink != NULL) {
+        max = m;
+        n = max->rlink;
+        while (n != NULL) {
+            if (n->freq > max->freq) {
+                max = n;
+            }
+            n = n->rlink;
+        }
+        if (max != m) {
+            if (max->llink == m) {
+                tmp1 = m->llink;
+                tmp2 = max->rlink;
+                max->rlink = m;
+                m->llink = max;
+                max->llink = tmp1;
+                if (tmp1 != NULL) {
+                    tmp1->rlink = max;
+                }else{
+                    *list = max;
+                }
+                m->rlink = tmp2;
+                if (tmp2 != NULL) {
+                    tmp2->llink = m;
+                }
+            }else{
+                tmp1 = max->llink;
+                tmp2 = max->rlink;
+                max->llink = m->llink;
+                max->rlink = m->rlink;
+                m->rlink->llink = max;
+                if (m->llink == NULL) {
+                    *list = max;
+                }else{
+                    m->llink->rlink = max;
+                }
+                tmp1->rlink = m;
+                if (tmp2 != NULL) {
+                    tmp2->llink = m;
+                }
+                m->llink = tmp1;
+                m->rlink = tmp2;
+            }
+        }
+        m = max->rlink;
+    }
+}
+
+
 void practice26(){
     const int n=10;
     int i;
@@ -272,19 +397,19 @@ void practice26(){
     list->rlink->rlink->data->num = 4;
     PRINTDLRULIST(list);
     printf("-------开始操作-------- \n");
-    LOCATE(&list, 1);
-    LOCATE(&list, 1);
-    LOCATE(&list, 5);
-    LOCATE(&list, 5);
-    LOCATE(&list, 5);
-    LOCATE(&list, 6);
-    LOCATE(&list, 6);
-    LOCATE(&list, 6);
-    LOCATE(&list, 6);
-    LOCATE(&list, 5);
-    LOCATE(&list, 8);
-    LOCATE(&list, 8);
-    LOCATE(&list, 9);
+    LOCATE2(&list, 1);
+    LOCATE2(&list, 1);
+    LOCATE2(&list, 5);
+    LOCATE2(&list, 5);
+    LOCATE2(&list, 5);
+    LOCATE2(&list, 6);
+    LOCATE2(&list, 6);
+    LOCATE2(&list, 6);
+    LOCATE2(&list, 6);
+    LOCATE2(&list, 7);
+    LOCATE2(&list, 7);
+    LOCATE2(&list, 8);
+    LOCATE2(&list, 9);
     PRINTDLRULIST(list);
     
 }
@@ -433,10 +558,8 @@ static void PROINTLIST(LinkList list){
     }
 }
 
-void practice24() {
-    LinkList rear = CreateACycleListRear(8);
-    PROINTREARLIST(rear);
-    printf("--------连接后-------- \n");
+
+static void ConnectWithRear1(LinkList rear, LinkList *rearCon){
     if (!rear) {
         printf("空链表 \n");
         return;
@@ -456,13 +579,38 @@ void practice24() {
         r = t;
         p = p->link;
     }
+    *rearCon = rearConnect;
+}
+
+// 对楼上垃圾代码优化版
+static void ConnectWithRear2(LinkList rear, LinkList *rearCon){
+    LinkList head,newRear=NULL;
+    head = rear->link;
+    while (head != rear) {
+        LinkList t = malloc(LNodeSize);
+        t->data = head->data;
+        t->link = rear->link;
+        rear->link = t;
+        if (newRear == NULL) {
+            newRear = t;
+        }
+        head = head->link;
+    }
+    *rearCon = newRear;
+}
+
+void practice24() {
+    LinkList rear = CreateACycleListRear(8);
+    LinkList rearConnect;
+    PROINTREARLIST(rear);
+    printf("--------连接后-------- \n");
+    ConnectWithRear2(rear, &rearConnect);
     PROINTREARLIST(rearConnect);
 }
 
 // 逆转链表方向
-void practice23(){
-    LinkList q=NULL,r,rear,list = CreateACycleListHead(10);
-    PROINTCYCLELIST(list);
+static void CONVERT(LinkList list){
+    LinkList q=NULL,r,rear;
     rear = list->link;
     while (rear->link != list) {
         rear = rear->link;
@@ -480,6 +628,25 @@ void practice23(){
         q = r;
         r = tmp;
     }
+
+}
+
+// 逆转链表方向 对楼上垃圾代码优化版
+static void Convert(LinkList list){
+    LinkList r=list,p=list->link,tmp=NULL;
+    while (p != list) {
+        tmp = p->link;
+        p->link = r;
+        r = p;
+        p = tmp;
+    }
+    list->link = r;
+}
+
+void practice23(){
+    LinkList list = CreateACycleListHead(10);
+    PROINTCYCLELIST(list);
+    Convert(list);
     printf("反转后 \n");
     PROINTCYCLELIST(list);
 }
@@ -552,9 +719,9 @@ void DELETEPLAST(LinkList p){
 }
 
 void practice21(){
-    LinkList list = CreateACycleList(2);
+    LinkList list = CreateACycleList(4);
     PRINTCYCLEUNHEADLIST(list);
-    LinkList p = list->link->link;
+    LinkList p = list->link;
     printf("p: %d \n", p->data->num);
     DELETEPLAST(p);
     PRINTCYCLEUNHEADLIST(p);
@@ -576,11 +743,7 @@ void practice20(){
 }
 
 // 删除多余使链表数据域值不同
-void prcatice19(){
-    LinkList list = CreateList(10);
-    list->link->data->num = 1;
-    list->link->link->link->data->num = 6;
-    PROINTLIST(list);
+static void DeleteDup(LinkList list){
     LinkList p=list->link,q=list,r;
     q->link = NULL;
     int exist;
@@ -606,6 +769,36 @@ void prcatice19(){
         }
         p = tmp;
     }
+}
+
+// 对楼上垃圾代码优化版
+static void DeleteDuplicate(LinkList list){
+    LinkList p,q,r;
+    p = list;
+    while (p != NULL) {
+        r = p;
+        q = r->link;
+        while (q != NULL) {
+            if (q->data->num == p->data->num) {
+                r->link = q->link;
+                free(q);
+                q = r->link;
+            }else{
+                r = q;
+                q = q->link;
+            }
+        }
+        p = p->link;
+    }
+}
+
+void prcatice19(){
+    LinkList list = CreateList(10);
+    list->link->data->num = 1;
+    list->link->link->data->num = 1;
+    list->link->link->link->data->num = 6;
+    PROINTLIST(list);
+    DeleteDuplicate(list);
     printf("排重后：\n");
     PROINTLIST(list);
 }
@@ -639,6 +832,25 @@ static LinkList MERGELIST(LinkList x, LinkList y){
     }
     return list;
 }
+
+static void MergeList(LinkList X, LinkList Y){
+    LinkList p=X,r=Y,tmp1,tmp2,k=NULL;
+    while (p != NULL && r != NULL) {
+        tmp1 = p->link;
+        tmp2 = r->link;
+        p->link = r;
+        r->link = tmp1;
+        k = r;
+        p = tmp1;
+        r = tmp2;
+    }
+    if (p != NULL) {
+        k->link = p;
+    }else if (r != NULL) {
+        k->link = r;
+    }
+}
+
 void prcatice18(){
     LinkList list = CreateList(5);
     list->data->num = 100;
@@ -647,8 +859,9 @@ void prcatice18(){
     list->link->link->link->data->num = 400;
     list->link->link->link->link->data->num = 500;
     LinkList list2 = CreateList(10);
-    LinkList mergeL = MERGELIST(list, list2);
-    PROINTLIST(mergeL);
+//    LinkList mergeL = MERGELIST(list, list2);
+    MergeList(list, list2);
+    PROINTLIST(list);
 }
 
 LinkList FINDK(LinkList list, int k){
@@ -814,10 +1027,33 @@ void DELETECUSTOM(LinkList *list, int i, int k){
     }
 }
 
+// 时间复杂度：O(index+k)
+void DeleteContinuous(LinkList *list, int index, int k){
+    int i;
+    LinkList p=*list,m=NULL,n=NULL,tmp=NULL;
+    for (i=1; i<=index+k; i++) {
+        tmp = p->link;
+        if (i < index) {
+            m = p;
+        }else if (i < index+k) {
+            free(p);
+        }else{
+            n = p;
+            break;
+        }
+        p = tmp;
+    }
+    if (m != NULL) {
+        m->link = n;
+    }else{
+        *list = n;
+    }
+}
+
 void prcatice12(){
     LinkList list = CreateList(10);
     PROINTLIST(list);
-    DELETECUSTOM(&list, 5, 3);
+    DeleteContinuous(&list, 1, 3);
     printf("删除后 \n");
     PROINTLIST(list);
 }
@@ -940,11 +1176,27 @@ void DELETERANGE(int *a, int n, int x, int y)
     }
 }
 
+static void DeleteCondition(int *A, int *n, int x, int y){
+    int i,k=-1;
+    for (i=0; i<*n; i++) {
+        if (A[i] > x && A[i] < y) {
+            A[i] = 0;
+            k++;
+        }else{
+            if (i-k-1 != i) {
+                A[i-k-1] = A[i];
+                A[i] = 0;
+            }
+        }
+    }
+    *n = *n-k-1;
+}
+
 void prcatice7(){
     int n=10;
     int *a = CREATEARRAY(n);
     PRINTARRAY(a, 10);
-    DELETERANGE(a, n, 0, 9);
+    DeleteCondition(a, &n, 2, 9);
     PRINTARRAY(a, 10);
 }
 
@@ -960,21 +1212,28 @@ void DELETEODD(int *a, int n){
     }
 }
 
+static void DeleteOddIndex(int *a, int *n){
+    int i,k=-1;
+    for (i=0; i<*n; i++) {
+        if (i % 2 != 0) {
+            k++;
+        }else{
+            a[i-k-1] = a[i];
+        }
+    }
+    *n = *n-k-1;
+}
+
 void prcatice6(){
     int n=12;
     int *a = CREATEARRAY(n);
     PRINTARRAY(a, n);
     printf("删除后 \n");
-    DELETEODD(a, n);
-    int i;
-    if (n % 2 == 0) {
-        i = n/2;
-    }else{
-        i = n/2+1;
-    }
-    PRINTARRAY(a, i);
+    DeleteOddIndex(a, &n);
+    PRINTARRAY(a, n);
 }
 
+// 🔥🔥🔥 时间复杂度!!!
 void DELETEODDITEM(int *a, int *n){
     for (int i=0; i<*n; i++) {
         if (*(a+i) % 2 == 1) {
@@ -984,12 +1243,24 @@ void DELETEODDITEM(int *a, int *n){
     }
 }
 
+static void DeleteOddItem(int *a, int *n){
+    int i,k=-1;
+    for (i=0; i<*n; i++) {
+        if (a[i]%2 != 0) {
+            k++;
+        }else{
+            a[i-k-1] = a[i];
+        }
+    }
+    *n = *n-k-1;
+}
+
 void prcatice5(){
     int n=10;
     int *a = CREATEARRAY(n);
     PRINTARRAY(a, n);
     printf("删除后 \n");
-    DELETEODDITEM(a, &n);
+    DeleteOddItem(a, &n);
     PRINTARRAY(a, n);
 }
 
@@ -1014,6 +1285,7 @@ int FINDITEM(int *a, int n, int item){
         int q = FINDITEM(a+1, n-1, item);
         return q >= 0 ? q+1 : -1;
     }
+
 }
 
 void prcatice4(){

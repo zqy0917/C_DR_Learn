@@ -192,6 +192,7 @@ void PRINTFILE(int argc, char *argv[]){
 
 void DRDay3(int argc, char *argv[]){
     
+    printf("\n");
 //    LinkList p = CreateACycleList(10);
 //    PRINTCYCLELIST(p);
 //    JOSEPHUS(10, 3, 0);
@@ -209,10 +210,11 @@ void DRDay3(int argc, char *argv[]){
 //    DELETED(dlist, insertIt);
 //    PRINTDLIST(dlist);
 //    PRINTFILE(argc, argv);
-//    parctice30();
+    parctice30();
 //    parctice29(10);
 //    practice28();
 //    practice27(4);
+//    practice26();
 //    practice24();
 //    practice23();
 //    practice22();

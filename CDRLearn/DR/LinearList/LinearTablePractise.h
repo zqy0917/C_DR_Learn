@@ -16,7 +16,7 @@ int parctice30();
 
 void parctice29(int n);
 
-int practice28();
+void practice28();
 
 void practice27(int delNum);
 

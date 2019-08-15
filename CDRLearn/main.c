@@ -38,7 +38,7 @@ int main(int argc, char * argv[]) {
     //    EntranceDay4();
 //    IntroducePractice(argc, argv);
 //    DRDay2();
-//    DRDay3(argc, argv);
+    DRDay3(argc, argv);
 //    ArrayPractice(argc, argv);
 //    OrderStackMain(argc, argv);
 //    LinkStackMain(argc, argv);
@@ -53,7 +53,7 @@ int main(int argc, char * argv[]) {
 //    FilePracticeMain(argc, argv);
 //    SortExamplesMain(argc, argv);
 //    SortPracticeMain(argc, argv);
-    PosOperateExamplesMain(argc, argv);
+//    PosOperateExamplesMain(argc, argv);
     
     return 0;
 }
