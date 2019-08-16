@@ -214,27 +214,53 @@ void MOVEONE(int *A, int n){
     *A = t;
 }
 
+static void MoveOneSpace(int *A, int n, int k){
+    int i,j,last;
+    for (i=0; i<k; i++) {
+        last = A[n-1];
+        for (j=n-1; j>0; j--) {
+            A[j] = A[j-1];
+        }
+        A[0] = last;
+    }
+}
+
+// 答案给的算法公式看不懂 🔥🔥🔥
+static void MoveTimeLimit(int *A, int n, int k){
+    int i,j,B[k];
+    for (i=0; i<k; i++) {
+        B[i] = A[n-k+i];
+    }
+    for (j=n-k-1; j>=0; j--) {
+        A[j+k] = A[j];
+    }
+    for (i=0; i<k; i++) {
+        A[i] = B[i];
+    }
+}
+
+
 // item 循环向右移k位，使用一个数组元素的附加空间
 void Practice4(){
     int n = 10;
     int *A = CREATEARRAY(n);
     PRINTARRAY(A, n);
     int k=3;
-    for (int i=0; i<k; i++) {
-        MOVEONE(A, n);
-    }
+//    for (int i=0; i<k; i++) {
+//        MOVEONE(A, n);
+//    }
+    MoveOneSpace(A,n,k);
     PRINTARRAY(A, n);
 }
 
 // 时间复杂度：O(n),循环右移 k 位置，采用尽可能少的空间 🔥🔥🔥
 void Practice5(){
-    int k = 5;
+    int k = 4;
     int n = 10;
     int *A = CREATEARRAY(n);
     PRINTARRAY(A, n);
-    for (int i=0; i<n; i++) {
-//        int tmp = A[i+k];
-    }
+    MoveTimeLimit(A,n,k);
+    PRINTARRAY(A, n);
 }
 
 // n 阶 3 对角矩阵压缩存储
@@ -374,7 +400,7 @@ int ** SPIRALMATRIX(int n){
 }
 
 void Practice10(){
-    int n=5;
+    int n=3;
     int **A = SPIRALMATRIX(n);
     PRINTTOWARRAY(A, n, n);
 }
@@ -431,11 +457,31 @@ void ADJUSTARRAY(int *A, int n){
     }
 }
 
+// 时间复杂度O(n)，左奇右偶, 改进楼上代码
+static void MoveArray(int *A, int n){
+    int i=0,j=n-1,tmp;
+    while (i < j) {
+        if (A[i] % 2 == 0 && A[j] % 2 != 0) {
+            tmp = A[i];
+            A[i] = A[j];
+            A[j] = tmp;
+        }else{
+            if (A[i] % 2 != 0) {
+                i++;
+            }
+            if (A[j] % 2 == 0) {
+                j--;
+            }
+        }
+    }
+}
+
 void Practice12(){
     const int n=11;
     int A[n] = {1, 2, 3, 5, 7, 6, 4, 9, 9, 2, 1};
     PRINTARRAY(A, n);
-    ADJUSTARRAY(A, n);
+//    ADJUSTARRAY(A, n);
+    MoveArray(A,n);
     printf("排序后 \n");
     PRINTARRAY(A, n);
 }
@@ -453,11 +499,27 @@ void MOVEZERO(int *A, int n){
     }
 }
 
+// 对楼上垃圾代码改进
+static void MoveZero(int *A, int n){
+    int i,k=-1;
+    for (i=n-1; i>=0; i--) {
+        if (A[i] == 0) {
+            k++;
+        }else{
+            if (i+k+1 != i) {
+                A[i+k+1] = A[i];
+                A[i] = 0;
+            }
+        }
+    }
+    
+}
+
 void Practice13(){
-    const int n=5;
-    int A[n] = {0, 2, 3, 5, 9};
+    const int n=11;
+    int A[n] = {2, 0, 3, 5, 0, 9, 0, 0, 8, 1, 0};
     PRINTARRAY(A, n);
-    MOVEZERO(A, n);
+    MoveZero(A, n);
     printf("排序后 \n");
     PRINTARRAY(A, n);
 }
