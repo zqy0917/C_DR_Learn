@@ -116,6 +116,49 @@ int CHECKCODE(char *fileName){
     }
     return b;
 }
+
+int CheckCode(char *fileName){
+    STLink topStack;
+    INITIALSLINK(&topStack);
+    SElem it;
+    FILE *fp;
+    if ((fp = fopen(fileName, "r")) == NULL) {
+        printf("打开文件失败 \n");
+        return 0;
+    }
+    char ch;
+    while ((ch = fgetc(fp)) != -1) {
+        if (ch == '(' || ch == '[' || ch == '{') {
+            if ((it = malloc(sizeof(SElem))) == NULL) {
+                printf("栈溢出 \n");
+                return 0;
+            }
+            it->c = ch;
+            PUSHLINK(&topStack, it);
+        }else{
+            if (ch == ')' || ch == ']' || ch == '}') {
+                GETTOPSLINK(topStack, &it);
+                if (EMPTYSLINK(topStack)) {
+                    return 0;
+                }else if (it->c == '(' && ch == ')') {
+                    POPLINK(&topStack, NULL);
+                }else if (it->c == '[' && ch == ']') {
+                    POPLINK(&topStack, NULL);
+                }else if (it->c == '{' && ch == '}') {
+                    POPLINK(&topStack, NULL);
+                }else{
+                    return 0;
+                }
+            }
+        }
+    }
+    if (!EMPTYSLINK(topStack)) {
+        return 0;
+    }
+    return 1;
+}
+
+
 #define M 100
 // 进制转换
 void CONVERSION(int num){
@@ -188,11 +231,62 @@ MOVE_P GETPATH(int row, int col, int dir){
     return m;
 }
 
-void MAZE(int A[][MaxN], int m, int n){
+static void CopyArray(int A[][MaxN], int B[][MaxN], int m, int n){
+    for (int i=0; i<m; i++) {
+        for (int j=0; j<n; j++) {
+            B[i][j] = A[i][j];
+        }
+    }
+}
+
+// 迷宫改进版
+static void Maze(int B[][MaxN], int m, int n){
+    int A[m][MaxN];
+    CopyArray(B, A, m, n);
+    int direction[8][2] = {{-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}};
+    MOVE_P STACK[MaxNM], curPos;
+    int top = -1, row, col, *dir;
+    STACK[++top] = GETPATH(1, 1, 0);
+    A[1][1] = 2;
+    while (top >= 0) {
+        curPos = STACK[top];
+        row = curPos->row;
+        col = curPos->col;
+        if (row == m-2 && col == n-2) {
+            break;
+        }
+        dir = direction[curPos->dir];
+        if (curPos->dir > 7) {
+            free(curPos);
+            top--;
+            continue;
+        }
+        row += dir[0];
+        col += dir[1];
+        if (A[row][col] == 0) {
+            A[row][col] = 2;
+            STACK[++top] = GETPATH(row, col, 0);
+        }else{
+            curPos->dir += 1;
+        }
+    }
+    // 打印堆栈路径
+    if (top < 0) {
+        printf("无路可走 \n");
+    }else{
+        for(int i=0; i<=top; i++){
+            printf("第 %d 步, row: %d, col: %d \n", i+1, STACK[i]->row, STACK[i]->col);
+        }
+    }
+}
+
+void MAZE(int B[][MaxN], int m, int n){
+    int A[m][MaxN];
+    CopyArray(B, A, m, n);
     int direction[8][2] = {{-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}};
     MOVE_P STACK[MaxNM], curPos;
     int top=0,curv=0,row,col; /* (1,1)处入口,进栈 */
-    STACK[0] = GETPATH(1, 1, 2);
+    STACK[0] = GETPATH(1, 1, 0);
     A[1][1] = 2;/* 走过的地方置为2 */
     while (top >= 0) {
         curPos = STACK[top];
@@ -235,38 +329,77 @@ void MAZE(int A[][MaxN], int m, int n){
     }
 }
 
+void Conversion(int n){
+    int STACK[MaxN], top = -1;
+    int t;
+    while (n > 0) {
+        t = n % 8;
+        n /= 8;
+        STACK[++top] = t;
+    }
+    while (top >= 0) {
+        t = STACK[top--];
+        printf("%d", t);
+    }
+    printf("\n");
+}
+
+
+static int Reccurresive(int a, int b){
+    int STACK[MaxN], top=-1, m=a, n=b;
+    STACK[++top] = m;
+    while (top >= 0) {
+        if (m*n == 0) {
+            n = m+n+1;
+            if (top >= 0) {
+                m = STACK[top];
+            }
+            top--;
+        }else{
+            STACK[++top] = m-1;
+            n--;
+        }
+    }
+    return n;
+}
+
+
 void LinkStackMain(int argc, char *argv[]){
-    INITIALSLINK(&top);
-    int i;
-    for (i=1; i<=10; i++) {
-        SElem it = GETSELEM(i);
-        PUSHLINK(&top, it);
-    }
-    SElem itm;
-    POPLINK(&top, &itm);
-    printf("pop 元素：%d \n", itm->num);
-    GETTOPSLINK(top, &itm);
-    printf("栈顶 元素：%d \n", itm->num);
-    PRINTSTACK(top);
-    int b = CHECKCODE("/Users/zhaoqianyu/C_DR_Learn/C_DR_Learn/CDRLearn/CS/Day2.c");
-    if (b) {
-        printf("格式正确 \n");
-    }else{
-        printf("格式错误 \n");
-    }
-    printf("进制转换 \n");
-    CONVERSION(1024);
-    CONVERSIONLINK(1024);
-    RECCURRESIVE(2, 1);
+//    INITIALSLINK(&top);
+//    int i;
+//    for (i=1; i<=10; i++) {
+//        SElem it = GETSELEM(i);
+//        PUSHLINK(&top, it);
+//    }
+//    SElem itm;
+//    POPLINK(&top, &itm);
+//    printf("pop 元素：%d \n", itm->num);
+//    GETTOPSLINK(top, &itm);
+//    printf("栈顶 元素：%d \n", itm->num);
+//    PRINTSTACK(top);
+//    int b = CheckCode("/Users/zhaoqianyu/C_DR_Learn/C_DR_Learn/CDRLearn/CS/Day2.c");
+//    if (b) {
+//        printf("格式正确 \n");
+//    }else{
+//        printf("格式错误 \n");
+//    }
+//    printf("进制转换 \n");
+//    Conversion(1024);
+//    CONVERSIONLINK(1024);
+//    RECCURRESIVE(2, 5);
+//    int res = Reccurresive(2, 5);
+//    printf("%d \n", res);
     const int n=8;
     int a[n][MaxN] = {
         {1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 0, 0, 1, 1, 0, 1, 1},
-        {1, 1, 0, 0, 1, 1, 0, 1},
-        {1, 0, 1, 1, 0, 0, 0, 1},
+        {1, 0, 1, 1, 1, 0, 1, 1},
+        {1, 0, 1, 1, 0, 1, 0, 1},
         {1, 1, 0, 1, 0, 1, 0, 1},
         {1, 0, 1, 1, 0, 1, 0, 1},
         {1, 1, 0, 0, 1, 1, 0, 1},
+        {1, 1, 1, 1, 1, 1, 0, 1},
         {1, 1, 1, 1, 1, 1, 1, 1}};
     MAZE(a, n, n);
+    printf("-------------------\n");
+    Maze(a, n, n);
 }

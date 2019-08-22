@@ -39,12 +39,12 @@ int main(int argc, char * argv[]) {
 //    IntroducePractice(argc, argv);
 //    DRDay2();
 //    DRDay3(argc, argv);
-    ArrayPractice(argc, argv);
+//    ArrayPractice(argc, argv);
 //    OrderStackMain(argc, argv);
 //    LinkStackMain(argc, argv);
 //    OrderQueueMain(argc, argv);
 //    LinkQueueMain(argc, argv);
-//    SQPracticeMain(argc, argv);
+    SQPracticeMain(argc, argv);
 //    BTreeLinkMain(argc, argv);
 //    BTreePracticeMain(argc, argv);
 //    GraphExampleMain(argc, argv);

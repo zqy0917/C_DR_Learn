@@ -11,6 +11,38 @@
 
 const int M = 1000000;
 
+typedef struct Elem{
+    int n;
+    int org;
+    int help;
+    int tar;
+    int via;
+}SElemType, *SElem;
+#define ELEMLEN sizeof(SElemType)
+
+typedef struct node{
+    SElem data;
+    struct node *link;
+}STNode, *STLink;
+#define STLINKLEN sizeof(STNode)
+
+typedef struct QElem{
+    int num;
+}QElemType, *QElem;
+#define SIZEELEM sizeof(QElemType)
+
+typedef struct qnode{
+    QElem data;
+    struct qnode *link;
+}QNode, *QLink;
+#define SIZEQNODE sizeof(QNode)
+
+typedef struct stnode{
+    int data;
+    struct stnode *link;
+}SNode, *SLink;
+#define SIZESNODE sizeof(SNode)
+
 // 堆栈编写非递归算法，十进制转 r 进制（2<=r<=9）
 static void CONVERT(int num, int r){
     int STACK[M], top=-1;
@@ -22,12 +54,45 @@ static void CONVERT(int num, int r){
         printf("%d", STACK[top--]);
     }
     printf("\n");
-    
+}
+
+// 链接对栈十进制num转r进制
+static void JinzhiTransform(int num, int r){
+    SLink top=NULL, k=NULL;
+    while (num > 0) {
+        k = malloc(STLINKLEN);
+        k->data = num % r;
+        k->link = NULL;
+        k->link = top;
+        top = k;
+        num /= r;
+    }
+    while (top != NULL) {
+        printf("%d", top->data);
+        k = top;
+        top = top->link;
+        free(k);
+    }
+    printf("\n");
 }
 
 static void practice1(){
-    int num = 10;
-    CONVERT(num, 5);
+    int num = 19950823;
+    JinzhiTransform(num, 8);
+}
+
+int Function2(int n){
+    int STACK[M], top=-1, res=1;
+    STACK[++top] = n;
+    while (top >= 0) {
+        if (n/2 != 0) {
+            STACK[++top] = n/2;
+            n /= 2;
+        }else{
+            res *= STACK[top--];
+        }
+    }
+    return res;
 }
 
 int FUNCTION(int n){
@@ -43,8 +108,28 @@ int FUNCTION(int n){
 }
 
 static void practice2(){
-    int sum = FUNCTION(5);
+    int sum = Function2(59);
     printf("函数值：%d \n", sum);
+}
+
+static int ACKRecursion2(int m, int n){
+    int STACK[M], top=-1;
+    STACK[++top] = m;
+    while (top >= 0) {
+        if (m == 0) {
+            n += 1;
+            m = STACK[top--];
+        }else{
+            if (n == 0) {
+                m--;
+                n = 1;
+            }else{
+                STACK[++top] = m-1;
+                n--;
+            }
+        }
+    }
+    return n;
 }
 
 // Ackerman 函数（递归）
@@ -85,8 +170,29 @@ static void practice3(){
     int m=2,n=30,res;
     res = ACKRecursion(m, n);
     printf("Ackerman 递归函数值：%d \n", res);
-    res = ACKNORecursion(m, n);
+    res = ACKRecursion2(m, n);
     printf("Ackerman 非递归函数值：%d \n", res);
+}
+
+int Gcd2(int m, int n){
+    int tmp;
+    while (1) {
+        if (m < 0) {
+            tmp = m;
+            m = n;
+            n = tmp;
+        }else{
+            if (n == 0) {
+                n = m;
+                break;
+            }else{
+                tmp = m % n;
+                m = n;
+                n = tmp;
+            }
+        }
+    }
+    return n;
 }
 
 // 非递归编写m，n最大公约数
@@ -145,21 +251,6 @@ void MOVE(int n, int org, int tar){
     char c=org+'A',t=tar+'A';
     printf("将第 %d 个盘子从：%c, 挪到：%c \n", n, c, t);
 }
-
-typedef struct Elem{
-    int n;
-    int org;
-    int help;
-    int tar;
-    int via;
-}SElemType, *SElem;
-#define ELEMLEN sizeof(SElemType)
-
-typedef struct node{
-    SElem data;
-    struct node *link;
-}STNode, *STLink;
-#define STLINKLEN sizeof(STNode)
 
 static void INITIALSLINK(STLink *top){
     *top = NULL;
@@ -263,17 +354,6 @@ static void practice6(){
     Hanoi2(3, 0, 1, 2);
     printf("一共走了 %d 步\n", aaa);
 }
-
-typedef struct QElem{
-    int num;
-}QElemType, *QElem;
-#define SIZEELEM sizeof(QElemType)
-
-typedef struct qnode{
-    QElem data;
-    struct qnode *link;
-}QNode, *QLink;
-#define SIZEQNODE sizeof(QNode)
 
 static void INITQUEUE(QLink *rear){
     *rear = NULL;

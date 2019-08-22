@@ -42,22 +42,34 @@ int ADDQ(QElemType QUEUE[], int *rear, QElem item){
 }
 
 // 改造成循环队列
-int ADDCQ(QElemType QUEUE[], int front, int *rear, QElem item){
-    if (((*rear)+1)%M == front) {
+
+void InitCQUEUE(QElemType QUEUE[], int *front, int *rear){
+    *front = *rear = 0;
+}
+
+int ADDCQ(QElemType QUEUE[], int front, int *rear, QElem item, int QueueLen){
+    int r = *rear;
+    if ((r+1)%QueueLen == front) {
+        printf("队列下溢 \n");
         return 0;
     }else{
-        QUEUE[++(*rear) % M] = *item;
+        r = (r+1) % QueueLen;
+        QUEUE[r] = *item;
+        *rear = r;
         return 1;
     }
 }
 
-int DELCQ(QElemType QUEUE[], int *front, int rear, QElem *item){
+int DELCQ(QElemType QUEUE[], int *front, int rear, QElem *item, int QueueLen){
     if (*front == rear) {
+        printf("队列上溢 \n");
         *item = NULL;
         return 0;
     }else{
-        *front = ((*front)+1) % M;
-        *item = &QUEUE[*front];
+        *front = ((*front)+1) % QueueLen;
+        if (item) {
+            *item = &QUEUE[*front];
+        }
         return 1;
     }
 }
@@ -84,21 +96,50 @@ static void PRINTQUEUE(QElemType QUEUE[], int front, int rear){
     }
 }
 
-void OrderQueueMain(int argc, char *argv[]){
-    QElemType QUEUE[M];
-    int front,rear;
-    INITQUEUE(QUEUE, &front, &rear);
-    int i;
-    for (i=1; i<=10; i++) {
-        QElem it = GETSELEM(i);
-        ADDQ(QUEUE, &rear, it);
+static void PRINTCQUEUE(QElemType QUEUE[], int front, int rear, int queueLen){
+    printf("从队头开始打印 \n");
+    for (int i=front+1; i!=rear+1; i++) {
+        printf("num: %d \n", QUEUE[i].num);
+        if (i == queueLen-1) {
+            i = -1;
+        }
     }
-    QElem itm;
-    DELQ(QUEUE, &front, rear, &itm);
-    printf("出队列：%d \n", itm->num);
-    GETQ(QUEUE, front, rear, &itm);
-    printf("对头元素：%d \n", itm->num);
-    PRINTQUEUE(QUEUE, front, rear);
+}
+
+void OrderQueueMain(int argc, char *argv[]){
+//    QElemType QUEUE[M];
+//    int front,rear;
+//    INITQUEUE(QUEUE, &front, &rear);
+//    int i;
+//    for (i=1; i<=10; i++) {
+//        QElem it = GETSELEM(i);
+//        ADDQ(QUEUE, &rear, it);
+//    }
+//    QElem itm;
+//    DELQ(QUEUE, &front, rear, &itm);
+//    printf("出队列：%d \n", itm->num);
+//    GETQ(QUEUE, front, rear, &itm);
+//    printf("对头元素：%d \n", itm->num);
+//    PRINTQUEUE(QUEUE, front, rear);
+    const int queueLen = 10;
+    QElemType QUEUE[queueLen];
+    int front,rear;
+    InitCQUEUE(QUEUE, &front, &rear);
+    int i;
+    for (i=1; i<=queueLen-1; i++) {
+        QElem it = GETSELEM(i);
+        ADDCQ(QUEUE, front, &rear, it, queueLen);
+    }
+    DELCQ(QUEUE, &front, rear, NULL, queueLen);
+    DELCQ(QUEUE, &front, rear, NULL, queueLen);
+    QElem it = GETSELEM(-100);
+    ADDCQ(QUEUE, front, &rear, it, queueLen);
+    ADDCQ(QUEUE, front, &rear, it, queueLen);
+    ADDCQ(QUEUE, front, &rear, it, queueLen);
+    DELCQ(QUEUE, &front, rear, NULL, queueLen);
+    ADDCQ(QUEUE, front, &rear, it, queueLen);
+//    ADDCQ(QUEUE, front, &rear, it, queueLen);
+    PRINTCQUEUE(QUEUE, front, rear, queueLen);
 }
 
 
