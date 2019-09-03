@@ -60,6 +60,29 @@ BTREE CreateTree(){
     return NULL;
 }
 
+BTREE CreateTreeWithArray2(int BT[], int n){
+    BTREE t,PTR[n],root=malloc(SIZENODE);
+    root->data = BT[0];
+    root->lchild = root->rchild = NULL;
+    PTR[0] = root;
+    int i,p;
+    for (i=1; i<n; i++) {
+        if (BT[i] != 0) {
+            t = malloc(SIZENODE);
+            t->lchild = t->rchild = NULL;
+            t->data = BT[i];
+            PTR[i] = t;
+            p = (i-1)/2;
+            if (i == 2*p+1) {
+                PTR[p]->lchild = t;
+            }else{
+                PTR[p]->rchild = t;
+            }
+        }
+    }
+    return root;
+}
+
 BTREE CreateTreeWithArray(int BT[], int n){
     BTREE t,PTR[n],root = malloc(SIZENODE);
     root->data = BT[0];
@@ -84,6 +107,17 @@ BTREE CreateTreeWithArray(int BT[], int n){
 }
 
 // 递归求叶子结点数目
+int GetLeafNodeRecursion2(BTREE root){
+    if (root == NULL) {
+        return 0;
+    }
+    if (root->lchild == NULL && root->rchild == NULL) {
+        return 1;
+    }
+    return GetLeafNodeRecursion2(root->rchild) + GetLeafNodeRecursion2(root->lchild);
+}
+
+
 int GetLeafNodeRecursion(BTREE root){
     if (root == NULL) {
         return 0;
@@ -97,6 +131,14 @@ int GetLeafNodeRecursion(BTREE root){
 static int max(int a, int b){
     return a>b?a:b;
 }
+
+int GetMaxDepth2(BTREE T){
+    if (T == NULL) {
+        return 0;
+    }
+    return max(GetMaxDepth2(T->lchild),GetMaxDepth2(T->rchild))+1;
+}
+
 
 int GetMaxDepth(BTREE T){
     if (T == NULL) {
@@ -119,10 +161,10 @@ void Attribute(){
     BTREE tree;
     const int n=15;
     int BT[n] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    tree = CreateTreeWithArray(BT, n);
-    int leafCount = GetLeafNodeRecursion(tree);
+    tree = CreateTreeWithArray2(BT, n);
+    int leafCount = GetLeafNodeRecursion2(tree);
     printf("叶子结点个数: %d \n", leafCount);
-    int depth = GetMaxDepth(tree);
+    int depth = GetMaxDepth2(tree);
     printf("深度: %d \n", depth);
 }
 
@@ -136,6 +178,21 @@ void PreOrder(BTREE T){
         Visit(T);
         PreOrder(T->lchild);
         PreOrder(T->rchild);
+    }
+}
+
+// 非递归算法对二叉树前序遍历
+void PreOrder3(BTREE T){
+    BTREE STACK[MAX], p=T;
+    int top=-1;
+    while (p != NULL || top >= 0) {
+        while (p != NULL) {
+            Visit(p);
+            STACK[++top] = p;
+            p = p->lchild;
+        }
+        p = STACK[top--];
+        p = p->rchild;
     }
 }
 
@@ -163,6 +220,20 @@ void InOrder(BTREE T){
     }
 }
 
+void InOrder3(BTREE T){
+    BTREE STACK[MAX], p=T;
+    int top=-1;
+    while (p != NULL || top >= 0) {
+        while (p != NULL) {
+            STACK[++top] = p;
+            p = p->lchild;
+        }
+        p = STACK[top--];
+        Visit(p);
+        p = p->rchild;
+    }
+}
+
 // 非递归算法对二叉树中序遍历
 void InOrder2(BTREE T){
     BTREE STACK[MAX], p=T;
@@ -184,6 +255,33 @@ void PostOrder(BTREE T){
         PostOrder(T->lchild);
         PostOrder(T->rchild);
         Visit(T);
+    }
+}
+
+// 非递归算法对二叉树后序遍历
+void PostOrder3(BTREE T){
+    BTREE STACK1[MAX], p=T;
+    int STACK2[MAX], top=-1, flag;
+    while (p != NULL || top >= 0) {
+        while (p != NULL) {
+            STACK1[++top] = p;
+            if (p->rchild != NULL) {
+                STACK2[top] = 0;
+            }else{
+                STACK2[top] = 1;
+            }
+            p = p->lchild;
+        }
+        p = STACK1[top];
+        flag = STACK2[top];
+        if (flag) {
+            Visit(p);
+            top--;
+            p = NULL;
+        }else{
+            STACK2[top] = 1;
+            p = p->rchild;
+        }
     }
 }
 
@@ -217,6 +315,26 @@ void PostOrder2(BTREE T){
     }
 }
 
+void LayerOrder2(BTREE T){
+    if (!T) {
+        return;
+    }
+    BTREE QUEUE[MAX], p=NULL;
+    int front=-1,rear=-1;
+    QUEUE[++rear] = T;
+    while (front < rear) {
+        p = QUEUE[++front];
+        Visit(p);
+        if (p->lchild != NULL) {
+            QUEUE[++rear] = p->lchild;
+        }
+        if (p->rchild != NULL) {
+            QUEUE[++rear] = p->rchild;
+        }
+    }
+    
+}
+
 // 层次遍历
 void LayerOrder(BTREE T){
     BTREE QUEUE[MAX],p=T;
@@ -238,6 +356,21 @@ void LayerOrder(BTREE T){
     }
 }
 
+void LayerOrder4(BTREE T){
+    if (T) {
+        Visit(T);
+        if (T->lchild) {
+            Visit(T->lchild);
+        }
+        if (T->rchild) {
+            Visit(T->rchild);
+        }
+        LayerOrder4(T->lchild);
+        LayerOrder4(T->rchild);
+    }
+}
+
+
 // 二叉树遍历
 void Orders(){
     BTREE tree;
@@ -252,14 +385,14 @@ void Orders(){
     PostOrder(tree);/* 4 5 2 6 7 3 1 */
     printf("\n\n***************************\n\n");
     printf("前序遍历非递归：\n");
-    PreOrder2(tree);/* 1 2 4 5 3 6 7 */
+    PreOrder3(tree);/* 1 2 4 5 3 6 7 */
     printf("\n中序遍历非递归：\n");
-    InOrder2(tree);/* 4 2 5 1 6 3 7 */
+    InOrder3(tree);/* 4 2 5 1 6 3 7 */
     printf("\n后序遍历非递归：\n");
-    PostOrder2(tree);/* 4 5 2 6 7 3 1 */
+    PostOrder3(tree);/* 4 5 2 6 7 3 1 */
     printf("\n\n***************************\n\n");
     printf("层次遍历：\n");
-    LayerOrder(tree);
+    LayerOrder2(tree);
     printf("\n");
 }
 
@@ -273,6 +406,58 @@ int SIMILAR(BTREE T1, BTREE T2){
     return 0;
 }
 
+int SameTree(BTREE T1, BTREE T2){
+    if (!T1 && !T2) {
+        return 1;
+    }
+    if (T1 && T2 && T1->data == T2->data) {
+        if (SameTree(T1->lchild, T2->lchild) && SameTree(T1->rchild, T2->rchild)) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void BuildTree2(BTREE *tree){
+    BTREE STACK[MAX], T, p;
+    int top=-1;
+    char ch;
+    scanf("%c", &ch);
+    p = malloc(SIZENODE);
+    p->data = ch-'a'+1;
+    STACK[++top] = p;
+    *tree = p;
+    T = p;
+    while (T != NULL || top >= 0) {
+        while (T != NULL) {
+            scanf("%c", &ch);
+            if (ch == ' ') {
+                T = NULL;
+            }else{
+                p = malloc(SIZENODE);
+                p->data = ch-'a'+1;
+                p->rchild = p->lchild = NULL;
+                STACK[++top] = p;
+                T->lchild = p;
+                T = p;
+            }
+        }
+        T = STACK[top--];
+        scanf("%c", &ch);
+        if (ch == ' ') {
+            T = NULL;
+        }else{
+            p = malloc(SIZENODE);
+            p->data = ch-'a'+1;
+            p->rchild = p->lchild = NULL;
+            STACK[++top] = p;
+            T->rchild = p;
+            T = p;
+        }
+    }
+    
+}
+
 void BuildTree(BTREE *tree){
     char ch;
     scanf("%c", &ch);
@@ -284,6 +469,33 @@ void BuildTree(BTREE *tree){
         BuildTree(&((*tree)->lchild));
         BuildTree(&((*tree)->rchild));
     }
+}
+
+void DESTROYBT2(BTREE *T){
+    BTREE STACK1[MAX],p=*T;
+    int top=-1, STACK2[MAX], flag;
+    while (p != NULL || top >= 0) {
+        while (p != NULL) {
+            STACK1[++top] = p;
+            if (p->rchild != NULL) {
+                STACK2[top] = 0;
+            }else{
+                STACK2[top] = 1;
+            }
+            p = p->lchild;
+        }
+        p = STACK1[top];
+        flag = STACK2[top];
+        if (flag) {
+            free(p);
+            top--;
+            p = NULL;
+        }else{
+            p = p->rchild;
+            STACK2[top] = 1;
+        }
+    }
+    *T = NULL;
 }
 
 void DESTROYBT(BTREE *T){
@@ -317,6 +529,35 @@ int EqualBT(BTREE T1, BTREE T2){
         return EqualBT(T1->lchild, T2->lchild) && EqualBT(T1->rchild, T2->rchild);
     }
     return 0;
+}
+
+int DepthBT2(BTREE T){
+    BTREE STACK1[MAX], p=T;
+    int STACK2[MAX], top=-1, flag, maxDepth=0;
+    while (p != NULL || top >= 0) {
+        while (p != NULL) {
+            STACK1[++top] = p;
+            if (p->rchild) {
+                STACK2[top] = 0;
+            }else{
+                STACK2[top] = 1;
+            }
+            p = p->lchild;
+        }
+        p = STACK1[top];
+        flag = STACK2[top];
+        if (flag) {
+            if (top+1 > maxDepth) {
+                maxDepth = top+1;
+            }
+            p = NULL;
+            top--;
+        }else{
+            STACK2[top] = 1;
+            p = p->rchild;
+        }
+    }
+    return maxDepth;
 }
 
 int DepthBT(BTREE T)
@@ -412,15 +653,15 @@ void ExchangeBT(BTREE T){
     QUEUE[0] = T;
     while (front != rear) {
         p = QUEUE[++front];
-        tmp = p->lchild;
-        p->lchild = p->rchild;
-        p->rchild = tmp;
         if (p->lchild != NULL) {
             QUEUE[++rear] = p->lchild;
         }
         if (p->rchild != NULL) {
             QUEUE[++rear] = p->rchild;
         }
+        tmp = p->lchild;
+        p->lchild = p->rchild;
+        p->rchild = tmp;
     }
 }
 
@@ -507,7 +748,7 @@ BTREE SearchBSTRecursion(BTREE T, int item){
 
 void TreeBasicOperat(){
     BTREE T,T2;
-    BuildTree(&T);
+    BuildTree2(&T);
     T2 = CopyBT(T);
     int e;
     e = EqualBT(T, T2);
@@ -533,6 +774,87 @@ void TreeBasicOperat(){
     printf("\n");
 }
 
+void InsertSortTree(BTREE *T, int item){
+    BTREE node = malloc(SIZENODE), p, r=NULL;
+    node->lchild = node->rchild = NULL;
+    node->data = item;
+    int flag=0;
+    if (*T == NULL) {
+        *T = node;
+    }else{
+        p = *T;
+        while (p != NULL) {
+            r = p;
+            if (item < p->data) {
+                p = p->lchild;
+                flag = 0;
+            }else{
+                p = p->rchild;
+                flag = 1;
+            }
+        }
+        if (flag) {
+            r->rchild = node;
+        }else{
+            r->lchild = node;
+        }
+    }
+}
+
+void InsertSortTreeRecursive(BTREE *T, int item){
+    if (*T == NULL) {
+        BTREE node = malloc(SIZENODE);
+        node->lchild = node->rchild = NULL;
+        node->data = item;
+        *T = node;
+    }else{
+        if (item < (*T)->data) {
+            InsertSortTreeRecursive(&(*T)->lchild, item);
+        }else{
+            InsertSortTreeRecursive(&(*T)->rchild, item);
+        }
+    }
+}
+
+BTREE SortTree2(int nodes[], int n){
+    BTREE T=NULL;
+    int i;
+    for (i=0; i<n; i++) {
+        InsertSortTreeRecursive(&T, nodes[i]);
+    }
+    return T;
+}
+
+BTREE SearchBST(BTREE T, int item){
+    BTREE p = T;
+    while (p != NULL) {
+        if (p->data == item) {
+            return p;
+        }else if (item < p->data) {
+            p = p->lchild;
+        }else if (item >= p->data) {
+            p = p->rchild;
+        }
+    }
+    return NULL;
+}
+
+BTREE SearchBSTRecursive(BTREE T, int item){
+    if (T == NULL) {
+        return NULL;
+    }else{
+        if (T->data == item) {
+            return T;
+        }else{
+            if (item < T->data) {
+                return SearchBSTRecursive(T->lchild, item);
+            }else{
+                return SearchBSTRecursive(T->rchild, item);
+            }
+        }
+    }
+}
+
 void SortBTreeOpeart(){
     const int n=8;
     int A[n] = {4, 2, 5, 2, 1, 6, 3, 7};
@@ -541,7 +863,7 @@ void SortBTreeOpeart(){
      1 2 2 3 4 5 6 7
      1 3 2 2 7 6 5 4
      */
-    BTREE T = SortTree(A, n);
+    BTREE T = SortTree2(A, n);
     PreOrder(T);
     printf("\n");
     InOrder(T);
@@ -550,7 +872,7 @@ void SortBTreeOpeart(){
     printf("\n");
     int depth = DepthBT(T);
     printf("深度： %d \n", depth);
-    BTREE ST = SearchBSTRecursion(T, 2);
+    BTREE ST = SearchBSTRecursive(T, 2);
     if (ST) {
         printf("查找到的值： %d \n", ST->data);
     }else{
@@ -560,6 +882,7 @@ void SortBTreeOpeart(){
 
 int BTreeLinkMain(int argc, char *argv[])
 {
+    printf("\n");
 //    CreateTreeWithInput();
 //    Attribute();
 //    Orders();

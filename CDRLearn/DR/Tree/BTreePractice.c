@@ -205,6 +205,34 @@ static void PrintAncestor(BTREE T, int item){
     printf("\n");
 }
 
+void PrintAncestor2(BTREE T, int item){
+    BTREE QUEUE[MAX];
+    int front=-1, rear=-1;
+    while (T != NULL) {
+        if (T->data == item) {
+            break;
+        }
+        QUEUE[++rear] = T;
+        if (item < T->data) {
+            T = T->lchild;
+        }else {
+            T = T->rchild;
+        }
+    }
+    if (T == NULL) {
+        printf("你丫的没祖先");
+    }else{
+        if (rear==front) {
+            printf("你是根结点");
+        }else{
+            while (front < rear) {
+                printf("%d ", QUEUE[++front]->data);
+            }
+        }
+    }
+    printf("\n");
+}
+
 /* 打印 item的祖先结点(非递归) */
 static void Practice17(){
     const int n=9;
@@ -213,7 +241,7 @@ static void Practice17(){
     printf("前序遍历: \n");
     LayerOrder(T);
     printf("祖先结点: \n");
-    PrintAncestor(T, 1);
+    PrintAncestor2(T, 4);
 }
 
 // 求 T 中 p 所指节点双亲节点，递归,适合层次遍历
@@ -238,13 +266,36 @@ BTREE GetParent(BTREE T, int item){
     return NULL;
 }
 
+
+BTREE GetParent2(BTREE T, int item){
+    if ((T->lchild && T->lchild->data == item) || (T->rchild && T->rchild->data == item)) {
+        return T;
+    }
+    BTREE p=NULL;
+    if (T->lchild) {
+        p = GetParent2(T->lchild, item);
+        if (p) {
+            return p;
+        }
+    }
+    if (T->rchild) {
+        p = GetParent2(T->rchild, item);
+        if (p) {
+            return p;
+        }
+    }
+    return NULL;
+}
+
+
 static void Practice13(){
     const int n=9;
     int A[n] = {4, 11, 5, 3, 9, 6, 2, 10, 2};
     BTREE T = BuildTree(A, n);
     printf("前序遍历: \n");
     LayerOrder(T);
-    BTREE parent = GetParent(T, 3);
+    BTREE parent;
+    parent = GetParent(T, 2);
     if (parent != NULL) {
         printf("Parent: %d \n", parent->data);
     }else{
@@ -343,15 +394,58 @@ BTREE FindNode(BTREE T, int item){
     return NULL;
 }
 
+// 后序遍历求深度
+static int GetDepth2(BTREE T){
+    BTREE STACK1[MAX], p=T;
+    int STACK2[MAX], top=-1, flag, maxDepth=0;
+    while (p != NULL || top >= 0) {
+        while (p != NULL) {
+            STACK1[++top] = p;
+            if (p->rchild == NULL) {
+                STACK2[top] = 1;
+            }else{
+                STACK2[top] = 0;
+            }
+            p = p->lchild;
+        }
+        p = STACK1[top];
+        flag = STACK2[top];
+        if (flag) {
+            if (top+1 > maxDepth) {
+                maxDepth = top+1;
+            }
+            p = NULL;
+            top--;
+        }else{
+            STACK2[top] = 1;
+            p = p->rchild;
+        }
+    }
+    return maxDepth;
+}
+
 static void Pracrtice10(){
     const int n=9;
     int A[n] = {4, 11, 5, 3, 9, 6, 2, 10, 2};
     BTREE T = BuildTree(A, n);
     printf("前序遍历: \n");
     LayerOrder(T);
-    BTREE d = FindNode(T, 5);
+    BTREE d;
+    d = FindNode(T, 5);
     if (d) {
-        printf("Depth: %d \n", GetDepth(d));
+        printf("Depth: %d \n", GetDepth2(d));
+    }else{
+        printf("没找到 \n");
+    }
+    d = FindNode(T, 2);
+    if (d) {
+        printf("Depth: %d \n", GetDepth2(d));
+    }else{
+        printf("没找到 \n");
+    }
+    d = FindNode(T, 4);
+    if (d) {
+        printf("Depth: %d \n", GetDepth2(d));
     }else{
         printf("没找到 \n");
     }
@@ -396,13 +490,43 @@ static int Layer2(BTREE T, int item, int d){
     }
 }
 
+int maxValue(int value1, int value2){
+    return value1 > value2 ? value1 : value2;
+}
+
+int Layer3(BTREE T, int item){
+    int layer=0;
+    if (T->data == item) {
+        return 1;
+    }else{
+        if (T->lchild) {
+            layer = Layer3(T->lchild, item);
+            if (layer) {
+                return layer+1;
+            }
+        }
+        if (T->rchild) {
+            layer = Layer3(T->rchild, item);
+            if (layer) {
+                return layer+1;
+            }
+        }
+        return 0;
+    }
+}
+
 static void Pracrtice9(){
     const int n=9;
     int A[n] = {4, 11, 5, 3, 9, 6, 2, 10, 2};
     BTREE T = BuildTree(A, n);
     printf("前序遍历: \n");
     LayerOrder(T);
-    int layer = Layer2(T, 40, 1);
+    int layer;
+    layer = Layer3(T, 4);
+    printf("层次：%d \n", layer);
+    layer = Layer2(T, 110, 1);
+    printf("层次：%d \n", layer);
+    layer = Layer(T, 4);
     printf("层次：%d \n", layer);
     
 }
@@ -477,16 +601,46 @@ static int JudgePerfectBTree(BTREE T){
     return b;
 }
 
+static int JudgePerfectBTree2(BTREE T){
+    BTREE QUEUE[MAX], p=T;
+    int front=-1, rear=-1, flag=0, b=1;
+    QUEUE[++rear] = p;
+    while (front < rear) {
+        p = QUEUE[++front];
+        if (!p->lchild && p->rchild) {
+            b = 0;
+            break;
+        }
+        if ((p->lchild && !p->rchild) || (!p->lchild && !p->rchild)) {
+            flag = 1;
+        }
+        if (p->lchild && p->rchild && flag) {
+            b = 0;
+            break;
+        }
+        if (p->lchild) {
+            QUEUE[++rear] = p->lchild;
+        }
+        if (p->rchild) {
+            QUEUE[++rear] = p->rchild;
+        }
+    }
+    return b;
+}
+
 static void Practice8(){
     const int n=7;
-    int A[n] = {8, 6, 11, 7, 3, 9, 11};
+    int A[n] = {8, 6, 11, 7, 3, 10, 11};
     BTREE T = BuildTree(A, n);
     LayerOrder(T);
-    int b = JudgePerfectBTree(T);
+    int b;
+    b = JudgePerfectBTree(T);
+    printf("Prefect: %d \n", b);
+    b = JudgePerfectBTree2(T);
     printf("Prefect: %d \n", b);
 }
 
-// 前序中序恢复树 🔥🔥🔥
+// 前序中序恢复树 🔥🔥🔥  🔥🔥🔥
 BTREE RecoverBTree(int Preod[], int Inod[], int n){
     
     return NULL;
@@ -519,6 +673,8 @@ static void PrintAllParent(BTREE T, int item){
                         printf("%d ", STACK1[flag]->data);
                     }
                     printf("\n");
+                }else{
+                    printf("你丫的没祖先\n");
                 }
                 return;
             }
@@ -531,12 +687,51 @@ static void PrintAllParent(BTREE T, int item){
     }
 }
 
+
+static void PrintAncestors(BTREE T, int item){
+    BTREE STACK1[MAX], p=T;
+    int STACK2[MAX], top=-1, flag;
+    while (p || top >= 0) {
+        while (p) {
+            STACK1[++top] = p;
+            if (p->rchild) {
+                STACK2[top] = 0;
+            }else{
+                STACK2[top] = 1;
+            }
+            p = p->lchild;
+        }
+        flag = STACK2[top];
+        p = STACK1[top];
+        if (flag) {
+            top--;
+            if (p->data == item) {
+                break;
+            }
+            p = NULL;
+        }else{
+            STACK2[top] = 1;
+            p = p->rchild;
+        }
+    }
+    if (top >= 0) {
+        for (flag=0; flag<=top; flag++) {
+            printf("%d ", STACK1[flag]->data);
+        }
+        printf("\n");
+    }else{
+        printf("你丫的没祖先\n");
+    }
+}
+
 static void Practice6(){
     const int n=9;
     int A[n] = {4, 11, 5, 3, 9, 6, 2, 10, 2};
     BTREE T = BuildTree(A, n);
     LayerOrder(T);
-    PrintAllParent(T, 4);
+    PrintAllParent(T, 12);
+    PrintAncestors(T, 12);
+    
 }
 
 typedef struct tNode{
@@ -585,16 +780,53 @@ static int OneCount(BTREE  T){
     return n;
 }
 
+static int OneCount2(BTREE T){
+    if (!T) {
+        return 0;
+    }
+    int sum = 0;
+    LNode top=NULL;
+    BTREE p = T;
+    Push(&top, p);
+    while (top) {
+        while (p) {
+            if ((p->lchild && !p->rchild) || (!p->lchild && p->rchild)) {
+                sum++;
+                printf("%d ", p->data);
+            }
+            Push(&top, p);
+            p = p->lchild;
+        }
+        p = top->date;
+        p = p->rchild;
+        Pop(&top);
+    }
+    return sum;
+}
+
 static void Practice5(){
     const int n=9;
     int A[n] = {4, 11, 5, 3, 9, 6, 2, 10, 2};
     BTREE T = BuildTree(A, n);
     LayerOrder(T);
-    int m = OneCount(T);
+    int m;
+    m = OneCount(T);
+    printf("度为1个数 %d \n", m);
+    m = OneCount2(T);
     printf("度为1个数 %d \n", m);
 }
 
-// 递归释放
+static void Destory2(BTREE *T){
+    if (*T == NULL) {
+        return;
+    }
+    Destory2(&(*T)->lchild);
+    Destory2(&(*T)->rchild);
+    free(*T);
+    *T = NULL;
+}
+
+
 static void Destory(BTREE *T){
     if (*T) {
         if ((*T)->lchild != NULL) {
@@ -613,7 +845,7 @@ static void Practice4(){
     int A[n] = {4, 11, 5, 3, 9, 6, 2, 10, 2};
     BTREE T = BuildTree(A, n);
     LayerOrder(T);
-    Destory(&T);
+    Destory2(&T);
     LayerOrder(T);
 }
 
@@ -632,6 +864,20 @@ static int Equally(BTREE T1, BTREE T2){
     return 0;
 }
 
+
+
+
+static int Equally2(BTREE T1, BTREE T2){
+    if (T1 && T2 && (T1->data != T2->data)) {
+        return 0;
+    }
+    if (!(T1 && T2)) {
+        return 0;
+    }
+    return Equally(T1->lchild, T2->lchild) && Equally(T1->rchild, T2->rchild);
+}
+
+
 static void Practice3(){
     const int n=9;
     int A[n] = {4, 11, 5, 3, 9, 6, 2, 10, 2};
@@ -640,8 +886,21 @@ static void Practice3(){
     BTREE T2 = BuildTree(B, n);
     LayerOrder(T1);
     LayerOrder(T2);
-    int b = Equally(T1, T2);
+    int b;
+    b = Equally(T1, T2);
     printf("是否等价：%d \n", b);
+    b = Equally2(T1, T2);
+    printf("是否等价：%d \n", b);
+}
+
+static int Similar2(BTREE T1, BTREE T2){
+    if (T1 == NULL && T2 == NULL) {
+        return 1;
+    }
+    if (T1 && T2) {
+        return Similar2(T1->lchild, T2->lchild) && Similar2(T1->rchild, T2->rchild);
+    }
+    return 0;
 }
 
 // 判断是否相似
@@ -658,12 +917,15 @@ static int Similar(BTREE T1, BTREE T2){
 static void Practice2(){
     const int n=9;
     int A[n] = {4, 11, 5, 3, 9, 6, 2, 10, 2};
-    int B[n] = {4, 11, 5, 3, 9, 6, 1, 10, 2};
+    int B[n] = {4, 11, 5, 3, 9, 6, 2, 10, 2};
     BTREE T1 = BuildTree(A, n);
     BTREE T2 = BuildTree(B, n);
     LayerOrder(T1);
     LayerOrder(T2);
-    int b = Similar(T1, T2);
+    int b;
+    b = Similar(T1, T2);
+    printf("是否相似：%d \n", b);
+    b = Similar2(T1, T2);
     printf("是否相似：%d \n", b);
 }
 
@@ -745,8 +1007,8 @@ int BTreePracticeMain(int argc, char *argv[]){
 //    Practice5();
 //    Practice4();
 //    Practice3();
-//    Practice2();
-    Practice1();
+    Practice2();
+//    Practice1();
     
     return 0;
 }

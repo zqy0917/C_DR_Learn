@@ -44,9 +44,9 @@ int main(int argc, char * argv[]) {
 //    LinkStackMain(argc, argv);
 //    OrderQueueMain(argc, argv);
 //    LinkQueueMain(argc, argv);
-    SQPracticeMain(argc, argv);
+//    SQPracticeMain(argc, argv);
 //    BTreeLinkMain(argc, argv);
-//    BTreePracticeMain(argc, argv);
+    BTreePracticeMain(argc, argv);
 //    GraphExampleMain(argc, argv);
 //    GraphPracticeMain(argc, argv);
 //    FileExampleMain(argc, argv);
