@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 #define MaxVNum 100
+#define MaxValue __INT_MAX__
 
 typedef struct edge{
     int adjvex; /* 该边终止节点在顶点结点中的位置 */
@@ -222,19 +223,19 @@ void Delete(VLink G[], int n, int u, int v);
  广度优先遍历：0 1 2 3 5 7 9 8 6  4
  */
 static void Practice7(){
-    static int n=10;
+    static int n=7;
     int i;
     VLink G[n], *v;
     for (i=0; i<n; i++) {
         v = malloc(sizeof(VLink));
         G[i] = *v;
     }
-    ADJLIST(G, n, 14);
+    ADJLIST(G, n, 9);
     int visited[n];
     BreadthFirst(G, n, visited);
-    Insert(G, n, 2, 5, 0);
+    Insert(G, n, 0, 1, 0);
     BreadthFirst(G, n, visited);
-    Delete(G, n, 2, 5);
+    Delete(G, n, 0, 1);
     BreadthFirst(G, n, visited);
 }
 
@@ -390,41 +391,118 @@ static void Convert2(int A[][MaxVNum], VLink G[], int n){
     }
 }
 
+void ConvertLinkToArray(VLink G[], int n, int B[][MaxVNum]){
+    int i, j;
+    for (i=0; i<n; i++) {
+        for (j=0; j<n; j++) {
+            B[i][j] = -1;
+        }
+    }
+    ELink *link = NULL;
+    for (i=0; i<n; i++) {
+        link = G[i].link;
+        while (link) {
+            B[i][link->adjvex] = link->weight;
+            link = link->next;
+        }
+    }
+}
+
+static void ConvertArrayToLink(int A[][MaxVNum], VLink G[], int n){
+    int i, j;
+    VLink *vl;
+    ELink *p,*r;
+    for (i=0; i<n; i++) {
+        vl = &G[i];
+        vl->inNum = 0;
+        vl->outNum = 0;
+        vl->link = NULL;
+        vl->vertex = i;
+        r = NULL;
+        for (j=0; j<n; j++) {
+            if (A[i][j] != -1) {
+                p = malloc(sizeof(ELink));
+                p->adjvex = j;
+                p->next = NULL;
+                p->weight = A[i][j];
+                if (r == NULL) {
+                    vl->link = p;
+                }else{
+                    r->next = p;
+                }
+                r = p;
+            }
+        }
+    }
+}
+
 static void Practice2(){
-    static int n=10;
+    static int n=7;
     int i,j;
     VLink G[n], *v, E[n];
     for (i=0; i<n; i++) {
         v = malloc(sizeof(VLink));
         G[i] = *v;
     }
-    ADJLIST(G, n, 14);
+    ADJLIST(G, n, 9);
     int visited[n];
     BreadthFirst(G, n, visited);
     int B[n][MaxVNum];
-    Convert(G, n, B);
+    ConvertLinkToArray(G, n, B);
     for (i=0; i<n; i++) {
         for (j=0; j<n; j++) {
             printf("%d ", B[i][j]);
         }
         printf("\n");
     }
-    Convert2(B, E, n);
+    ConvertArrayToLink(B, E, n);
     BreadthFirst(E, n, visited);
 }
 
-//
+
+static void ADJLIST2(VLink G[], int n, int e){
+    int i, vi ,vj, weight;
+    ELink *link=NULL,*k=NULL;
+    for (i=0; i<n; i++) {
+        G[i].vertex = i;
+        G[i].link = NULL;
+        G[i].inNum = 0;
+        G[i].outNum = 0;
+    }
+    for (i=0; i<e; i++) {
+        scanf("%d %d %d", &vi, &vj, &weight);
+        G[vi].outNum++;
+        G[vj].inNum++;
+        link = malloc(sizeof(ELink));
+        link->adjvex= vj;
+        link->next = NULL;
+        link->weight= weight;
+        k = G[vi].link;
+        if (!k) {
+            G[vi].link = link;
+        }else{
+            while (k->next != NULL) {
+                k = k->next;
+            }
+            k->next = link;
+        }
+    }
+}
+
+
+
 static void Practice1(){
-    static int n=10;
+    static int n=7;
     int i,j;
     VLink G[n], *v, E[n];
     for (i=0; i<n; i++) {
         v = malloc(sizeof(VLink));
         G[i] = *v;
     }
-    ADJLIST(G, n, 14);
+    ADJLIST2(G, n, 9);
     int visited[n];
     BreadthFirst(G, n, visited);
+//    DepthFirst(G, n, visited);
 }
 
 void Visit2(int v){
@@ -527,13 +605,13 @@ void PracticeCycle(){
 
 int GraphPracticeMain(int argc, char *argv[]){
     printf("Hello Graph practice \n");
-//    Practice7();
+    Practice7();
 //    Practice5();
 //    Practice4();
 //    Practice3();
 //    Practice2();
 //    Practice1();
-    PracticeCycle();
+//    PracticeCycle();
     
     return 0;
 }

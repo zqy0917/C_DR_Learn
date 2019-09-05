@@ -213,6 +213,60 @@ void BFS(VLink G[], int visited[], int v){
     printf("\n");
 }
 
+void DFS222(VLink G[], int visited[], int v){
+    Visit(G, v);
+    visited[v] = 1;
+    ELink *next = G[v].link;
+    while (next) {
+        if (visited[next->adjvex] == 0) {
+            DFS222(G, visited, next->adjvex);
+        }
+        next = next->next;
+    }
+}
+
+void DFS2222(VLink G[], int visited[], int v){
+    int STACK[MaxVNum], Vl, top=-1, el=-1;
+    STACK[++top] = v;
+    while (top >= 0) {
+        Vl = STACK[top];
+        if (visited[Vl] == 0) {
+            Visit(G, Vl);
+            visited[Vl] = 1;
+        }
+        el = NEXTADJ(G, visited, Vl);
+        if (el != -1) {
+            if (visited[el] == 0) {
+                STACK[++top] = el;
+            }
+        }else{
+            top--;
+        }
+    }
+}
+
+
+void BFS222(VLink G[], int visited[], int v){
+    int QUEUE[MaxVNum], front=-1, rear=-1, vl, nl;
+    QUEUE[++rear] = v;
+    while (front < rear) {
+        vl = QUEUE[++front];
+        if (visited[vl] == 0){
+            Visit(G, vl);
+            visited[vl] = 1;
+        }
+        nl = NEXTADJ(G, visited, vl);
+        while(nl != -1){
+            if (visited[nl] == 0) {
+                QUEUE[++rear] = nl;
+                Visit(G, nl);
+                visited[nl] = 1;
+            }
+            nl = NEXTADJ(G, visited, vl);
+        }
+    }
+}
+
 void TRAVEL_DFS(VLink G[], int visited[], int n){
     int i;
     for (i=0; i<n; i++) {
@@ -220,7 +274,7 @@ void TRAVEL_DFS(VLink G[], int visited[], int n){
     }
     for (i=0; i<n; i++) {
         if (visited[i] == 0) {
-            DFS2(G, visited, i);
+            DFS2222(G, visited, i);
         }
     }
     printf("\n");
@@ -233,7 +287,7 @@ void TRAVEL_BFS(VLink G[], int visited[], int n){
     }
     for (i=0; i<n; i++) {
         if (visited[i] == 0) {
-            BFS(G, visited, i);
+            BFS222(G, visited, i);
         }
     }
     printf("\n");
@@ -281,7 +335,7 @@ void DepthAndBreadthFirstSearch(){
         v = malloc(sizeof(VLink));
         G[i] = *v;
     }
-    ADJLIST(G, n, 14);
+    ADJLIST(G, n, 17);
     TRAVEL_DFS(G, visited, n);
     for (int i=0; i<n; i++) {
         visited[i] = 0;
@@ -358,17 +412,49 @@ void Prim(int GE[][MaxVNum], int n){
     }
 }
 
+void Prim2(int GE[][MaxVNum], int n){
+    const int start = 0;
+    int lowcost[n], target[n],i, j, minPath, k;
+    for (i=0; i<n; i++) {
+        lowcost[i] = GE[i][start];
+        target[i] = start;
+    }
+    lowcost[start] = 0;
+    for (i=0; i<n-1; i++) {
+        k=0;
+        minPath=MaxVNum;
+        for (j=0; j<n; j++) {
+            if (lowcost[j] < minPath && lowcost[j] != 0) {
+                k = j;
+                minPath = lowcost[j];
+            }
+        }
+        printf("%d->%d ", k, target[k]);
+        lowcost[k] = 0;
+        for (j=0; j<n; j++) {
+            if (lowcost[j] != 0) {
+                if (GE[j][k] < lowcost[j]) {
+                    lowcost[j] = GE[j][k];
+                    target[j] = k;
+                }
+            }
+        }
+    }
+}
+
+
+
 void PrimTest(){
     const int n=6;
     int GE[n][MaxVNum],i,j;
-    ADJMATRIX(GE, n, 10);
+    ADJMATRIX(GE, n, 20);
     for (i=0; i<n; i++) {
         for (j=0; j<n; j++) {
             printf("%d ", GE[i][j]);
         }
         printf("\n");
     }
-    Prim(GE, n);
+    Prim2(GE, n);
 }
 
 int MinDist(int s[], int dist[], int n){
@@ -427,6 +513,50 @@ void Shortest_Path_Dijkstra(int cost[][MaxVNum], int v, int n, int dist[], int p
     }
 }
 
+
+
+void Shortest_Path_Dijkstra2(int cost[][MaxVNum], int v, int n, int dist[], int path[][MaxVNum]){
+    int i, s[n], pos[n], u, j, count;
+    for (i=0; i<n; i++) {
+        s[i] = 0;
+        dist[i] = cost[v][i];
+        path[i][0] = v;
+        pos[i] = 0;
+    }
+    s[v] = 1;
+    count=1;
+    while (count < n) {
+        u = MinDist(s, dist, n);
+        if (u == -1) {
+            break;
+        }
+        s[u] = 1;
+        path[u][++pos[u]] = u;
+        count++;
+        for (i=0; i<n; i++) {
+            if (cost[u][i] == 0 || cost[u][i] >= MaxVNum || s[i] != 0) {
+                continue;
+            }
+            if (dist[u] + cost[u][i] < dist[i]) {
+                dist[i] = dist[u] + cost[u][i];
+                for (j=0; j<=pos[u]; j++) {
+                    path[i][j] = path[u][j];
+                }
+                pos[i]=pos[u];
+            }
+        }
+    }
+    
+    for (i=0; i<n; i++) {
+        printf("原点 %d 到顶点 %d 的路径长度: %-2d, ", v, i, dist[i]);
+        for (u=0; u<=pos[i]; u++) {
+            printf("%d ", path[i][u]);
+        }
+        printf("\n");
+    }
+}
+
+
 void ShortPathTest(){
     const int n=7;
     int GE[n][MaxVNum],i,j;
@@ -438,7 +568,7 @@ void ShortPathTest(){
         printf("\n");
     }
     int v=0, dist[n], path[n][MaxVNum];
-    Shortest_Path_Dijkstra(GE, v, n, dist, path);
+    Shortest_Path_Dijkstra2(GE, v, n, dist, path);
 }
 
 // 依次输入带权有向图 n 个顶点和 e 个表示边的顶点偶对，写一算法建立邻接表结构(附带顶点入度字段)
@@ -523,6 +653,59 @@ int TOPO_Judge(VLink G[], int V[], int n){
     return b;
 }
 
+
+void TopoSrot(VLink G[], int n){
+    int STACK[MaxVNum], top=-1, i, V[n], p, k;
+    ELink *link;
+    for (i=0; i<n; i++) {
+        if (G[i].indegree == 0) {
+            STACK[++top] = i;
+        }
+    }
+    i=0;
+    while (top >= 0) {
+        p = STACK[top--];
+        V[i++] = p;
+        link = G[p].link;
+        while (link) {
+            k = link->adjvex;
+            G[k].indegree--;
+            if (G[k].indegree <= 0) {
+                STACK[++top] = k;
+            }
+            link = link->next;
+        }
+    }
+    if (i == n) {
+        for (int i=0; i<n; i++) {
+            printf("%d ", V[i]);
+        }
+        printf("\n");
+    }else{
+        printf("网中存在回路！！！ \n");
+    }
+}
+
+
+int JudgeTopoSort(VLink G[], int V[], int n){
+    int i, j, k;
+    ELink *link;
+    for (i=0; i<n; i++) {
+        j = V[i];
+        if (G[j].indegree != 0) {
+            break;
+        }
+        link = G[j].link;
+        while (link) {
+            k = link->adjvex;
+            G[k].indegree--;
+            link = link->next;
+        }
+    }
+    return i == n ? 1 : 0;
+}
+
+
 void TOPO_SortTest(){
     int visited[MaxVNum]={0};
     const int n=7;
@@ -533,6 +716,7 @@ void TOPO_SortTest(){
     }
     ADJLIST_TOPO(G, n, 8);
     Component(G, visited, n);
+//    TopoSrot(G, n);
     int indegrees[n];
     for (int i=0; i<n; i++) {
         indegrees[i] = G[i].indegree;
@@ -552,7 +736,10 @@ void TOPO_SortTest(){
     for (int i=0; i<n; i++) {
         G[i].indegree = indegrees[i];
     }
-    b = TOPO_Judge(G, V, n);
+    int tmp = V[2];
+    V[2] = V[3];
+    V[3] = tmp;
+    b = JudgeTopoSort(G, V, n);
     printf("是否拓扑序列: %d \n", b);
 }
 
