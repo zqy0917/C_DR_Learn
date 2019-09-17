@@ -146,7 +146,7 @@ int HashDelete(Hashlist2 HT, int k){
 
 int FileExampleMain(int argc, char *argv[]){
     printf("Hello file!!! 2019-07-09 \n");
-//    FindNum();
+    FindNum();
     
     return 0;
 }

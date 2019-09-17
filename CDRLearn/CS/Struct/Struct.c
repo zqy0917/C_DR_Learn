@@ -6,7 +6,7 @@
 //  Copyright © 2019年 Zqy. All rights reserved.
 //
 
-#include "Day4.h"
+#include "Struct.h"
 #include <stdlib.h>
 
 struct Student {

@@ -86,17 +86,12 @@ static void Sort_DoubleArray(int K[][MaxNum], int m, int n){
             K[i][j] = C[i][j];
         }
     }
-    for (i=0; i<m; i++) {
-        for(j=0; j<n; j++){
-            printf("%d ", K[i][j]);
-        }
-        printf("\n");
-    }
 }
 
 static void Practice7(){
     const int m = 5;
     const int n = 5;
+    int i,j;
     int K[m][MaxNum] = {
         {6, 5, 3, 1, 10},
         {7, 8, 6, 7, 9},
@@ -105,6 +100,31 @@ static void Practice7(){
         {7, 8, 4, 2, 9}
     };
     Sort_DoubleArray(K, m, n);
+    for (i=0; i<m; i++) {
+        for(j=0; j<n; j++){
+            printf("%d ", K[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+
+static void Sort_Sequence2(int K[], int n){
+    int i,left=0,right=n-1,C[n];
+    for (i=0; i<n; i++){
+        if (K[i] < 0) {
+            C[left++] = K[i];
+        }
+        if (K[i] > 0) {
+            C[right--] = K[i];
+        }
+    }
+    for (i=left; i<=right; i++) {
+        C[i] = 0;
+    }
+    for (i=0; i<n; i++) {
+        K[i] = C[i];
+    }
 }
 
 /* 负数排在0前面，正数0后面 */
@@ -130,7 +150,7 @@ static void Sort_Sequence(int K[], int n){
 static void Practice6(){
     const int n = 10;
     int K[n] = {-1, 2, 0, 9, -9, 7, 0, 4, -2, 0};
-    Sort_Sequence(K, n);
+    Sort_Sequence2(K, n);
     PrintArray(K, n);
 }
 
@@ -224,13 +244,73 @@ static void LinearList_Sort(LNode list){
     
 }
 
+static void DelNode(LNode list, LNode delNode){
+    LNode lNode = delNode->llink;
+    LNode rNode = delNode->rlink;
+    lNode->rlink = rNode;
+    rNode->llink = lNode;
+    delNode->llink = delNode->rlink = NULL;
+}
+
+static void InsertNode(LNode list, LNode LastNode, LNode node){
+    LNode lNode = LastNode;
+    LNode rNode = LastNode->rlink;
+    node->llink = lNode;
+    node->rlink = rNode;
+    lNode->rlink = node;
+    rNode->llink = node;
+}
+
+// Linear list Insert-Sort
+static void Insert_Sort(LNode list){
+    LNode p=list->rlink, k, tmp;
+    int t;
+    while (p != list) {
+        t = p->data;
+        tmp = p->rlink;
+        k = p->llink;
+        while (k != list) {
+            if (k->data <= t) {
+                break;
+            }
+            k = k->llink;
+        }
+        DelNode(list, p);
+        InsertNode(list, k, p);
+        p = tmp;
+    }
+}
+
+static void SelectSort(LNode list){
+    LNode p=list, k, min, r, s=NULL;
+    while (p->rlink != NULL) {
+        min = p->rlink;
+        k = min->rlink;
+        r = min;
+        while (k != NULL) {
+            if (k->data < min->data) {
+                s = r;
+                min = k;
+            }
+            r = k;
+            k = k->rlink;
+        }
+        if (min != p->rlink) {
+            s->rlink = min->rlink;
+            min->rlink = p->rlink;
+            p->rlink = min;
+        }
+        p = min;
+    }
+}
+
 static void Practice5(){
     const int n = 10;
     int A[n] = {2, 6, 3, 1, 7, 5, 9, 10, 4, 8};
     LNode list = CREATEDLIST(A,n);
     PRINTDLIST(list);
     printf("----------------- \n");
-    LinearList_Sort(list);
+    Insert_Sort(list);
     PRINTDLIST(list);
 }
 
@@ -289,7 +369,7 @@ static void Practice4(){
     LNode list = Create_Single_List(A, n);
     Print_Single_List(list);
     printf("--------------------\n");
-    Select_Sort_SingleList(list);
+    SelectSort(list);
     Print_Single_List(list);
 }
 
@@ -310,7 +390,7 @@ static void Adjust(int K[], int i, int n){
 }
 
 static void Insert_Heap(int A[], int *n, int k){
-    int i,temp,N = *n;;
+    int i,temp,N = *n;
     for (i=N/2; i>=1; i--) {
         Adjust(A, i, N);
     }
@@ -320,21 +400,22 @@ static void Insert_Heap(int A[], int *n, int k){
     printf("\n");
     A[++N] = k;
     (*n) = N;
-    for (i = N; i>1; i/=2) {
-        if (A[i/2] < A[i]) {
-            temp = A[i];
-            A[i] = A[i/2];
-            A[i/2] = temp;
+    while (N > 1) {
+        i = N/2;
+        if (A[i] < k) {
+            A[N] = A[i];
         }else{
             break;
         }
+        N /= 2;
     }
+    A[N] = k;
 }
 
 static void Practice3(){
     int n = 10,i;
-    int K[] = {-1, 6, 5, 3, 1, 10, 7, 7, 4, 2, 8};
-    Insert_Heap(K, &n, 11);
+    int K[] = {-100, 6, 5, 3, 1, 10, 7, 7, 4, 2, 8};
+    Insert_Heap(K, &n, 12);
     for (i=1; i<=n; i++) {
         printf("%d ", K[i]);
     }

@@ -13,10 +13,13 @@
 static int compareCount=0;
 static int swipCount=0;
 
-static void swip(int K[], int i, int j){
-    int temp = K[i];
-    K[i] = K[j];
-    K[j] = temp;
+static void swip(int A[], int i, int j){
+    // 需注意 i 与 j 不可同
+    if (i != j) {
+        A[i] = A[i] ^ A[j];
+        A[j] = A[j] ^ A[i];
+        A[i] = A[i] ^ A[j];
+    }
 }
 
 // Insert sort function
@@ -157,6 +160,31 @@ static void Shell_Sort(int K[], int n){
     
 }
 
+static void Quick_Sort111(int K[], int low, int high){
+    int p=low+1, q=high, temp;
+    if (low >= high) {
+        return;
+    }
+    while (p <= q) {
+        if (K[p] > K[low] && K[q] <= K[low]) {
+            temp = K[p];
+            K[p] = K[q];
+            K[q] = temp;
+        }
+        if (K[p] <= K[low]) {
+            p++;
+        }
+        if (K[q] > K[low]) {
+            q--;
+        }
+    }
+    temp = K[q];
+    K[q] = K[low];
+    K[low] = temp;
+    Quick_Sort111(K, low, q-1);
+    Quick_Sort111(K, q+1, high);
+}
+
 // Quick sort, follow progress, My algorithm
 // 5, 6, 3, 1, 10, 7, 4, 8, 2, 9
 static void Quick_Sort(int K[], int low, int high){
@@ -192,13 +220,13 @@ static void Quick_Sort(int K[], int low, int high){
 static void Quick_Sort2(int K[], int s, int t){
     int i,j;
     if (s < t) {
+        i = s;
+        j = t+1;
         while (1) {
-            i = s;
-            j = t+1;
             do {
                 i++;
                 compareCount++;
-            } while (!(K[s] <= K[i] || i == t));
+            } while (!(K[s] < K[i] || i == t));
             do {
                 j--;
                 compareCount++;
@@ -245,6 +273,40 @@ static void Quick_Sort3(int K[], int s, int t){
         swipCount++;
         Quick_Sort3(K, s, j-1);
         Quick_Sort3(K, j+1, t);
+    }
+}
+
+// Quick sort, follow progress, unrecursive .
+// 6, 5, 3, 1, 10, 7, 4, 8, 2, 9
+static void Quick_Sort444(int K[], int s, int t){
+    int STACK1[MaxNum], STACK2[MaxNum], top=-1, p, q;
+    STACK1[++top] = s;
+    STACK2[top] = t;
+    while (top >= 0) {
+        s = STACK1[top];
+        t = STACK2[top--];
+        p = s+1;
+        q = t;
+        while (p <= q) {
+            if (K[s] < K[p] && K[s] >= K[q]) {
+                swip(K, p, q);
+            }
+            if (K[p] <= K[s]) {
+                p++;
+            }
+            if (K[q] > K[s]) {
+                q--;
+            }
+        }
+        swip(K, s, q);
+        if (s < q-1) {
+            STACK1[++top] = s;
+            STACK2[top] = q-1;
+        }
+        if (q+1 < t) {
+            STACK1[++top] = q+1;
+            STACK2[top] = t;
+        }
     }
 }
 
@@ -332,7 +394,7 @@ int SortExamplesMain(int argc, char *argv[]){
 //    int K[n] = {6, 5, 3, 1, 10, 7, 8, 4, 2, 9};
 //    int K[n] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 //    int K[n] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
-    int K[n] = {0, 6, 5, 3, 1, 10, 7, 8, 4, 2, 9};
+    int K[n] = {0, 6, 6, 3, 1, 10, 7, 8, 4, 2, 9};
     // 1  3  5  6 10
 //    Insert_Sort(K, n);
 //    Bin_Insert_Sort(K, n);
@@ -340,10 +402,10 @@ int SortExamplesMain(int argc, char *argv[]){
 //    Bubble_Sort2(K,n);
 //    Bubble_Sort1(K,n);
 //    Shell_Sort(K,n);
-//    Quick_Sort(K, 0, n-1);
+//    Quick_Sort111(K, 0, n-1);
 //    Quick_Sort2(K, 0, n-1);
 //    Quick_Sort3(K, 0, n-1);
-//    Quick_Sort4(K, 0, n-1);
+//    Quick_Sort444(K, 0, n-1);
     Heap_Sort(K, n-1);
     PrintArray(K, n);
     printf("compare: %d \n", compareCount);

@@ -6,7 +6,7 @@
 //  Copyright © 2019年 Zqy. All rights reserved.
 //
 
-#include "Day3.h"
+#include "Pointer.h"
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
@@ -334,12 +334,24 @@ void EntranceDay3(){
 //        {16, 17, 18, 19},
 //    };
 //    convert(arr, 4);
-    int n,m;
-    while (scanf("%d %d", &n, &m)) {
-        nbNb(n,m);
-        cirle(n,m);
-    }
+//    int n,m;
+//    while (scanf("%d %d", &n, &m)) {
+//        nbNb(n,m);
+//        cirle(n,m);
+//    }
 
+    const int n = 5;
+    char *strs[n] = {
+        "12345",
+        "24680",
+        "abcde",
+        "ABCED",
+        "POILK",
+    };
+    char **s;
+    for (s=strs; s<strs+n; s++) {
+        printf("%s \a\n", *s);
+    }
     
 }
 

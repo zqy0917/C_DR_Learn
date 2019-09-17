@@ -6,7 +6,7 @@
 //  Copyright © 2019年 Zqy. All rights reserved.
 //
 
-#include "Day2.h"
+#include "Array.h"
 #include <string.h>
 #include <math.h>
 //{},,,,,,()[]

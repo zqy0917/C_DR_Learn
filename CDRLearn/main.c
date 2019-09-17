@@ -8,9 +8,9 @@
 
 #include <stdio.h>
 #include <math.h>
-#include "CS/Day2.h"
-#include "CS/Day3.h"
-#include "CS/Day4.h"
+#include "CS/Array/Array.h"
+#include "CS/Pointer/Pointer.h"
+#include "CS/Struct/Struct.h"
 #include "IntroducePractice.h"
 #include "LinearTable.h"
 #include "CycleLinearTable.h"
@@ -29,12 +29,14 @@
 #include "SortExamples.h"
 #include "SortPractice.h"
 #include "PositionOperate.h"
+#include "CS2/Introduction/IntroduceExam.h"
+#include "CS2/Cycle&Condition/CyclePractice.h"
 
 int main(int argc, char * argv[]) {
     // insert code here...
     //    printPoint();
     //    EntranceDay2();
-    //    EntranceDay3();
+//        EntranceDay3();
     //    EntranceDay4();
 //    IntroducePractice(argc, argv);
 //    DRDay2();
@@ -48,12 +50,13 @@ int main(int argc, char * argv[]) {
 //    BTreeLinkMain(argc, argv);
 //    BTreePracticeMain(argc, argv);
 //    GraphExampleMain(argc, argv);
-    GraphPracticeMain(argc, argv);
+//    GraphPracticeMain(argc, argv);
 //    FileExampleMain(argc, argv);
 //    FilePracticeMain(argc, argv);
 //    SortExamplesMain(argc, argv);
 //    SortPracticeMain(argc, argv);
 //    PosOperateExamplesMain(argc, argv);
-    
+//    IntroduceExamMain(argc, argv);
+    CyclePracticeMain(argc, argv);
     return 0;
 }

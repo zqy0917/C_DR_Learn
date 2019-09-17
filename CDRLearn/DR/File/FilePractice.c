@@ -15,13 +15,7 @@ typedef struct elem{
     int key;
 }ElemType, *ElemLink;
 
-typedef struct node{
-    int key;
-    struct node *link;
-}HNode, *HNLink;
-
 typedef ElemType Hashlist1[HashMaxLen];
-typedef HNLink Hashlist2[HashMaxLen];
 
 static int Practice1(Hashlist1 HT, int i, int n, int k){
     if (i >= n) {
@@ -84,6 +78,37 @@ static int Practice3(Hashlist1 HT, int *n, int k){
     return pos;
 }
 
+
+static int InsertItem(Hashlist1 HT, int *n, int k){
+    int left=0, right=*n-1, mid, pos=-1, i;
+    ElemLink p;
+    while (left <= right) {
+        mid=(left+right)/2;
+        if (HT[mid].key == k) {
+            pos = mid;
+            break;
+        }else{
+            if (k < HT[mid].key) {
+                right = mid-1;
+            }else{
+                left = mid+1;
+            }
+        }
+    }
+    // -1 代表没找到，如果找到了就无需插入
+    if (pos == -1) {
+        pos = left;
+        for (i=*n-1; i>=pos; i--) {
+            HT[i+1] = HT[i];
+        }
+        p = malloc(sizeof(ElemType));
+        p->key = k;
+        HT[pos] = *p;
+        (*n)++;
+    }
+    return pos;
+}
+
 int FilePracticeMain(int argc, char *argv[]){
     int n=10;
     int i,pos=-1;
@@ -111,18 +136,11 @@ int FilePracticeMain(int argc, char *argv[]){
 //    }else{
 //        printf("没找到 \n");
 //    }
-    pos = Practice3(HT, &n, 13);
+    pos = InsertItem(HT, &n, 13);
     printf("pos: %d \n", pos);
     for (i=0; i<n; i++) {
         printf("%d ", HT[i].key);
     }
     printf("\n");
-    printf("%d\n", 'M'-'A'+1);
-    printf("%d\n", 'T'-'A'+1);
-    printf("%d\n", 'W'-'A'+1);
-    printf("%d\n", 'T'-'A'+1);
-    printf("%d\n", 'F'-'A'+1);
-    printf("%d\n", 'S'-'A'+1);
-    printf("%d\n", 'S'-'A'+1);
     return 0;
 }
