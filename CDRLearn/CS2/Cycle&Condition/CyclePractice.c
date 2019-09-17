@@ -178,8 +178,80 @@ static void Practice21(){
     printf("%d%d\n", sum/10%10, sum%10);
 }
 
+static int calculateJieCheng(int n){
+    int i,sum=1;
+    for (i=1; i<=n; i++) {
+        sum *= i;
+    }
+    return sum;
+}
+
+static double calculateMi(double x, int n){
+    double sum=1;
+    int i,t=n;
+    t=t>0?t:t*-1;
+    for (i=1; i<=t; i++) {
+        sum *= x;
+    }
+    if (n < 0) {
+        sum = 1/sum;
+    }
+    return sum;
+}
+
+static double Sin(double x, int m){
+    int i,j=1;
+    double sum=0;
+    for (i=1; i<=m; i+=2) {
+        sum += calculateMi(x, i)*j/calculateJieCheng(i);
+        j *= -1;
+    }
+    return sum;
+}
+
+static double Func(double x, int m){
+    int i=0;
+    double sum=0,t,tmp;
+    while (1) {
+        t = calculateMi(-1, i)*calculateMi(x, 2*i)/calculateJieCheng(2*i);
+        tmp = t>0?t:t*-1;
+        if (tmp < calculateMi(10, -m)) {
+            break;
+        }
+        sum += t;
+        i++;
+    }
+    return sum;
+}
+
 static void Practice22(){
-    
+    double res;
+    res = Sin(1.5707963,10);
+    printf("result: %.12lf \n", res);
+}
+
+static void Practice25(){
+    double x,res;
+    int m;
+    scanf("%lf %d", &x, &m);
+    res = Func(x, m);
+    printf("result: %.12lf \n", res);
+}
+
+static void Practice26(){
+    int n=10,i;
+    char c1,c2,c3;
+    scanf("%c\n%c", &c1, &c2);
+    getchar();
+    for (i=0; i<n; i++) {
+        scanf("%c", &c3);
+        if (c3 == c1) {
+            putchar(c2);
+        }else{
+            putchar(c3);
+        }
+    }
+    putchar('\n');
 }
 
 void CyclePracticeMain(int argc, char *argv[]){
@@ -193,5 +265,7 @@ void CyclePracticeMain(int argc, char *argv[]){
 //    Practice19();
 //    Practice20();
 //    Practice21();
-    Practice22();
+//    Practice22();
+//    Practice25();
+    Practice26();
 }
