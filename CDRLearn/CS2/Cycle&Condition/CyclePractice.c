@@ -254,6 +254,24 @@ static void Practice26(){
     putchar('\n');
 }
 
+static void Practice27(){
+    int i=18,b=0;
+    char c;
+    while (i-- > 0) {
+        c = getchar();
+        if (c == ' ') {
+            b = 1;
+            continue;
+        }else{
+            if (b == 1 && c != '\n') {
+                putchar(' ');
+            }
+            putchar(c);
+            b = 0;
+        }
+    }
+}
+
 void CyclePracticeMain(int argc, char *argv[]){
     int i;
     for (i=1; i<argc; i++) {
@@ -267,5 +285,6 @@ void CyclePracticeMain(int argc, char *argv[]){
 //    Practice21();
 //    Practice22();
 //    Practice25();
-    Practice26();
+//    Practice26();
+    Practice27();
 }
