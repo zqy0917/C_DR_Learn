@@ -13,6 +13,7 @@
 		1D3FDA4B232F3D1B00125848 /* IntroduceExam.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D3FDA4A232F3D1B00125848 /* IntroduceExam.c */; };
 		1D52A4C722E46E2A007FCCAD /* PositionOperate.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D52A4C622E46E2A007FCCAD /* PositionOperate.c */; };
 		1DAAEEC522BA3AEF00C5CBB9 /* ArrayPractice.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEEC422BA3AEF00C5CBB9 /* ArrayPractice.c */; };
+		1DAB2AAA2333324B00F0D1FA /* ArrayPractice.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB2AA92333324B00F0D1FA /* ArrayPractice.c */; };
 		1DB20B9122BC749100CE873E /* 4_day.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DB20B8522BC749100CE873E /* 4_day.c */; };
 		1DB20B9222BC749100CE873E /* 1_day.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DB20B8622BC749100CE873E /* 1_day.c */; };
 		1DB20B9322BC749100CE873E /* 5_day.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DB20B8722BC749100CE873E /* 5_day.c */; };
@@ -67,6 +68,8 @@
 		1D52A4C622E46E2A007FCCAD /* PositionOperate.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PositionOperate.c; sourceTree = "<group>"; };
 		1DAAEEC322BA3AEF00C5CBB9 /* ArrayPractice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArrayPractice.h; sourceTree = "<group>"; };
 		1DAAEEC422BA3AEF00C5CBB9 /* ArrayPractice.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ArrayPractice.c; sourceTree = "<group>"; };
+		1DAB2AA82333324B00F0D1FA /* ArrayPractice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArrayPractice.h; sourceTree = "<group>"; };
+		1DAB2AA92333324B00F0D1FA /* ArrayPractice.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ArrayPractice.c; sourceTree = "<group>"; };
 		1DB20B8522BC749100CE873E /* 4_day.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 4_day.c; sourceTree = "<group>"; };
 		1DB20B8622BC749100CE873E /* 1_day.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 1_day.c; sourceTree = "<group>"; };
 		1DB20B8722BC749100CE873E /* 5_day.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 5_day.c; sourceTree = "<group>"; };
@@ -218,6 +221,7 @@
 		1D3FDA47232F3CCC00125848 /* CS2 */ = {
 			isa = PBXGroup;
 			children = (
+				1DAB2AA72333320F00F0D1FA /* Array */,
 				1DDA9A0F2331D9D800D5FA63 /* Function */,
 				1D1B6F88233091F10095BC7C /* Cycle&Condition */,
 				1D3FDA48232F3CD500125848 /* Introduction */,
@@ -250,6 +254,15 @@
 			children = (
 				1DAAEEC322BA3AEF00C5CBB9 /* ArrayPractice.h */,
 				1DAAEEC422BA3AEF00C5CBB9 /* ArrayPractice.c */,
+			);
+			path = Array;
+			sourceTree = "<group>";
+		};
+		1DAB2AA72333320F00F0D1FA /* Array */ = {
+			isa = PBXGroup;
+			children = (
+				1DAB2AA82333324B00F0D1FA /* ArrayPractice.h */,
+				1DAB2AA92333324B00F0D1FA /* ArrayPractice.c */,
 			);
 			path = Array;
 			sourceTree = "<group>";
@@ -457,6 +470,7 @@
 				1DEC4E0922D5D919008E623D /* IntroducePractice.c in Sources */,
 				1DB20B9D22BC881F00CE873E /* BasicOperatLinkStack.c in Sources */,
 				1DE8915922C9FF2400180C3B /* GraphExamples.c in Sources */,
+				1DAB2AAA2333324B00F0D1FA /* ArrayPractice.c in Sources */,
 				1D52A4C722E46E2A007FCCAD /* PositionOperate.c in Sources */,
 				1D0E123222C1FA8E0022F5E6 /* BTreeLinkStruct.c in Sources */,
 				1DDA9A122331DA0300D5FA63 /* FuncExample.c in Sources */,

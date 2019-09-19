@@ -9,6 +9,7 @@
 #include "FuncExample.h"
 #include <math.h>
 #include <ctype.h>
+#include <string.h>
 #define PI 3.1415926535897
 #define MAXNum 1000
 #define NumOf(x) (sizeof(x)/sizeof(x[0]))
@@ -112,10 +113,32 @@ static int isPrime(int n){
     return b;
 }
 
+static int queue_add(int QUEUE[MAXNum], int head, int *rear, int item){
+    int end = (*rear+1)%MAXNum;
+    if (end == head) {
+        printf("Queue up fill \n");
+        return 0;
+    }
+    QUEUE[end] = item;
+    *rear = end;
+    return 1;
+}
+
+static int queue_del(int QUEUE[MAXNum], int *head, int rear){
+    int front = *head;
+    if (front == rear) {
+        printf("Queue down fill \n");
+        return 0;
+    }else{
+        front = (front+1) % MAXNum;
+        return 1;
+    }
+}
+
 static void bigPrime(int n){
     int j,m,QUEUE[MAXNum]={2,3,5,7},head=0,tail=3,rear=0;
     int digits[] = {1,3,7,9};
-    while (n-- > 0) {
+    while (--n > 0) {
         for (rear=tail; head<=rear; head++) {
             m = QUEUE[head]*10;
             for (j=0; j<NumOf(digits); j++) {
@@ -125,8 +148,27 @@ static void bigPrime(int n){
             }
         }
     }
-    for (j=rear; j<=tail; j++) {
+    for (j=rear+1; j<=tail; j++) {
         printf("%d \n", QUEUE[j]);
+    }
+}
+
+static void bigPrime2(int n){
+    int hd=0,tail=4,QUEUE[MAXNum]={2,3,5,7};
+    int digits[] = {1,3,7,9};
+    int i,m,len,end=0;
+    for (len=1; len<n; len++) {
+        for (end=tail; hd<end; hd++) {
+            m = QUEUE[hd]*10;
+            for (i=0; i<NumOf(digits); i++) {
+                if (isPrime(m+digits[i])) {
+                    QUEUE[tail++] = m+digits[i];
+                }
+            }
+        }
+    }
+    for (i=end; i<tail; i++) {
+        printf("%d \n", QUEUE[i]);
     }
 }
 
@@ -153,5 +195,10 @@ void FuncExampleMain(int argc, char *argv[]){
 //    printf("%d \n", n);
 //    printPrimes(100);
 //    calculateLocal();
-    bigPrime(1);
+//    bigPrime(8);
+//    char *aaa = "ASDFGHJ";
+//    char c = 'S';
+//    char *ss = strchr(aaa, c);
+//    printf("%s \n", ss);
+    
 }

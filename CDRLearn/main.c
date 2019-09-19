@@ -32,6 +32,7 @@
 #include "CS2/Introduction/IntroduceExam.h"
 #include "CS2/Cycle&Condition/CyclePractice.h"
 #include "CS2/Function/FuncExample.h"
+#include "CS2/Array/ArrayPractice.h"
 
 int main(int argc, char * argv[]) {
     putchar('\n');
@@ -60,7 +61,8 @@ int main(int argc, char * argv[]) {
 //    PosOperateExamplesMain(argc, argv);
 //    IntroduceExamMain(argc, argv);
 //    CyclePracticeMain(argc, argv);
-    FuncExampleMain(argc, argv);
+//    FuncExampleMain(argc, argv);
+    ArrayPracticeMain(argc, argv);
     
     return 0;
 }
