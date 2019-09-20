@@ -247,12 +247,214 @@ static void Practice22(){
     putchar('\n');
 }
 
+/* 🔥🔥🔥 */
+static void Practice23(){
+    int i;
+//    for ()  /
+}
+
+static void Practice24(){
+    char strs[MaxNum],*res=NULL,*subs=NULL,c;
+    fgets(strs, MaxNum, stdin);
+    int i=0,isWord=0,maxLen=0,length=0;
+    while ((c=strs[i]) != '\0') {
+        if (islower(c) || isupper(c)) {
+            if (isWord == 0) {
+                length = 0;
+                subs = strs+i;
+                isWord = 1;
+            }
+            length++;
+        }else{
+            if (isWord == 1) {
+                if (length > maxLen) {
+                    res = subs;
+                    maxLen = length;
+                }
+            }
+            isWord = 0;
+        }
+        i++;
+    }
+    printf("MaxLength: %d \n", maxLen);
+    for (i=0; i<maxLen; i++) {
+        putchar(*(res+i));
+    }
+    putchar('\n');
+}
+
+static void Practice25(){
+    const int n=26;
+    int res[n][2] = {{0}},min_index=MaxNum,min_length=MaxNum,current_index=0,current_length=0;
+    char strs[MaxNum],c;
+    fgets(strs, MaxNum, stdin);
+    int i=0,j,isword=0,count=0;
+    while ((c = strs[i]) != '\0') {
+        if (islower(c) || isupper(c)) {
+            if (!isword) {
+                isword = 1;
+                current_index = i;
+                current_length = 0;
+            }
+            current_length++;
+        }else{
+            if (isword) {
+                if (count < n) {
+                    res[count][0] = current_index;
+                    res[count++][1] = current_length;
+                }else{
+                    if (min_length < current_length) {
+                        res[min_index][0] = current_index;
+                        res[min_index][1] = current_length;
+                    }
+                }
+                min_length = MaxNum;
+                for (j=0; j<count; j++) {
+                    if (res[j][1] < min_length) {
+                        min_length = res[j][1];
+                        min_index = j;
+                    }
+                }
+            }
+            isword = 0;
+        }
+        i++;
+    }
+    // Sort
+    for (i=0; i<count-1; i++) {
+        for (j=0; j<count-i-1; j++) {
+            if (res[j][1] > res[j+1][1]) {
+                current_index = res[j][0];
+                current_length = res[j][1];
+                res[j][0] = res[j+1][0];
+                res[j][1] = res[j+1][1];
+                res[j+1][0] = current_index;
+                res[j+1][1] = current_length;
+            }
+        }
+    }
+    
+    // Print
+    for (i=0; i<count; i++) {
+        for (j=res[i][0]; j<res[i][0]+res[i][1]; j++) {
+            putchar(strs[j]);
+        }
+        putchar('\n');
+    }
+}
+
+static void Practice26(){
+    const int n=3;
+    float matrix[n][n] = {
+        {0.1, 0.2, 0.3},
+        {0.4, 0.5, 0.6},
+        {0.7, 0.8, 0.9}
+    };
+    int i;
+    float mainSum=0,viceSum=0;
+    for (i=0; i<n; i++) {
+        mainSum += matrix[i][i];
+        viceSum += matrix[i][n-1-i];
+    }
+    printf("%f %f \n", mainSum, viceSum);
+}
+
+static void PrintMatrix(int matrix[][MaxNum], int row, int col){
+    int i,j;
+    for (i=0; i<row; i++) {
+        for (j=0; j<col; j++) {
+            printf("%-4d ", matrix[i][j]);
+        }
+        putchar('\n');
+    }
+}
+
+static void Practice27(){
+    const int n=5;
+    int i,j,matrix[n][MaxNum]={0},m=1;
+    for (i=0; i<n/2; i++) {
+        for (j=i; j<n-i; j++) {
+            matrix[i][j] = m++;
+        }
+        for (j=i+1; j<n-i; j++) {
+            matrix[j][n-i-1] = m++;
+        }
+        for (j=n-2-i; j>=i; j--) {
+            matrix[n-i-1][j] = m++;
+        }
+        for (j=n-2-i; j>i; j--) {
+            matrix[j][i] = m++;
+        }
+    }
+    if (n%2 != 0) {
+        matrix[n/2][n/2] = m;
+    }
+    PrintMatrix(matrix, n, n);
+}
+
+// 🔥🔥🔥
+static void Practice30(){
+    
+}
+
+// Three leaf line
+
+static void PrintCharMatrix(char matrix[][MaxNum], int row, int col){
+    int i,j;
+    for (i=0; i<row; i++) {
+        for (j=0; j<col; j++) {
+            printf("%c", matrix[i][j]);
+        }
+        putchar('\n');
+    }
+}
+
+static void initMatrix(char matrix[][MaxNum], int r){
+    int i,j;
+    for (i=0; i<r*2+1; i++) {
+        for (j=0; j<r*2+1; j++) {
+            matrix[i][j] = ' ';
+        }
+    }
+    for (i=0; i<r*2+1; i++) {
+        matrix[r][i] = '-';
+        matrix[i][r] = '|';
+    }
+}
+
+static void drawLine(char matrix[][MaxNum], int r){
+    int i;
+    double x,y;
+    double t;
+    for (i=0; i <= 360; i++) {
+        t=M_PI*2/360*i;
+        x = r*sin(t*3)*sin(t);
+        y = r*sin(t*3)*cos(t);
+        matrix[r-(int)x][r-(int)y] = '*';
+    }
+}
+static void Practice31(){
+    const int r=20;
+    int i,j;
+    char matrix[r*2+1][MaxNum]={{}};
+    initMatrix(matrix, r);
+    drawLine(matrix, r);
+    PrintCharMatrix(matrix, r*2+1, r*2+1);
+}
+
 void ArrayPracticeMain(int argc, char *argv[]){
 //    longLine();
 //    DrawFuncGraph();
 //    copyArray();
 //    oppositePrintStrs();
 //    Practice21();
-    Practice22();
+//    Practice22();
+//    Practice23();
+//    Practice24();
+//    Practice25();
+//    Practice26();
+//    Practice27();
+//    Practice30();
+//    Practice31();
     
 }

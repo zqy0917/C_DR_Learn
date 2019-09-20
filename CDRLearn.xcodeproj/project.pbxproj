@@ -12,6 +12,7 @@
 		1D1B6F8B233092680095BC7C /* CyclePractice.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D1B6F8A233092680095BC7C /* CyclePractice.c */; };
 		1D3FDA4B232F3D1B00125848 /* IntroduceExam.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D3FDA4A232F3D1B00125848 /* IntroduceExam.c */; };
 		1D52A4C722E46E2A007FCCAD /* PositionOperate.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D52A4C622E46E2A007FCCAD /* PositionOperate.c */; };
+		1D7918732334CE7800F7ED3C /* PointPractice.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D7918722334CE7800F7ED3C /* PointPractice.c */; };
 		1DAAEEC522BA3AEF00C5CBB9 /* ArrayPractice.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEEC422BA3AEF00C5CBB9 /* ArrayPractice.c */; };
 		1DAB2AAA2333324B00F0D1FA /* ArrayPractice.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB2AA92333324B00F0D1FA /* ArrayPractice.c */; };
 		1DB20B9122BC749100CE873E /* 4_day.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DB20B8522BC749100CE873E /* 4_day.c */; };
@@ -66,6 +67,8 @@
 		1D3FDA4A232F3D1B00125848 /* IntroduceExam.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = IntroduceExam.c; sourceTree = "<group>"; };
 		1D52A4C522E46E2A007FCCAD /* PositionOperate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PositionOperate.h; sourceTree = "<group>"; };
 		1D52A4C622E46E2A007FCCAD /* PositionOperate.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PositionOperate.c; sourceTree = "<group>"; };
+		1D7918712334CE7800F7ED3C /* PointPractice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointPractice.h; sourceTree = "<group>"; };
+		1D7918722334CE7800F7ED3C /* PointPractice.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PointPractice.c; sourceTree = "<group>"; };
 		1DAAEEC322BA3AEF00C5CBB9 /* ArrayPractice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArrayPractice.h; sourceTree = "<group>"; };
 		1DAAEEC422BA3AEF00C5CBB9 /* ArrayPractice.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ArrayPractice.c; sourceTree = "<group>"; };
 		1DAB2AA82333324B00F0D1FA /* ArrayPractice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArrayPractice.h; sourceTree = "<group>"; };
@@ -221,6 +224,7 @@
 		1D3FDA47232F3CCC00125848 /* CS2 */ = {
 			isa = PBXGroup;
 			children = (
+				1D7918702334CE6100F7ED3C /* Pointer */,
 				1DAB2AA72333320F00F0D1FA /* Array */,
 				1DDA9A0F2331D9D800D5FA63 /* Function */,
 				1D1B6F88233091F10095BC7C /* Cycle&Condition */,
@@ -247,6 +251,15 @@
 				1DEC4E0322D5CDC7008E623D /* FilePractice.c */,
 			);
 			path = File;
+			sourceTree = "<group>";
+		};
+		1D7918702334CE6100F7ED3C /* Pointer */ = {
+			isa = PBXGroup;
+			children = (
+				1D7918712334CE7800F7ED3C /* PointPractice.h */,
+				1D7918722334CE7800F7ED3C /* PointPractice.c */,
+			);
+			path = Pointer;
 			sourceTree = "<group>";
 		};
 		1DAAEEC022BA0D1600C5CBB9 /* Array */ = {
@@ -453,6 +466,7 @@
 				1DB20B9722BC749100CE873E /* 3_day.c in Sources */,
 				1DB20B9522BC749100CE873E /* PointerExec.c in Sources */,
 				1DB20B9622BC749100CE873E /* 2_day.c in Sources */,
+				1D7918732334CE7800F7ED3C /* PointPractice.c in Sources */,
 				1DB20B9422BC749100CE873E /* File.c in Sources */,
 				7B8E5B8122B4ED9400E77A49 /* Pointer.c in Sources */,
 				7B8E5B8222B4ED9400E77A49 /* Struct.c in Sources */,

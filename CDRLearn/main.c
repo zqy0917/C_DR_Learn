@@ -33,6 +33,7 @@
 #include "CS2/Cycle&Condition/CyclePractice.h"
 #include "CS2/Function/FuncExample.h"
 #include "CS2/Array/ArrayPractice.h"
+#include "CS2/Pointer/PointPractice.h"
 
 int main(int argc, char * argv[]) {
     putchar('\n');
@@ -62,7 +63,8 @@ int main(int argc, char * argv[]) {
 //    IntroduceExamMain(argc, argv);
 //    CyclePracticeMain(argc, argv);
 //    FuncExampleMain(argc, argv);
-    ArrayPracticeMain(argc, argv);
+//    ArrayPracticeMain(argc, argv);
+    PointerPracticeMain(argc, argv);
     
     return 0;
 }
