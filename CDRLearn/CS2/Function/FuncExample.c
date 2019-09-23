@@ -195,7 +195,7 @@ void FuncExampleMain(int argc, char *argv[]){
 //    printf("%d \n", n);
 //    printPrimes(100);
 //    calculateLocal();
-//    bigPrime(8);
+    bigPrime(2);
 //    char *aaa = "ASDFGHJ";
 //    char c = 'S';
 //    char *ss = strchr(aaa, c);

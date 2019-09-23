@@ -34,6 +34,7 @@
 #include "CS2/Function/FuncExample.h"
 #include "CS2/Array/ArrayPractice.h"
 #include "CS2/Pointer/PointPractice.h"
+#include "CS2/Pointer/PointerPractice2.h"
 
 int main(int argc, char * argv[]) {
     putchar('\n');
@@ -64,7 +65,8 @@ int main(int argc, char * argv[]) {
 //    CyclePracticeMain(argc, argv);
 //    FuncExampleMain(argc, argv);
 //    ArrayPracticeMain(argc, argv);
-    PointerPracticeMain(argc, argv);
+//    PointerPracticeMain(argc, argv);
+    PointerPractice2Main(argc, argv);
     
     return 0;
 }
