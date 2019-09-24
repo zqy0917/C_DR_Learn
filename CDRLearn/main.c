@@ -35,14 +35,15 @@
 #include "CS2/Array/ArrayPractice.h"
 #include "CS2/Pointer/PointPractice.h"
 #include "CS2/Pointer/PointerPractice2.h"
+#include "CS2/CodeDesign/CodeDesignPractices.h"
 
 int main(int argc, char * argv[]) {
     putchar('\n');
     // insert code here...
-    //    printPoint();
-    //    EntranceDay2();
-//        EntranceDay3();
-    //    EntranceDay4();
+//    printPoint();
+//    EntranceDay2();
+//    EntranceDay3();
+//    EntranceDay4();
 //    IntroducePractice(argc, argv);
 //    DRDay2();
 //    DRDay3(argc, argv);
@@ -66,7 +67,8 @@ int main(int argc, char * argv[]) {
 //    FuncExampleMain(argc, argv);
 //    ArrayPracticeMain(argc, argv);
 //    PointerPracticeMain(argc, argv);
-    PointerPractice2Main(argc, argv);
+//    PointerPractice2Main(argc, argv);
+    CodeDesignPracticesMain(argc, argv);
     
     return 0;
 }
