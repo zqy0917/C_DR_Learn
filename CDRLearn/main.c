@@ -36,6 +36,7 @@
 #include "CS2/Pointer/PointPractice.h"
 #include "CS2/Pointer/PointerPractice2.h"
 #include "CS2/CodeDesign/CodeDesignPractices.h"
+#include "CS2/Struct&Union/StructPractices.h"
 
 int main(int argc, char * argv[]) {
     putchar('\n');
@@ -68,7 +69,8 @@ int main(int argc, char * argv[]) {
 //    ArrayPracticeMain(argc, argv);
 //    PointerPracticeMain(argc, argv);
 //    PointerPractice2Main(argc, argv);
-    CodeDesignPracticesMain(argc, argv);
+//    CodeDesignPracticesMain(argc, argv);
+    StructPracticesMain(argc, argv);
     
     return 0;
 }
