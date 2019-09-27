@@ -88,27 +88,31 @@ static void CombinationExam(){
     combination(m, n, used, 0, 1);
 }
 
-static void arrange_output(int m, int used[MaxNum]){
+static void arrange_output(int m, int n, int used[MaxNum]){
     int i;
+    int A[MaxNum]={0};
     for (i=1; i<=m; i++) {
         if (used[i]) {
-            printf("%d ", i);
+            A[used[i]] = i;
         }
+    }
+    for (i=1; i<=n; i++) {
+        printf("%d ", A[i]);
     }
     putchar('\n');
 }
 
-static void arrangement(int m, int n, int used[MaxNum], int k, int i){
+static void arrangement(int m, int n, int used[MaxNum], int k){
     int j;
-    if (k == n) {
+    if (k == n+1) {
         // arrangement
-        arrange_output(m, used);
+        arrange_output(m, n, used);
         return;
     }
-    for (j=i; j<=m; j++) {
+    for (j=1; j<=m; j++) {
         if(used[j] == 0){
-            used[j] = 1;
-            arrangement(m, n, used, k+1, i);
+            used[j] = k;
+            arrangement(m, n, used, k+1);
             used[j] = 0;
         }
     }
@@ -117,7 +121,7 @@ static void arrangement(int m, int n, int used[MaxNum], int k, int i){
 static void ArrangementExam(){
     int used[MaxNum]={0};
     int m=5,n=3;
-    arrangement(m, n, used, 0, 1);
+    arrangement(m, n, used, 1);
 }
 
 static void alphabet_print(int used[MaxNum], int m){
@@ -214,8 +218,8 @@ static void Practice26(){
 void CodeDesignPracticesMain(int argc, char *argv[]){
 //    Example8_4();
 //    CombinationExam();
-//    ArrangementExam();
+    ArrangementExam();
 //    CombinationAlphabetExam();
 //    Practice23();
-    Practice26();
+//    Practice26();
 }
