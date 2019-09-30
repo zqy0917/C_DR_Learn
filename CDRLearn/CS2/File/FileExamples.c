@@ -552,6 +552,121 @@ static void Practice22_2_1(){
     }
 }
 
+#define FileName23 "/Users/zhaoqianyu/C_DR_Learn/C_DR_Learn/CDRLearn/CS2/File/Practice23.txt"
+#define m 10
+#define k 3
+static void Practice23(){
+    int nums[m]={0},count=0,p=0,isNum=0,i,sum=0,max,min;
+    char buf[BUFSIZ],*s;
+    FILE *fp;
+    if ((fp = fopen(FileName23, "r")) == NULL) {
+        perror("Can not open this file\n");
+        return;
+    }
+    while (fgets(buf, BUFSIZ, fp) != NULL) {
+        s = buf;
+        p = 0;
+        isNum = 0;
+        while (*s != '\n') {
+            if (*s != ' ') {
+                if (!isNum) {
+                    p++;
+                    if (p == k) {
+                        nums[count++] = atoi(s);
+                        break;
+                    }
+                }
+                isNum = 1;
+            }else{
+                isNum = 0;
+            }
+            s++;
+        }
+        if (p < k) {
+            nums[count++] = 0;
+        }
+    }
+    max = nums[0];
+    min = nums[0];
+    for (i=0; i<count; i++) {
+        if (nums[i] > max) {
+            max = nums[i];
+        }
+        if (nums[i] < min) {
+            min = nums[i];
+        }
+        sum += nums[i];
+    }
+    printf("Max: %d, Min: %d, Avg: %.3lf\n", max, min, (double)sum/count);
+}
+
+static void StatisticStorage(){
+    
+}
+
+#define FileName24 "/Users/zhaoqianyu/C_DR_Learn/C_DR_Learn/CDRLearn/CS2/File/Practice24.txt"
+static void Practice24(){
+    int sum=0;
+    char buf[BUFSIZ], *tarStr="GB", *tarPos;
+    FILE *fp;
+    if ((fp = fopen(FileName24, "r")) == NULL) {
+        perror("Can not open this file\n");
+        return;
+    }
+    while (fgets(buf, BUFSIZ, fp) != NULL) {
+        if ((tarPos = strstr(buf, tarStr)) != NULL) {
+            while (isdigit(*(--tarPos)));
+            sum += atoi(tarPos);
+        }
+    }
+    printf("Sum: %d\n", sum);
+}
+
+#define FileName25 "/Users/zhaoqianyu/C_DR_Learn/C_DR_Learn/CDRLearn/CS2/File/Practice25.txt"
+#define MaxCount 1000000
+#define MaxLength 2000
+typedef struct Data{
+    uint pos;
+    int len;
+}Data, *PData;
+FILE *fp;
+
+static int comp_file(const void *f1, const void *f2){
+    Data f11 = *(PData)f1;
+    Data f22 = *(PData)f2;
+    char f1s[MaxLength],f2s[MaxLength];
+    if (f11.len == f22.len) {
+        fseek(fp, f11.pos, SEEK_SET);
+        fgets(f1s, MaxLength, fp);
+        fseek(fp, f22.pos, SEEK_SET);
+        fgets(f2s, MaxLength, fp);
+        return strcmp(f1s, f2s);
+    }else{
+        return f11.len-f22.len;
+    }
+}
+
+static void Practice25(){
+    Data datas[MaxCount];
+    char buf[MaxLength];
+    int count=0,strLen,i;
+    if ((fp = fopen(FileName25, "r")) == NULL) {
+        perror("Can not open this file\n");
+        return;
+    }
+    while (fgets(buf, MaxLength, fp) != NULL) {
+        strLen = (int)strlen(buf);
+        datas[count].pos = (uint)ftell(fp)-strLen;
+        datas[count++].len = strLen;
+    }
+    qsort(datas, count, sizeof(Data), comp_file);
+    for (i=0; i<count; i++){
+        fseek(fp, datas[i].pos, SEEK_SET);
+        fgets(buf, MaxLength, fp);
+        fprintf(stdout, "%s", buf);
+    }
+}
+
 void FileExamplesMain(int argc, char *argv[]){
 //    Exam_10_1();
 //    Exam_10_3();
@@ -569,6 +684,9 @@ void FileExamplesMain(int argc, char *argv[]){
 //    Practice20_1();
 //    Practice22_1();
 //    Practice22_1_1();
-    Practice22_2();
-    Practice22_2_1();
+//    Practice22_2();
+//    Practice22_2_1();
+//    Practice23();
+//    Practice24();
+//    Practice25();
 }
