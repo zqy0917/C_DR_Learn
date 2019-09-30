@@ -1,0 +1,6 @@
+Zhangsan 28 1 250000.0
+Lisi 30 1 200000.0
+Wangwu 25 1 150000.0
+Liqian 35 0 350000.0
+Suchang 26 0 500000.0
+Zhaoqianyu 25 1 750000.0

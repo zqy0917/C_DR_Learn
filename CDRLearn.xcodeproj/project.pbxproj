@@ -73,6 +73,8 @@
 		1D4E215A233E09DF008EFDAA /* FileExamples.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = FileExamples.c; sourceTree = "<group>"; };
 		1D52A4C522E46E2A007FCCAD /* PositionOperate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PositionOperate.h; sourceTree = "<group>"; };
 		1D52A4C622E46E2A007FCCAD /* PositionOperate.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PositionOperate.c; sourceTree = "<group>"; };
+		1D65358423404E2F00062836 /* data_file.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = data_file.txt; sourceTree = "<group>"; };
+		1D65358523404EA100062836 /* Reminder.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Reminder.txt; sourceTree = "<group>"; };
 		1D7918712334CE7800F7ED3C /* PointPractice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointPractice.h; sourceTree = "<group>"; };
 		1D7918722334CE7800F7ED3C /* PointPractice.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PointPractice.c; sourceTree = "<group>"; };
 		1D8C5663233A23E8000D9AFB /* CodeDesignPractices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodeDesignPractices.h; sourceTree = "<group>"; };
@@ -271,8 +273,10 @@
 		1D4E2158233E09CA008EFDAA /* File */ = {
 			isa = PBXGroup;
 			children = (
+				1D65358523404EA100062836 /* Reminder.txt */,
 				1D4E2159233E09DF008EFDAA /* FileExamples.h */,
 				1D4E215A233E09DF008EFDAA /* FileExamples.c */,
+				1D65358423404E2F00062836 /* data_file.txt */,
 			);
 			path = File;
 			sourceTree = "<group>";
