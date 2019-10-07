@@ -667,6 +667,115 @@ static void Practice25(){
     }
 }
 
+static void PrintCycle(int n){
+    int i,j,ks=1,A[n][n];
+    for (i=0; i<n/2; i++) {
+        for (j=i; j<n-i; j++) {
+            A[i][j] = ks++;
+        }
+        for (j=i+1; j<n-i; j++) {
+            A[j][n-i-1] = ks++;
+        }
+        for (j=n-2-i; j>=i; j--) {
+            A[n-1-i][j] = ks++;
+        }
+        for (j=n-2-i; j>=i+1; j--) {
+            A[j][i] = ks++;
+        }
+    }
+    if (n % 2 != 0) {
+        A[n/2][n/2] = ks;
+    }
+    for (i=0; i<n; i++) {
+        for (j=0; j<n; j++) {
+            printf("%-3d ", A[i][j]);
+        }
+        puts("\n");
+    }
+}
+
+static void PrintPrimes(int n){
+    int i,primes[MaxNum],count=0,p;
+    primes[count++] = 2;
+    if (n >= 2) {
+        primes[count++] = 3;
+    }
+    while (count < n) {
+        p = primes[count-1]+2;
+        while (1) {
+            for (i=0; i<count; i++) {
+                if (p % primes[i] == 0) {
+                    break;
+                }
+            }
+            if (i >= count) {
+                break;
+            }
+            p += 2;
+        }
+        primes[count++] = p;
+    }
+    for (i=0; i<n; i++) {
+        printf("%3d ", primes[i]);
+    }
+    puts("\n");
+}
+
+#define FileName26 "/Users/zqy/C_DR_Learn/CDRLearn/CS2/File/Practice26.txt"
+#define FileName26_1 "/Users/zqy/C_DR_Learn/CDRLearn/CS2/File/Practice26_1.txt"
+
+static void ChangeWorld(){
+    char *old = "Directly", *new = "HHHHHHHHHHHHHHH", word[BUFSIZ], c;
+    int isWorld = 0,len=0;
+    FILE *fp1,*fp2;
+    if ((fp1 = fopen(FileName26, "r")) == NULL) {
+        perror("Can not open this file \n");
+        return;
+    }
+    if ((fp2 = fopen(FileName26_1, "w+")) == NULL) {
+        perror("Can not open this file \n");
+        return;
+    }
+    while ((c = fgetc(fp1)) != -1) {
+        if (isupper(c) || islower(c)) {
+            if (!isWorld) {
+                len = 0;
+            }
+            isWorld = 1;
+            len++;
+        }else{
+            if (isWorld) {
+                fseek(fp1, -len-1, SEEK_CUR);
+                fgets(word, len+1, fp1);
+                word[len] = '\0';
+                if (strcmp(word, old) == 0) {
+                    fputs(new, fp2);
+                }else{
+                    fputs(word, fp2);
+                }
+            }else{
+                fputc(c, fp2);
+            }
+            isWorld = 0;
+        }
+    }
+    fclose(fp1);
+    fclose(fp2);
+}
+
+#define TextFileName "/Users/zqy/C_DR_Learn/CDRLearn/CS2/File/Test_file.txt"
+static void Test(){
+    FILE *fp;
+    int d1,d2,a[6] = {1,2,3,4,5,6};
+    fp = fopen(TextFileName, "w");
+    fprintf(fp, "%d%d%d\n", a[0], a[1], a[2]);
+    fprintf(fp, "%d%d%d\n", a[3], a[4], a[5]);
+    fclose(fp);
+    fp = fopen(TextFileName, "r");
+    fscanf(fp, "%d %d", &d1, &d2);
+    printf("%d %d \n", d1, d2);
+}
+
 void FileExamplesMain(int argc, char *argv[]){
 //    Exam_10_1();
 //    Exam_10_3();
@@ -689,4 +798,10 @@ void FileExamplesMain(int argc, char *argv[]){
 //    Practice23();
 //    Practice24();
 //    Practice25();
+//    PrintCycle(9);
+//    PrintPrimes(20);
+//    ChangeWorld();
+    Test();
 }
+
+
