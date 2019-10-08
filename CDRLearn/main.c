@@ -11,24 +11,24 @@
 #include "CS/Array/Array.h"
 #include "CS/Pointer/Pointer.h"
 #include "CS/Struct/Struct.h"
-#include "IntroducePractice.h"
-#include "LinearTable.h"
-#include "CycleLinearTable.h"
-#include "ArrayPractice.h"
-#include "BasicOperatOrderStack.h"
-#include "BasicOperatLinkStack.h"
-#include "BasciOperatOrderQueue.h"
-#include "BasciOperatLinkQueue.h"
-#include "StackQueuePractice.h"
-#include "BTreeLinkStruct.h"
-#include "BTreePractice.h"
-#include "GraphExamples.h"
-#include "GraphPractice.h"
-#include "FileExamples.h"
-#include "FilePractice.h"
-#include "SortExamples.h"
-#include "SortPractice.h"
-#include "PositionOperate.h"
+#include "DR/Introduction/IntroducePractice.h"
+#include "DR/LinearList/LinearTable.h"
+#include "DR/LinearList/CycleLinearTable.h"
+#include "DR/Array/ArrayPractice.h"
+#include "DR/Stack&Queue/BasicOperatOrderStack.h"
+#include "DR/Stack&Queue/BasicOperatLinkStack.h"
+#include "DR/Stack&Queue/BasciOperatOrderQueue.h"
+#include "DR/Stack&Queue/BasciOperatLinkQueue.h"
+#include "DR/Stack&Queue/StackQueuePractice.h"
+#include "DR/Tree/BTreeLinkStruct.h"
+#include "DR/Tree/BTreePractice.h"
+#include "DR/Graph/GraphExamples.h"
+#include "DR/Graph/GraphPractice.h"
+#include "DR/File/FileExamples.h"
+#include "DR/File/FilePractice.h"
+#include "DR/InternalSort/SortExamples.h"
+#include "DR/InternalSort/SortPractice.h"
+#include "CS/PositionOpr/PositionOperate.h"
 #include "CS2/Introduction/IntroduceExam.h"
 #include "CS2/Cycle&Condition/CyclePractice.h"
 #include "CS2/Function/FuncExample.h"
@@ -38,8 +38,11 @@
 #include "CS2/CodeDesign/CodeDesignPractices.h"
 #include "CS2/Struct&Union/StructPractices.h"
 #include "CS2/File/FileExamples.h"
+#include "DR2/Reviews/LinearListReview.h"
+#include "DR2/Reviews/ArrayReview.h"
+#include "DR2/Reviews/StackQueueReview.h"
 
-int main(int argc, char * argv[]) {
+int main(int argc, char *argv[]) {
     putchar('\n');
     // insert code here...
 //    printPoint();
@@ -72,7 +75,10 @@ int main(int argc, char * argv[]) {
 //    PointerPractice2Main(argc, argv);
 //    CodeDesignPracticesMain(argc, argv);
 //    StructPracticesMain(argc, argv);
-    FileExamplesMain(argc, argv);
+//    FileExamplesMain(argc, argv);
+//    LinearListReviewMain(argc, argv);
+//    ArrayReviewMain(argc, argv);
+    StackQueueReviewMain(argc, argv);
     
     return 0;
 }

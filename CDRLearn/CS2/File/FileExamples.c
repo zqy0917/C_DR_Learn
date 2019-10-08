@@ -626,7 +626,7 @@ static void Practice24(){
 #define MaxCount 1000000
 #define MaxLength 2000
 typedef struct Data{
-    uint pos;
+    int pos;
     int len;
 }Data, *PData;
 FILE *fp;
@@ -656,7 +656,7 @@ static void Practice25(){
     }
     while (fgets(buf, MaxLength, fp) != NULL) {
         strLen = (int)strlen(buf);
-        datas[count].pos = (uint)ftell(fp)-strLen;
+        datas[count].pos = (int)ftell(fp)-strLen;
         datas[count++].len = strLen;
     }
     qsort(datas, count, sizeof(Data), comp_file);
@@ -763,13 +763,13 @@ static void ChangeWorld(){
     fclose(fp2);
 }
 
-#define TextFileName "/Users/zqy/C_DR_Learn/CDRLearn/CS2/File/Test_file.txt"
+#define TextFileName "/Users/zhaoqianyu/C_DR_Learn/C_DR_Learn/CDRLearn/CS2/File/Test_file.txt"
 static void Test(){
     FILE *fp;
     int d1,d2,a[6] = {1,2,3,4,5,6};
     fp = fopen(TextFileName, "w");
-    fprintf(fp, "%d%d%d\n", a[0], a[1], a[2]);
-    fprintf(fp, "%d%d%d\n", a[3], a[4], a[5]);
+    fprintf(fp, "%d %d %d\n", a[0], a[1], a[2]);
+    fprintf(fp, "%d %d %d\n", a[3], a[4], a[5]);
     fclose(fp);
     fp = fopen(TextFileName, "r");
     fscanf(fp, "%d %d", &d1, &d2);
