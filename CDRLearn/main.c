@@ -41,6 +41,7 @@
 #include "DR2/Reviews/LinearListReview.h"
 #include "DR2/Reviews/ArrayReview.h"
 #include "DR2/Reviews/StackQueueReview.h"
+#include "DR2/Reviews/TreeReview.h"
 
 int main(int argc, char *argv[]) {
     putchar('\n');
@@ -78,7 +79,8 @@ int main(int argc, char *argv[]) {
 //    FileExamplesMain(argc, argv);
 //    LinearListReviewMain(argc, argv);
 //    ArrayReviewMain(argc, argv);
-    StackQueueReviewMain(argc, argv);
-    
+    // StackQueueReviewMain(argc, argv);
+    TreeReviewMain(argc, argv);
+
     return 0;
 }

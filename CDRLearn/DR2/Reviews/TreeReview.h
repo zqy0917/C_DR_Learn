@@ -11,4 +11,6 @@
 
 #include <stdio.h>
 
+void TreeReviewMain(int argc, char *argv[]);
+
 #endif /* TreeReview_h */

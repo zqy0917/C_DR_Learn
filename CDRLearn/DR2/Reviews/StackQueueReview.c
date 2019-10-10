@@ -105,7 +105,7 @@ static int DelQueue(PItem *front, PItem *rear){
 
 static void LinearQueuePractice(){
     int i,data;
-    PItem front,rear,p;
+    PItem front,rear;
     InitinalQueue(&front, &rear);
     for (i=1; i<=10; i++) {
         AddQueue(&front, &rear, i);
@@ -142,7 +142,7 @@ static double Calculate(double a, double b, char operation){
 void SuffixExpressionCalculate(){
     char buf[BUFSIZ],*c;
     double STACK[MaxNum];
-    int top=-1,tmp,i=0,count;
+    int top=-1,tmp,count;
     fgets(buf, BUFSIZ, stdin);
     c = buf;
     while (*c != '\0' && *c != '\n'){
@@ -169,5 +169,6 @@ void StackQueueReviewMain(int argc, char *argv[]){
     printf("Stack Queue review \n");
     // LinearStackPractice();
     // LinearQueuePractice();
-    SuffixExpressionCalculate();
+    // SuffixExpressionCalculate();
+    
 }
