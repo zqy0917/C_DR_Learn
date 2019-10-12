@@ -223,13 +223,34 @@ static BTree CreateSqrtTree(int A[], int n){
     return T;
 }
 
+static int SearchSortTree(BTree T, int k, BTree *item){
+    if (T == NULL) {
+        *item = NULL;
+        return 0;
+    }
+    if (k < T->data) {
+        return SearchSortTree(T->llink, k, item);
+    }else if (k > T->data){
+        return SearchSortTree(T->rlink, k, item);
+    }else{
+        *item = T;
+        return 1;
+    }
+}
+
 static void CreateSortTree(){
     const int n=8;
-    int A[n] = {1, 2, 3, 4, 5, 6, 7,8};
-    BTree T = CreateSqrtTree(A, n);
+    int A[n] = {5, 3, 7, 1, 8, 6, 2, 4}, b;
+    BTree T = CreateSqrtTree(A, n), item;
     // LayerTraverse(T);
-    BehindTraverseRecursive(T);
-    putchar('\n');
+    // BehindTraverseRecursive(T);
+    // putchar('\n');
+    b = SearchSortTree(T, 18, &item);
+    if (b == 1) {
+        printf("Find out: %d\n", item->data);
+    }else{
+        printf("Not find out\n");
+    }
 }
 
 void TreeReviewMain(int argc, char *argv[]){
