@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 #define MaxNum 1000
+#define MaxValue 100000
 
 typedef struct Edge{
     int adjves;
@@ -161,7 +162,7 @@ static void GraphSearch(PVlink vertexs[], int n, void (*SearchOperation)(PVlink 
  8 9 0
  9 10 0
  10 1 0
- // 邻接表表示：
+ // link table show：
  1 ->2 ->3 ->5->6
  2 ->1 ->6 ->4
  3 ->8 ->2 ->10
@@ -172,8 +173,8 @@ static void GraphSearch(PVlink vertexs[], int n, void (*SearchOperation)(PVlink 
  8 ->9
  9 ->10
  10 ->1
- 深度优先遍历：1 2 6 7 8 9 10 4 3 5
- 广度优先遍历：1 2 3 5 6 4 8 10 7 9
+ Depth first：1 2 6 7 8 9 10 4 3 5
+ Broad first：1 2 3 5 6 4 8 10 7 9
  */
 static void CreateAdjacencyGraph(){
     const int n=10;
@@ -185,15 +186,132 @@ static void CreateAdjacencyGraph(){
     GraphSearch(vertexs, n, *SearchOperation);
 }
 
-// Can you coding this algorithm？
-static void Prim(){
 
+static void CreateUndirectionADJMatrix(int A[][MaxNum], int n, int e){
+    int i, j, s, t, w;
+    for (i=0; i<n; i++) {
+        for (j=0; j<n; j++) {
+            A[i][j] = MaxValue;
+        }
+    }
+    for (i=0; i<e; i++) {
+        scanf("%d %d %d", &s, &t, &w);
+        A[s][t] = w;
+        A[t][s] = w;
+    }
+}
+
+// Prim Algorithm get minimum spanning tree.
+// Can you coding this algorithm alone?
+// Yes, I am willing to try.
+// Finally I beat it!!!👊👊👊
+static void Prim(int GE[][MaxNum], int n){
+    int added[n], minTarget[n], i, j, count=0, minPath=MaxValue, minPos=0;
+    for (i=0; i<n; i++) {
+        added[i] = 0;
+        minTarget[i] = 0;
+    } 
+    added[0] = 1;
+    count++;
+    while(count < n){
+        minPath=MaxValue;
+        for (i=1; i<n; i++) {
+            if (added[i] == 0 && GE[i][minTarget[i]] < minPath) {
+                minPos = i;
+                minPath = GE[i][minTarget[i]];
+            }
+        }
+        printf("Path: %d->%d\t", minPos+1, minTarget[minPos]+1);
+        count++;
+        added[minPos] = 1;
+        for (j=1; j<n; j++) {
+            if (added[j] == 0 && GE[j][minPos] < GE[j][minTarget[j]]) {
+                minTarget[j] = minPos;
+            }
+        }
+    }
+}
+
+// Dijskel Algorithm get shortest path.
+// Can you coding this algorithm alone?
+// Yes, I am willing to try.
+// Finally I beat it!!!👊👊👊
+static void Dijskel(int GE[][MaxNum], int n, int v){
+    int confirms[n], minPaths[n][n], pathsPos[n], minPathCosts[n], i, j, count=0, minPos, minCost;
+    for (i=0; i<n; i++) {
+        minPaths[i][0] = v;
+        pathsPos[i] = 1;
+        minPathCosts[i] = GE[i][v];
+        confirms[i] = 0;
+    }
+    confirms[v] = 1;
+    count++;
+    while(count < n){
+        minPos = 0;
+        minCost = MaxValue;
+        for (i=0; i<n; i++) {
+            if (confirms[i] == 0 && minPathCosts[i] < minCost) {
+                minPos = i;
+                minCost = minPathCosts[i];
+            }
+        }
+        confirms[minPos] = 1;
+        count++;
+        for (i=0; i<n; i++) {
+            if (confirms[i] == 0 && minPathCosts[i] > minCost+GE[i][minPos]) {
+                for (j=0; j<pathsPos[minPos]; j++) {
+                    minPaths[i][j] = minPaths[minPos][j];
+                }
+                minPaths[i][j] = minPos;
+                minPathCosts[i] = minCost+GE[i][minPos];
+                pathsPos[i] = pathsPos[minPos]+1;
+            }
+        }
+    }
+    for (i=0; i<n; i++) {
+        for (j=0; j<pathsPos[i]; j++) {
+            printf("%d -> ", minPaths[i][j]+1);
+        }
+        if (i == v) {
+            printf("\n");
+        }else{
+            printf("%d\n", i+1);
+        }
+    }
+}
+
+static void PrimTest(){
+    const int n=6, e=20;
+    int GE[n][MaxNum],i,j;
+    CreateUndirectionADJMatrix(GE, n, e);
+    for (i=0; i<n; i++) {
+        for (j=0; j<n; j++) {
+            printf("%d ", GE[i][j]);
+        }
+        printf("\n");
+    }
+    Prim(GE, n);
+    putchar('\n');
+}
+
+static void DijskelTest(){
+    const int n=7, e=25;
+    int GE[n][MaxNum],i,j;
+    CreateUndirectionADJMatrix(GE, n, e);
+    for (i=0; i<n; i++) {
+        for (j=0; j<n; j++) {
+            printf("%d ", GE[i][j]);
+        }
+        printf("\n");
+    }
+    Dijskel(GE, n, 3);
 }
 
 void GraphReviewMain(int argc, char *argv[]){
     printf("GraphReviewMain \n");
-    CreateAdjacencyGraph();
-    
+    //CreateAdjacencyGraph();
+    //PrimTest();
+    DijskelTest();
 }
 
 
