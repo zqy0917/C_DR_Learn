@@ -42,10 +42,11 @@ static void AdjacencyList(PVlink vertexs[], int n, int e){
         }
         r = malloc(sizeof(Edge));
         r->link = NULL;
-        r->adjves = vj-1;
-        pe = vertexs[vi-1]->link;
+        r->adjves = vj;
+        (vertexs[vj]->indegree)++;
+        pe = vertexs[vi]->link;
         if (pe == NULL) {
-            vertexs[vi-1]->link = r;
+            vertexs[vi]->link = r;
         }else{
             while (pe->link != NULL){
                 pe = pe->link;
@@ -307,11 +308,65 @@ static void DijskelTest(){
     Dijskel(GE, n, 3);
 }
 
+
+static void GetTopoSort(PVlink vertexs[], int n, int e, int topoList[]){
+    int STACK[MaxNum],i,j,top=-1,k;
+    PElink p;
+    for (i=0; i<n; i++) {
+        if (vertexs[i]->indegree == 0) {
+            STACK[++top] = i;
+        } 
+    }
+    i=0;
+    while(top >= 0){
+        j = STACK[top--];
+        topoList[i++] = vertexs[j]->data;
+        p = vertexs[j]->link;
+        while(p != NULL){
+            k = p->adjves;
+            (vertexs[k]->indegree)--;
+            if (vertexs[k]->indegree <= 0) {
+                STACK[++top] = k;
+            }
+            p = p->link;
+        }
+    }
+    if (i < n) {
+        printf("网中存在回路\n");
+    }else{
+        for (j=0; j<i; j++) {
+            printf("%d ", topoList[j]);
+        }
+        putchar('\n');
+    }
+}
+
+static int JudgeTopoList(PVlink vertexs[], int topoList[], int n, int e){
+    return -1;
+}
+
+static void TopoSortTest(){
+    const int n=7, e=8;
+    int topoList[n], indigrees[n], i, b;
+    PVlink vertexs[n];
+    AdjacencyList(vertexs, n, e);
+    for (i=0; i<n; i++) {
+        indigrees[i] = vertexs[i]->indegree;
+    }
+    GetTopoSort(vertexs, n, e, topoList);
+    for (i=0; i<n; i++) {
+        vertexs[i]->indegree = indigrees[i];
+    }
+    
+}  
+
+
 void GraphReviewMain(int argc, char *argv[]){
     printf("GraphReviewMain \n");
     //CreateAdjacencyGraph();
     //PrimTest();
-    DijskelTest();
+    //DijskelTest();
+    TopoSortTest();
 }
 
 
