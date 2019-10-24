@@ -253,8 +253,26 @@ static void CreateSortTree(){
     }
 }
 
+// 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 Vitally important practice
+static void Practice1(){
+    const int n=8;
+    int tree[n] = {0,3,5,6,0,1,2,7};
+    int STACK[n],top=-1,i=1;
+    while (top >= 0 || (tree[i] > 0 && i < n)) {
+        while (tree[i] > 0 && i < n) {
+            printf("%d ", tree[i]);
+            STACK[++top] = i;
+            i = i*2;
+        }
+        i = STACK[top--];
+        i = i*2+1;
+    }
+    fprintf(stdout, "\n");
+}
+
 void TreeReviewMain(int argc, char *argv[]){
     printf("TreeReviewMain \n");
     // CreateTree();
-    CreateSortTree();
+//    CreateSortTree();
+    Practice1();
 }

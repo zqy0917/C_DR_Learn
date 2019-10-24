@@ -15,6 +15,7 @@
 		1D4E215B233E09DF008EFDAA /* FileExamples.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D4E215A233E09DF008EFDAA /* FileExamples.c */; };
 		1D52A4C722E46E2A007FCCAD /* PositionOperate.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D52A4C622E46E2A007FCCAD /* PositionOperate.c */; };
 		1D7918732334CE7800F7ED3C /* PointPractice.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D7918722334CE7800F7ED3C /* PointPractice.c */; };
+		1D7B4E072356D02900375FEF /* FileSearchReview.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D7B4E062356D02900375FEF /* FileSearchReview.c */; };
 		1D8C5665233A23E8000D9AFB /* CodeDesignPractices.c in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C5664233A23E8000D9AFB /* CodeDesignPractices.c */; };
 		1DAAEEC522BA3AEF00C5CBB9 /* ArrayPractice.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DAAEEC422BA3AEF00C5CBB9 /* ArrayPractice.c */; };
 		1DAB2AAA2333324B00F0D1FA /* ArrayPractice.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB2AA92333324B00F0D1FA /* ArrayPractice.c */; };
@@ -84,6 +85,8 @@
 		1D65358523404EA100062836 /* Reminder.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Reminder.txt; sourceTree = "<group>"; };
 		1D7918712334CE7800F7ED3C /* PointPractice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointPractice.h; sourceTree = "<group>"; };
 		1D7918722334CE7800F7ED3C /* PointPractice.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PointPractice.c; sourceTree = "<group>"; };
+		1D7B4E052356D02900375FEF /* FileSearchReview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileSearchReview.h; sourceTree = "<group>"; };
+		1D7B4E062356D02900375FEF /* FileSearchReview.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = FileSearchReview.c; sourceTree = "<group>"; };
 		1D8C5663233A23E8000D9AFB /* CodeDesignPractices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodeDesignPractices.h; sourceTree = "<group>"; };
 		1D8C5664233A23E8000D9AFB /* CodeDesignPractices.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CodeDesignPractices.c; sourceTree = "<group>"; };
 		1DAAEEC322BA3AEF00C5CBB9 /* ArrayPractice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArrayPractice.h; sourceTree = "<group>"; };
@@ -383,6 +386,8 @@
 				1DBB0C63234C8FED000DD371 /* StackQueueReview.c */,
 				1D0E6333235084EA003C0D89 /* GraphReview.h */,
 				1D0E6334235084EA003C0D89 /* GraphReview.c */,
+				1D7B4E052356D02900375FEF /* FileSearchReview.h */,
+				1D7B4E062356D02900375FEF /* FileSearchReview.c */,
 			);
 			path = Reviews;
 			sourceTree = "<group>";
@@ -586,6 +591,7 @@
 				1D0E123222C1FA8E0022F5E6 /* BTreeLinkStruct.c in Sources */,
 				1DDA9A122331DA0300D5FA63 /* FuncExample.c in Sources */,
 				1DBB0C61234C7BA4000DD371 /* TreeReview.c in Sources */,
+				1D7B4E072356D02900375FEF /* FileSearchReview.c in Sources */,
 				1DBB0C5B234C7B81000DD371 /* ArrayReview.c in Sources */,
 				7B8E5B8022B4ED9400E77A49 /* Array.c in Sources */,
 				7B9DC1BF22BE4DCA0000D8EA /* BasciOperatOrderQueue.c in Sources */,
