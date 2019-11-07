@@ -8,6 +8,8 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
+#include <string.h>
 #include "CS/Array/Array.h"
 #include "CS/Pointer/Pointer.h"
 #include "CS/Struct/Struct.h"
