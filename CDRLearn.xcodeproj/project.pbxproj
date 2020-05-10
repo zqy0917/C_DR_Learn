@@ -36,6 +36,8 @@
 		1DBB0C64234C8FED000DD371 /* StackQueueReview.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DBB0C63234C8FED000DD371 /* StackQueueReview.c */; };
 		1DBB54A422DDD0DE006D76AE /* SortPractice.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DBB54A322DDD0DE006D76AE /* SortPractice.c */; };
 		1DC826AD22D718C10021AE90 /* SortExamples.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DC826AC22D718C10021AE90 /* SortExamples.c */; };
+		1DD1EF8B2462EC8E00CD236B /* TestCodeDog.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DD1EF8A2462EC8E00CD236B /* TestCodeDog.c */; };
+		1DD1EF8E2462F18300CD236B /* TestCodeDog22.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DD1EF8D2462F18300CD236B /* TestCodeDog22.c */; };
 		1DDA9A122331DA0300D5FA63 /* FuncExample.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DDA9A112331DA0300D5FA63 /* FuncExample.c */; };
 		1DE30D6122C4A8F600A7B24B /* BTreePractice.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DE30D6022C4A8F600A7B24B /* BTreePractice.c */; };
 		1DE8915922C9FF2400180C3B /* GraphExamples.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8915822C9FF2400180C3B /* GraphExamples.c */; };
@@ -126,6 +128,10 @@
 		1DBB54A322DDD0DE006D76AE /* SortPractice.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SortPractice.c; sourceTree = "<group>"; };
 		1DC826AB22D718C10021AE90 /* SortExamples.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SortExamples.h; sourceTree = "<group>"; };
 		1DC826AC22D718C10021AE90 /* SortExamples.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SortExamples.c; sourceTree = "<group>"; };
+		1DD1EF892462EC8E00CD236B /* TestCodeDog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestCodeDog.h; sourceTree = "<group>"; };
+		1DD1EF8A2462EC8E00CD236B /* TestCodeDog.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = TestCodeDog.c; sourceTree = "<group>"; };
+		1DD1EF8C2462F18300CD236B /* TestCodeDog22.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestCodeDog22.h; sourceTree = "<group>"; };
+		1DD1EF8D2462F18300CD236B /* TestCodeDog22.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = TestCodeDog22.c; sourceTree = "<group>"; };
 		1DDA9A102331DA0300D5FA63 /* FuncExample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FuncExample.h; sourceTree = "<group>"; };
 		1DDA9A112331DA0300D5FA63 /* FuncExample.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = FuncExample.c; sourceTree = "<group>"; };
 		1DE30D5F22C4A8F600A7B24B /* BTreePractice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTreePractice.h; sourceTree = "<group>"; };
@@ -470,6 +476,10 @@
 				7B8E5B7622B4ED9400E77A49 /* CS */,
 				1D3FDA47232F3CCC00125848 /* CS2 */,
 				7B8E5B6622B4ED4F00E77A49 /* main.c */,
+				1DD1EF892462EC8E00CD236B /* TestCodeDog.h */,
+				1DD1EF8A2462EC8E00CD236B /* TestCodeDog.c */,
+				1DD1EF8C2462F18300CD236B /* TestCodeDog22.h */,
+				1DD1EF8D2462F18300CD236B /* TestCodeDog22.c */,
 			);
 			path = CDRLearn;
 			sourceTree = "<group>";
@@ -568,6 +578,7 @@
 				1D8C5665233A23E8000D9AFB /* CodeDesignPractices.c in Sources */,
 				7B8E5B8222B4ED9400E77A49 /* Struct.c in Sources */,
 				1DBB54A422DDD0DE006D76AE /* SortPractice.c in Sources */,
+				1DD1EF8B2462EC8E00CD236B /* TestCodeDog.c in Sources */,
 				1DAAEEC522BA3AEF00C5CBB9 /* ArrayPractice.c in Sources */,
 				7B16358E22B92A30001C2019 /* CycleLinearTable.c in Sources */,
 				1DEC4E0422D5CDC7008E623D /* FilePractice.c in Sources */,
@@ -591,6 +602,7 @@
 				1D0E123222C1FA8E0022F5E6 /* BTreeLinkStruct.c in Sources */,
 				1DDA9A122331DA0300D5FA63 /* FuncExample.c in Sources */,
 				1DBB0C61234C7BA4000DD371 /* TreeReview.c in Sources */,
+				1DD1EF8E2462F18300CD236B /* TestCodeDog22.c in Sources */,
 				1D7B4E072356D02900375FEF /* FileSearchReview.c in Sources */,
 				1DBB0C5B234C7B81000DD371 /* ArrayReview.c in Sources */,
 				7B8E5B8022B4ED9400E77A49 /* Array.c in Sources */,
